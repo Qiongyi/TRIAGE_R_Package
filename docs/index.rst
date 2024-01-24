@@ -1,0 +1,25 @@
+.. TRIAGE R Package documentation master file
+
+Welcome to TRIAGE R Package's documentation!
+============================================
+
+This guide provides step-by-step instructions on using the TRIAGE R package for effective analysis of transcriptomic data.
+
+Contents:
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   Installation
+   TRIAGEgene
+   TRIAGEcluster
+   TRIAGEparser
+   User-friendly functions 
+   Testing TRIAGE
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`search`
