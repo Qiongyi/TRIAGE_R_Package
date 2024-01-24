@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Installation &#8212; TRIAGE R Package  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="TRIAGEgene" href="TRIAGEgene.html" />
+    <link rel="prev" title="Welcome to TRIAGE R Package’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>This section covers the installation and setup of the TRIAGE R package. The TRIAGE R package requires both R and Python dependencies. Follow these steps to set up the environment and install the package.</p>
+<section id="r-dependencies">
+<span id="id1"></span><h2>R Dependencies<a class="headerlink" href="#r-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Install the required R packages:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;reticulate&quot;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;data.table&quot;</span><span class="p">)</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;pheatmap&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="python-environment-setup">
+<h2>Python Environment Setup<a class="headerlink" href="#python-environment-setup" title="Permalink to this headline">¶</a></h2>
+<p>Install Python modules within R using the reticulate package. It’s recommended to manage Python dependencies in a separate environment.</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
+<span class="c1"># Note: any Python with version &gt;=3.9 works. Here we install Python version 3.9.5 as an example.</span>
+<span class="n">reticulate</span><span class="o">::</span><span class="nf">install_python</span><span class="p">(</span><span class="n">version</span> <span class="o">=</span> <span class="s">&#39;3.9.5&#39;</span><span class="p">)</span>
+<span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;pandas&quot;</span><span class="p">,</span> <span class="n">envname</span> <span class="o">=</span> <span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
+<span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;numpy&quot;</span><span class="p">,</span> <span class="n">envname</span> <span class="o">=</span> <span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
+<span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;scipy&quot;</span><span class="p">,</span> <span class="n">envname</span> <span class="o">=</span> <span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
+<span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;matplotlib&quot;</span><span class="p">,</span> <span class="n">envname</span> <span class="o">=</span> <span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
+<span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;requests&quot;</span><span class="p">,</span> <span class="n">envname</span> <span class="o">=</span> <span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
+<span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;scikit-learn&quot;</span><span class="p">,</span> <span class="n">envname</span> <span class="o">=</span> <span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
+<span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;seaborn&quot;</span><span class="p">,</span> <span class="n">envname</span> <span class="o">=</span> <span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="knowledge-base">
+<h2>Knowledge Base<a class="headerlink" href="#knowledge-base" title="Permalink to this headline">¶</a></h2>
+<p>When using the reticulate package in R to install Python modules, it is important to understand how reticulate::py_install manages the installation of these modules. Below are key points to consider:</p>
+<ul class="simple">
+<li><p><strong>Intelligent Installation</strong>: The reticulate::py_install function is designed to intelligently manage Python modules within your specified Python environment. It checks whether the required modules are already installed in the targeted environment.</p></li>
+<li><p><strong>No Redundant Installation</strong>: If a module is already installed in the given environment, py_install will not attempt to reinstall it. This avoids redundant installation and saves time, especially when setting up the environment for the first time or in a new session.</p></li>
+<li><p><strong>Specified Environment</strong>: You can specify the environment where you want the modules to be installed. This is done using the envname parameter in the py_install function. For instance, reticulate::py_install(“pandas”, envname = “r-reticulate”) will install the pandas module in the r-reticulate environment.</p></li>
+</ul>
+<p>In future R sessions, activate the r-reticulate environment:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
+<span class="nf">use_virtualenv</span><span class="p">(</span><span class="s">&quot;r-reticulate&quot;</span><span class="p">,</span> <span class="n">required</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="installing-triage-r-package">
+<h2>Installing TRIAGE R Package<a class="headerlink" href="#installing-triage-r-package" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Download the TRIAGE R package (e.g., Triage_1.0.0.tar.gz) from the GitHub repository: <a class="reference external" href="https://github.com/Qiongyi/TRIAGE_R_Package">https://github.com/Qiongyi/TRIAGE_R_Package</a></p></li>
+<li><p>Install the TRIAGE R package from the source file:</p></li>
+</ol>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;path/to/Triage_1.0.0.tar.gz&quot;</span><span class="p">,</span> <span class="n">repos</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;source&quot;</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">Triage</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TRIAGE R Package</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#r-dependencies">R Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-environment-setup">Python Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#knowledge-base">Knowledge Base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-triage-r-package">Installing TRIAGE R Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly functions.html">User-friendly Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Testing TRIAGE.html">Testing TRIAGE</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to TRIAGE R Package’s documentation!</a></li>
+      <li>Next: <a href="TRIAGEgene.html" title="next chapter">TRIAGEgene</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Qiongyi Zhao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

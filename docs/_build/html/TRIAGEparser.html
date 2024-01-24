@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>TRIAGEparser &#8212; TRIAGE R Package  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User-friendly Functions" href="User-friendly functions.html" />
+    <link rel="prev" title="TRIAGEcluster" href="TRIAGEcluster.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="triageparser">
+<h1>TRIAGEparser<a class="headerlink" href="#triageparser" title="Permalink to this headline">¶</a></h1>
+<p>TRIAGEparser is one of core functions of the TRIAGE R package, designed to evaluate groups of genes, such as the top 100 genes ranked by TRIAGE-weighted values or differentially expressed genes, to pinpoint genes with distinct biological functions. It performs principal component analysis to extract orthogonal patterns of H3K27me3 depositions from consortium-level epigenomic data and uses Bayesian information criterion to optimally determine gene clusters. TRIAGEparser then assesses each gene cluster by searching the protein-protein interaction (PPI) networks from the STRING database and conducts Gene Ontology (GO) enrichment analysis for genes with direct PPI interactions. For more details, see: Sun et al., Nucleic Acid Research 2023, “Inferring cell diversity in single cell data using consortium-scale epigenetic data as a biological anchor for cell identity”.</p>
+<section id="input-and-output">
+<h2>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this headline">¶</a></h2>
+<p>Input: TRIAGEparser requires an input file, which can be provided in two formats:</p>
+<p>As a <em>Gene List</em>: A list of genes, typically in a text file - each line contains one gene name. This format is suitable when you want to analyze a specific set of genes.</p>
+<p>As a <em>Table</em>: A more comprehensive data table, either in .csv or tab/space-delimited .txt format. This format is ideal for analyzing gene expression data along with other associated data points.</p>
+<p>Output: The output from TRIAGEparser are two folders, “gene_clusters” and “go”.</p>
+<p>In the “gene_clusters” folder, there are “*_gene_clusters.csv” files listing the probabilities of each gene being assigned to different gene clusters. For analyses involving multiple samples/groups, outputs are stored in distinct files.</p>
+<p>In the “go” folder, there are “*_go.txt” files listing significance values (i.e., false discovery rates) for all associated GO terms descriptions across PPI-significant clusters. For analyses involving multiple samples/groups, outputs are stored in distinct files.</p>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><cite>input</cite>: The input file, which can be a .csv file or a tab/space-delimited .txt file.|</p></li>
+<li><p><cite>input_type</cite>: Optional. Specifies the input type, either ‘table’ or ‘list’. Default is ‘list’.</p></li>
+<li><p><cite>outdir</cite>: Optional. The path to the output directory. Default is ‘TRIAGEparser_output’.</p></li>
+<li><p><cite>H3K27me3_pc</cite>: Optional. The pre-calculated H3K27me3 principal components. Default is ‘pca_roadmap’.</p></li>
+<li><p><cite>number_of_pca</cite>: Optional. Number of principal components to use. Default is 10.</p></li>
+<li><p><cite>number_of_gene</cite>: Optional. Number of top genes to use for analysis. Default is 100.</p></li>
+<li><p><cite>no_iter</cite>: Optional. Number of iterations for determining the best number of clusters using Bayesian Information Criterion (BIC). Default is 100.</p></li>
+<li><p><cite>EM_tol</cite>: Optional. Convergence threshold for the Expectation-Maximization (EM) iterations in the GaussianMixture function. Default is 1e-3.</p></li>
+<li><p><cite>EM_max_iter</cite>: Optional. Maximum number of EM iterations for the GaussianMixture function. Default is 100.</p></li>
+<li><p><cite>go_analysis</cite>: Optional. Option to perform GO enrichment analysis. (1: Yes, 0: No). Default is 1.</p></li>
+<li><p><cite>verbose</cite>: Optional. Level of verbosity (options: 1 or 0). Default is 1.</p></li>
+<li><p><cite>max_cluster</cite>: Optional. Maximum number of clusters to consider. Default is 10.</p></li>
+<li><p><cite>gene_order</cite>: Optional. Direction to sort genes (options: ‘ascending’ or ‘descending’). Default is ‘descending’.</p></li>
+<li><p><cite>go_threshold</cite>: Optional. Threshold for GO term enrichment (False Discovery Rate). Default is 0.01.</p></li>
+</ul>
+</section>
+<section id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: Using a tab-delimited table file &quot;input.txt&quot; as the input</span>
+<span class="c1"># and &quot;TRIAGEparser_output&quot; as the output directory</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="s">&quot;input.txt&quot;</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;table&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 2: Using &quot;input.txt&quot; - a gene list as the input,</span>
+<span class="c1"># and specifying the output directory</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="s">&quot;input.txt&quot;</span><span class="p">,</span> <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;path/to/results&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 3: Using a CSV file &quot;input.csv&quot; and specifying the output directory.</span>
+<span class="c1"># Using top 200 genes for the TRIAGEparser analysis.</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="s">&quot;input.csv&quot;</span><span class="p">,</span>
+        <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;table&quot;</span><span class="p">,</span>
+        <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;path/to/results&quot;</span><span class="p">,</span>
+        <span class="n">number_of_gene</span> <span class="o">=</span> <span class="m">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TRIAGE R Package</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TRIAGEparser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-and-output">Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly functions.html">User-friendly Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Testing TRIAGE.html">Testing TRIAGE</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="TRIAGEcluster.html" title="previous chapter">TRIAGEcluster</a></li>
+      <li>Next: <a href="User-friendly functions.html" title="next chapter">User-friendly Functions</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Qiongyi Zhao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/TRIAGEparser.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

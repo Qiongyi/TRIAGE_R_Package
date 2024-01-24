@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>TRIAGEcluster &#8212; TRIAGE R Package  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="TRIAGEparser" href="TRIAGEparser.html" />
+    <link rel="prev" title="TRIAGEgene" href="TRIAGEgene.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="triagecluster">
+<h1>TRIAGEcluster<a class="headerlink" href="#triagecluster" title="Permalink to this headline">¶</a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>TRIAGEcluster is one of core functions of the TRIAGE R package, representing a notable advancement in scRNA-seq data analysis by integrating epigenomic signatures to demarcate cell diversity within heterogeneous data. Utilizing a combination of genes with high RTS with weighted kernel density estimation in a two-dimensional space, TRIAGEcluster can be leveraged to refine cell clusters and identify biologically distinct cell populations, which we refer to as “peaks” in our method. For more details, see: Sun et al., Nucleic Acid Research 2023, “Inferring cell diversity in single cell data using consortium-scale epigenetic data as a biological anchor for cell identity”.</p>
+</section>
+<section id="input-and-output">
+<h2>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>Input: TRIAGEcluster requires two input files.</dt><dd><ol class="arabic simple">
+<li><p>A normalized gene expression matrix file or a TRIAGE-weighted file. This matrix file can be in either .csv or tab-delimited .txt format.</p></li>
+<li><p>A metadata file for scRNA-seq data analysis. The metadata file needs to contain information about cell identifiers and UMAP coordinates and can also be in .csv or tab-delimited .txt format.</p></li>
+</ol>
+</dd>
+</dl>
+<p>Output: TRIAGEcluster generates a total of 18 output files in the specified directory. These outputs include nine UMAP plots, each corresponding to a different bandwidth resolution ranging from 0.1 to 0.9. These plots visually represent the clustering of cell populations within the scRNA-seq data. Alongside the UMAP plots, there are nine corresponding metadata files. Each of these files details the characteristics of the identified cell populations, referred to as “Peaks,” for each bandwidth resolution.</p>
+</section>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><cite>expr</cite>: The input file for the normalized gene expression matrix or TRIAGE-weighted matrix. Accepts .csv or tab-delimited .txt files.</p></li>
+<li><p><cite>metadata</cite>: The metadata file for scRNA-seq data analysis, also in .csv or tab-delimited .txt format.</p></li>
+<li><p><cite>outdir</cite>: Optional. Specifies the output directory for the analysis results. Default is “TRIAGEcluster_results”.</p></li>
+<li><p><cite>output_prefix</cite>: Optional. The prefix for output files. Default is “TRIAGEcluster”.</p></li>
+<li><p><cite>cell_column</cite>: Optional. Indicates the column name in the metadata file representing cell identifiers. Default is “Barcode”.</p></li>
+<li><p><cite>umap_column</cite>: Optional. Specifies the prefix for UMAP coordinate columns. Default is “UMAP_”.</p></li>
+<li><p><cite>priority_rts</cite>: Optional. Specifies the path to the priority RTS gene list file. The default setting is “Priority_epimap_rts.csv”. Note that this option is intended for advanced users who are capable of generating their own priority RTS gene lists. For most users, it is recommended to use the default setting to ensure optimal functionality and results.</p></li>
+<li><p><cite>min_cells_per_peak</cite>: Optional. Sets the minimum number of cells required per peak to be considered in the analysis. Default is 5.</p></li>
+</ul>
+</section>
+<section id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
+<p>TRIAGEcluster can be run using various combinations of parameters, as shown in the following examples:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: Using a .csv TRIAGE-weighted (i.e. discordance score) matrix</span>
+<span class="c1"># and a tab-delimited .txt metadata file.</span>
+<span class="nf">TRIAGEcluster</span><span class="p">(</span><span class="s">&quot;ds.csv&quot;</span><span class="p">,</span>
+            <span class="s">&quot;metadata.txt&quot;</span><span class="p">,</span>
+            <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;TRIAGEcluster_results&quot;</span><span class="p">,</span>
+            <span class="n">output_prefix</span> <span class="o">=</span> <span class="s">&quot;project1&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 2: Using a tab-delimited .txt file for the discordance score matrix</span>
+<span class="c1"># and a .csv file for the metadata. The cell identifiers are specified in the</span>
+<span class="c1"># &quot;Cells&quot; column and the UMAP info are named in &quot;UMAP1&quot; and &quot;UMAP2&quot; columns</span>
+<span class="c1"># in the metadata file.</span>
+<span class="nf">TRIAGEcluster</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="s">&quot;ds.txt&quot;</span><span class="p">,</span>
+          <span class="n">metadata</span> <span class="o">=</span> <span class="s">&quot;metadata.csv&quot;</span><span class="p">,</span>
+          <span class="n">output_prefix</span> <span class="o">=</span> <span class="s">&quot;project2&quot;</span><span class="p">,</span>
+          <span class="n">cell_column</span> <span class="o">=</span> <span class="s">&quot;Cells&quot;</span><span class="p">,</span>
+          <span class="n">umap_column</span> <span class="o">=</span> <span class="s">&quot;UMAP&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 3: Using .csv files for both gene expression matrix and metadata.</span>
+<span class="nf">TRIAGEcluster</span><span class="p">(</span><span class="s">&quot;Expr_matrix.csv&quot;</span><span class="p">,</span>
+            <span class="s">&quot;metadata.csv&quot;</span><span class="p">,</span>
+            <span class="n">output_prefix</span> <span class="o">=</span> <span class="s">&quot;project3&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 4: Using tab-delimited .txt files for both gene expression matrix and metadata.</span>
+<span class="nf">TRIAGEcluster</span><span class="p">(</span><span class="s">&quot;Expr_matrix.txt&quot;</span><span class="p">,</span>
+            <span class="s">&quot;metadata.txt&quot;</span><span class="p">,</span>
+            <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;results&quot;</span><span class="p">,</span>
+            <span class="n">output_prefix</span> <span class="o">=</span> <span class="s">&quot;project4&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TRIAGE R Package</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TRIAGEcluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-and-output">Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly functions.html">User-friendly Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Testing TRIAGE.html">Testing TRIAGE</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="TRIAGEgene.html" title="previous chapter">TRIAGEgene</a></li>
+      <li>Next: <a href="TRIAGEparser.html" title="next chapter">TRIAGEparser</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Qiongyi Zhao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/TRIAGEcluster.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

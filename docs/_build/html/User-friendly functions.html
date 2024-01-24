@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>User-friendly Functions &#8212; TRIAGE R Package  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testing TRIAGE" href="Testing TRIAGE.html" />
+    <link rel="prev" title="TRIAGEparser" href="TRIAGEparser.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="user-friendly-functions">
+<h1>User-friendly Functions<a class="headerlink" href="#user-friendly-functions" title="Permalink to this headline">¶</a></h1>
+<p>The TRIAGE R package includes several user-friendly functions designed to enhance data visualization and analysis. These functions provide intuitive graphical representations of complex data, making it easier for researchers to interpret their results. This document covers three key functions: <cite>plotJaccard</cite>, <cite>byPeak</cite>, and <cite>plotGO</cite>.</p>
+<section id="plotjaccard-function">
+<h2>plotJaccard Function<a class="headerlink" href="#plotjaccard-function" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>plotJaccard</cite> function generates Jaccard similarity index heatmaps based on the output from the <cite>TRIAGEgene</cite> function, allowing for intuitive data comparisons.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>ds</cite>: The output matrix from the <cite>TRIAGEgene</cite> function.</p></li>
+<li><p><cite>output_file</cite>: The desired file name for the output heatmap PDF.</p></li>
+<li><p><cite>top_no</cite>: Optional. The number of top TRIAGE ranked genes to consider for the Jaccard index calculation. Default is 100.</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input_matrix</span><span class="p">)</span>
+<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s">&quot;Jaccard_heatmap.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="bypeak-function">
+<h2>byPeak Function<a class="headerlink" href="#bypeak-function" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>byPeak</cite> function calculates the average gene expression or average TRIAGE-weighted values for each gene grouped by ‘Peak’. It supports direct data frame input or reading from CSV/TXT files.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>expr</cite>: The gene expression data, either as a data frame or a path to a CSV/TXT file.</p></li>
+<li><p><cite>peak</cite>: The metadata containing cell IDs and peak values, either as a data frame or a path to a CSV/TXT file.</p></li>
+<li><p><cite>cell_id_col</cite>: Optional. Name of the column representing cell IDs. Default is “Barcode”.</p></li>
+<li><p><cite>peak_col</cite>: Optional. Name of the column representing peak values. Default is “Peak”.</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: using .csv files as the input files</span>
+<span class="n">result</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="s">&quot;path/to/expression.csv&quot;</span><span class="p">,</span>
+                <span class="n">peak</span> <span class="o">=</span> <span class="s">&quot;path/to/metadata.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 2: using data frame (&#39;expr_df&#39; and &#39;metadata_df&#39;) as the input,</span>
+<span class="c1"># grouped by &#39;Clusters&#39;</span>
+<span class="n">result</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="n">expr_df</span><span class="p">,</span>
+                <span class="n">peak</span> <span class="o">=</span> <span class="n">metadata_df</span><span class="p">,</span>
+                <span class="n">peak_col</span><span class="o">=</span><span class="s">&quot;Clusters&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plotgo-function">
+<h2>plotGO Function<a class="headerlink" href="#plotgo-function" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>plotGO</cite> function creates GO enrichment heatmaps from the output of the <cite>TRIAGEparser</cite>. It visualizes the GO enrichment analysis results for specific groups or IDs.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>indir</cite>: The path to the output directory from <cite>TRIAGEparser</cite>.</p></li>
+<li><p><cite>outdir</cite>: The directory where the generated heatmap PDF files will be saved.</p></li>
+<li><p><cite>id</cite>: Optional parameter to specify a particular group or ID for heatmap generation. Default is NULL (generates heatmaps for all groups/IDs).</p></li>
+<li><p><cite>color_palette</cite>: Optional parameter for custom heatmap color palette. Default is a gradient from light grey to red.</p></li>
+<li><p><cite>top_terms</cite>: Optional. The number of top GO terms to include in the heatmap. Default is 10.</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: Generate heatmaps for all groups/IDs</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span> <span class="o">=</span> <span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
+    <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 2: Generate heatmap for a specific group “E016”</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span> <span class="o">=</span> <span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
+    <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">,</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;E016&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TRIAGE R Package</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User-friendly Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#plotjaccard-function">plotJaccard Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bypeak-function">byPeak Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotgo-function">plotGO Function</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Testing TRIAGE.html">Testing TRIAGE</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="TRIAGEparser.html" title="previous chapter">TRIAGEparser</a></li>
+      <li>Next: <a href="Testing TRIAGE.html" title="next chapter">Testing TRIAGE</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Qiongyi Zhao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/User-friendly functions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
