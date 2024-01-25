@@ -3,14 +3,13 @@
 Welcome to TRIAGE R Package's documentation!
 ============================================
 
-This guide provides step-by-step instructions on using the TRIAGE R package for effective analysis of transcriptomic data.
+This guide provides step-by-step instructions on using the TRIAGE R package for analysis of bulk and single cell transcriptomic data.
 
 Contents:
 ---------
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    Installation
    TRIAGEgene

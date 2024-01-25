@@ -4,6 +4,8 @@ TRIAGEcluster
 Description
 -----------
 TRIAGEcluster is one of core functions of the TRIAGE R package, representing a notable advancement in scRNA-seq data analysis by integrating epigenomic signatures to demarcate cell diversity within heterogeneous data. Utilizing a combination of genes with high RTS with weighted kernel density estimation in a two-dimensional space, TRIAGEcluster can be leveraged to refine cell clusters and identify biologically distinct cell populations, which we refer to as “peaks” in our method. For more details, see: Sun et al., Nucleic Acid Research 2023, "Inferring cell diversity in single cell data using consortium-scale epigenetic data as a biological anchor for cell identity".
+For more details, see: `Sun et al., Nucleic Acid Research 2023, Inferring cell diversity in single cell data using consortium-scale epigenetic data as a biological anchor for cell identity <https://academic.oup.com/nar/article/51/11/e62/7147502>`_.
+
 
 
 Input and Output
@@ -64,7 +66,8 @@ TRIAGEcluster can be run using various combinations of parameters, as shown in t
                 "metadata.csv", 
                 output_prefix = "project3")
 
-    # Example 4: Using tab-delimited .txt files for both gene expression matrix and metadata.
+    # Example 4: Using tab-delimited .txt files for both gene expression matrix 
+    # and metadata.
     TRIAGEcluster("Expr_matrix.txt", 
                 "metadata.txt", 
                 outdir = "results", 

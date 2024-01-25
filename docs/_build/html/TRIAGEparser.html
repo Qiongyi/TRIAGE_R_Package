@@ -35,7 +35,12 @@
             
   <section id="triageparser">
 <h1>TRIAGEparser<a class="headerlink" href="#triageparser" title="Permalink to this headline">¶</a></h1>
-<p>TRIAGEparser is one of core functions of the TRIAGE R package, designed to evaluate groups of genes, such as the top 100 genes ranked by TRIAGE-weighted values or differentially expressed genes, to pinpoint genes with distinct biological functions. It performs principal component analysis to extract orthogonal patterns of H3K27me3 depositions from consortium-level epigenomic data and uses Bayesian information criterion to optimally determine gene clusters. TRIAGEparser then assesses each gene cluster by searching the protein-protein interaction (PPI) networks from the STRING database and conducts Gene Ontology (GO) enrichment analysis for genes with direct PPI interactions. For more details, see: Sun et al., Nucleic Acid Research 2023, “Inferring cell diversity in single cell data using consortium-scale epigenetic data as a biological anchor for cell identity”.</p>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>TRIAGEparser is one of core functions of the TRIAGE R package, designed to evaluate groups of genes, such as the top 100 genes ranked by TRIAGE-weighted values or differentially expressed genes, to pinpoint genes with distinct biological functions. It performs principal component analysis to extract orthogonal patterns of H3K27me3 depositions from consortium-level epigenomic data and uses Bayesian information criterion to optimally determine gene clusters. TRIAGEparser then assesses each gene cluster by searching the protein-protein interaction (PPI) networks from the STRING database and conducts Gene Ontology (GO) enrichment analysis for genes with direct PPI interactions.
+For more details, see: <a class="reference external" href="https://academic.oup.com/nar/article/51/11/e62/7147502">Sun et al., Nucleic Acid Research 2023, Inferring cell diversity in single cell data using consortium-scale epigenetic data as a biological anchor for cell identity</a>.</p>
+<p><strong>Note:</strong> TRIAGEparser is adaptable to any type of data mapped to protein-coding and non-coding genes, including RNAseq, proteomics, ChIP-seq, and more.</p>
+</section>
 <section id="input-and-output">
 <h2>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this headline">¶</a></h2>
 <p>Input: TRIAGEparser requires an input file, which can be provided in two formats:</p>
@@ -102,13 +107,12 @@
 
 
 <h3>Navigation</h3>
-<p><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation and Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TRIAGEparser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#input-and-output">Input and Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>

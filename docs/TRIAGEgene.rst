@@ -1,7 +1,12 @@
 TRIAGEgene
 ==========
 
-TRIAGEgene is one of core functions of the TRIAGE R package, aiming to predict the regulatory potential of genes and further identify genetic drivers of cell identity. This approach calculates repressive tendency scores (RTS) for each gene by analyzing broad H3K27me3 domains near the gene (2.5kb upstream plus the gene body), and then integrates the RTS metric with gene expression data to calculate a TRIAGE-weighted value for each gene. This value, also referred to as Discordance Score (DS) in previous literature, indicates genes’ regulatory potential. After this TRIAGEgene transformation, it becomes instrumental in identifying potential regulatory and cell identity genes by ranking them in descending order based on the TRIAGE-weighted values within each group, which can vary from specific conditions to individual samples, distinct cell types, clusters, or even single cells. For more details, see: Shim et al., Cell Systems 2020, "Conserved Epigenetic Regulatory Logic Infers Genes Governing Cell Identity".
+Description
+-----------
+TRIAGEgene is one of core functions of the TRIAGE R package, aiming to predict the regulatory potential of genes and further identify genetic drivers of cell identity. This approach calculates repressive tendency scores (RTS) for each gene by analyzing broad H3K27me3 domains near the gene (2.5kb upstream plus the gene body), and then integrates the RTS metric with gene expression data to calculate a TRIAGE-weighted value for each gene. This value, also referred to as Discordance Score (DS) in previous literature, indicates genes’ regulatory potential. After this TRIAGEgene transformation, it becomes instrumental in identifying potential regulatory and cell identity genes by ranking them in descending order based on the TRIAGE-weighted values within each group, which can vary from specific conditions to individual samples, distinct cell types, clusters, or even single cells. For more details, see: `Shim et al., Cell Systems 2020, Conserved Epigenetic Regulatory Logic Infers Genes Governing Cell Identity <https://linkinghub.elsevier.com/retrieve/pii/S2405-4712(20)30419-1>`_.
+
+**Note:** TRIAGEgene is adaptable to any type of data mapped to protein-coding and non-coding genes, including RNAseq, proteomics, ChIP-seq, and more.
+
 
 
 Input and Output
