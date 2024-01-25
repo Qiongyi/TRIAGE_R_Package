@@ -42,8 +42,12 @@
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
 <li><p><cite>ds</cite>: The output matrix from the <cite>TRIAGEgene</cite> function.</p></li>
+</ul>
+<ul class="simple">
 <li><p><cite>output_file</cite>: The desired file name for the output heatmap PDF.</p></li>
-<li><p><cite>top_no</cite>: Optional. The number of top TRIAGE ranked genes to consider for the Jaccard index calculation. Default is 100.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>top_no</cite>: (Optional) The number of top TRIAGE ranked genes to consider for the Jaccard index calculation. Default is 100.</p></li>
 </ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input_matrix</span><span class="p">)</span>
@@ -57,9 +61,15 @@
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
 <li><p><cite>expr</cite>: The gene expression data, either as a data frame or a path to a CSV/TXT file.</p></li>
+</ul>
+<ul class="simple">
 <li><p><cite>peak</cite>: The metadata containing cell IDs and peak values, either as a data frame or a path to a CSV/TXT file.</p></li>
-<li><p><cite>cell_id_col</cite>: Optional. Name of the column representing cell IDs. Default is “Barcode”.</p></li>
-<li><p><cite>peak_col</cite>: Optional. Name of the column representing peak values. Default is “Peak”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>cell_id_col</cite>: (Optional) Name of the column representing cell IDs. Default is “Barcode”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>peak_col</cite>: (Optional) Name of the column representing peak values. Default is “Peak”.</p></li>
 </ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: using .csv files as the input files</span>
@@ -80,10 +90,18 @@
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
 <li><p><cite>indir</cite>: The path to the output directory from <cite>TRIAGEparser</cite>.</p></li>
+</ul>
+<ul class="simple">
 <li><p><cite>outdir</cite>: The directory where the generated heatmap PDF files will be saved.</p></li>
-<li><p><cite>id</cite>: Optional parameter to specify a particular group or ID for heatmap generation. Default is NULL (generates heatmaps for all groups/IDs).</p></li>
-<li><p><cite>color_palette</cite>: Optional parameter for custom heatmap color palette. Default is a gradient from light grey to red.</p></li>
-<li><p><cite>top_terms</cite>: Optional. The number of top GO terms to include in the heatmap. Default is 10.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>id</cite>: (Optional) Parameter to specify a particular group or ID for heatmap generation. Default is NULL (generates heatmaps for all groups/IDs).</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>color_palette</cite>: (Optional) Parameter for custom heatmap color palette. Default is a gradient from light grey to red.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>top_terms</cite>: (Optional) The number of top GO terms to include in the heatmap. Default is 10.</p></li>
 </ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: Generate heatmaps for all groups/IDs</span>
@@ -116,10 +134,8 @@
 
 
 <h3>Navigation</h3>
-<p><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation and Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>

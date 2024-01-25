@@ -30,33 +30,59 @@ In the "go" folder, there are "\*_go.txt" files listing significance values (i.e
 Parameters
 ----------
 
-- `input`: The input file, which can be a .csv file or a tab/space-delimited .txt file.|
+- `input`: The input file, which can be a .csv file or a tab/space-delimited .txt file.
 
-- `input_type`: Optional. Specifies the input type, either 'table' or 'list'. Default is 'list'.
+..
 
-- `outdir`: Optional. The path to the output directory. Default is 'TRIAGEparser_output'.
+- `input_type`: (Optional) Specifies the input type, either 'table' or 'list'. Default is 'list'.
 
-- `H3K27me3_pc`: Optional. The pre-calculated H3K27me3 principal components. Default is 'pca_roadmap'.
+..
 
-- `number_of_pca`: Optional. Number of principal components to use. Default is 10.
+- `outdir`: (Optional) The path to the output directory. Default is 'TRIAGEparser_output'.
 
-- `number_of_gene`: Optional. Number of top genes to use for analysis. Default is 100.
+..
 
-- `no_iter`: Optional. Number of iterations for determining the best number of clusters using Bayesian Information Criterion (BIC). Default is 100.
+- `H3K27me3_pc`: (Optional) The pre-calculated H3K27me3 principal components. Default is 'pca_roadmap'.
 
-- `EM_tol`: Optional. Convergence threshold for the Expectation-Maximization (EM) iterations in the GaussianMixture function. Default is 1e-3.
+..
 
-- `EM_max_iter`: Optional. Maximum number of EM iterations for the GaussianMixture function. Default is 100.
+- `number_of_pca`: (Optional) Number of principal components to use. Default is 10.
 
-- `go_analysis`: Optional. Option to perform GO enrichment analysis. (1: Yes, 0: No). Default is 1.
+..
 
-- `verbose`: Optional. Level of verbosity (options: 1 or 0). Default is 1.
+- `number_of_gene`: (Optional) Number of top genes to use for analysis. Default is 100.
 
-- `max_cluster`: Optional. Maximum number of clusters to consider. Default is 10.
+..
 
-- `gene_order`: Optional. Direction to sort genes (options: 'ascending' or 'descending'). Default is 'descending'.
+- `no_iter`: (Optional) Number of iterations for determining the best number of clusters using Bayesian Information Criterion (BIC). Default is 100.
 
-- `go_threshold`: Optional. Threshold for GO term enrichment (False Discovery Rate). Default is 0.01.
+..
+
+- `EM_tol`: (Optional) Convergence threshold for the Expectation-Maximization (EM) iterations in the GaussianMixture function. Default is 1e-3.
+
+..
+
+- `EM_max_iter`: (Optional) Maximum number of EM iterations for the GaussianMixture function. Default is 100.
+
+..
+
+- `go_analysis`: (Optional) Option to perform GO enrichment analysis. (1: Yes, 0: No). Default is 1.
+
+..
+
+- `verbose`: (Optional) Level of verbosity (options: 1 or 0). Default is 1.
+
+..
+
+- `max_cluster`: (Optional) Maximum number of clusters to consider. Default is 10.
+
+..
+
+- `gene_order`: (Optional) Direction to sort genes (options: 'ascending' or 'descending'). Default is 'descending'.
+
+..
+
+- `go_threshold`: (Optional) Threshold for GO term enrichment (False Discovery Rate). Default is 0.01.
 
 
 

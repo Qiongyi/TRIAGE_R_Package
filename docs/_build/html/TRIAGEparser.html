@@ -53,20 +53,46 @@ For more details, see: <a class="reference external" href="https://academic.oup.
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><cite>input</cite>: The input file, which can be a .csv file or a tab/space-delimited .txt file.|</p></li>
-<li><p><cite>input_type</cite>: Optional. Specifies the input type, either ‘table’ or ‘list’. Default is ‘list’.</p></li>
-<li><p><cite>outdir</cite>: Optional. The path to the output directory. Default is ‘TRIAGEparser_output’.</p></li>
-<li><p><cite>H3K27me3_pc</cite>: Optional. The pre-calculated H3K27me3 principal components. Default is ‘pca_roadmap’.</p></li>
-<li><p><cite>number_of_pca</cite>: Optional. Number of principal components to use. Default is 10.</p></li>
-<li><p><cite>number_of_gene</cite>: Optional. Number of top genes to use for analysis. Default is 100.</p></li>
-<li><p><cite>no_iter</cite>: Optional. Number of iterations for determining the best number of clusters using Bayesian Information Criterion (BIC). Default is 100.</p></li>
-<li><p><cite>EM_tol</cite>: Optional. Convergence threshold for the Expectation-Maximization (EM) iterations in the GaussianMixture function. Default is 1e-3.</p></li>
-<li><p><cite>EM_max_iter</cite>: Optional. Maximum number of EM iterations for the GaussianMixture function. Default is 100.</p></li>
-<li><p><cite>go_analysis</cite>: Optional. Option to perform GO enrichment analysis. (1: Yes, 0: No). Default is 1.</p></li>
-<li><p><cite>verbose</cite>: Optional. Level of verbosity (options: 1 or 0). Default is 1.</p></li>
-<li><p><cite>max_cluster</cite>: Optional. Maximum number of clusters to consider. Default is 10.</p></li>
-<li><p><cite>gene_order</cite>: Optional. Direction to sort genes (options: ‘ascending’ or ‘descending’). Default is ‘descending’.</p></li>
-<li><p><cite>go_threshold</cite>: Optional. Threshold for GO term enrichment (False Discovery Rate). Default is 0.01.</p></li>
+<li><p><cite>input</cite>: The input file, which can be a .csv file or a tab/space-delimited .txt file.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>input_type</cite>: (Optional) Specifies the input type, either ‘table’ or ‘list’. Default is ‘list’.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>outdir</cite>: (Optional) The path to the output directory. Default is ‘TRIAGEparser_output’.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>H3K27me3_pc</cite>: (Optional) The pre-calculated H3K27me3 principal components. Default is ‘pca_roadmap’.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>number_of_pca</cite>: (Optional) Number of principal components to use. Default is 10.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>number_of_gene</cite>: (Optional) Number of top genes to use for analysis. Default is 100.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>no_iter</cite>: (Optional) Number of iterations for determining the best number of clusters using Bayesian Information Criterion (BIC). Default is 100.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>EM_tol</cite>: (Optional) Convergence threshold for the Expectation-Maximization (EM) iterations in the GaussianMixture function. Default is 1e-3.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>EM_max_iter</cite>: (Optional) Maximum number of EM iterations for the GaussianMixture function. Default is 100.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>go_analysis</cite>: (Optional) Option to perform GO enrichment analysis. (1: Yes, 0: No). Default is 1.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>verbose</cite>: (Optional) Level of verbosity (options: 1 or 0). Default is 1.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>max_cluster</cite>: (Optional) Maximum number of clusters to consider. Default is 10.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>gene_order</cite>: (Optional) Direction to sort genes (options: ‘ascending’ or ‘descending’). Default is ‘descending’.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>go_threshold</cite>: (Optional) Threshold for GO term enrichment (False Discovery Rate). Default is 0.01.</p></li>
 </ul>
 </section>
 <section id="usage-examples">

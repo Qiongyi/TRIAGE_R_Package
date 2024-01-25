@@ -11,8 +11,14 @@ The `plotJaccard` function generates Jaccard similarity index heatmaps based on 
 **Parameters:**
 
 - `ds`: The output matrix from the `TRIAGEgene` function.
+
+..
+
 - `output_file`: The desired file name for the output heatmap PDF.
-- `top_no`: Optional. The number of top TRIAGE ranked genes to consider for the Jaccard index calculation. Default is 100.
+
+..
+
+- `top_no`: (Optional) The number of top TRIAGE ranked genes to consider for the Jaccard index calculation. Default is 100.
 
 **Usage Example:**
 
@@ -30,9 +36,18 @@ The `byPeak` function calculates the average gene expression or average TRIAGE-w
 **Parameters:**
 
 - `expr`: The gene expression data, either as a data frame or a path to a CSV/TXT file.
+
+..
+
 - `peak`: The metadata containing cell IDs and peak values, either as a data frame or a path to a CSV/TXT file.
-- `cell_id_col`: Optional. Name of the column representing cell IDs. Default is "Barcode".
-- `peak_col`: Optional. Name of the column representing peak values. Default is "Peak".
+
+..
+
+- `cell_id_col`: (Optional) Name of the column representing cell IDs. Default is "Barcode".
+
+..
+
+- `peak_col`: (Optional) Name of the column representing peak values. Default is "Peak".
 
 **Usage Example:**
 
@@ -57,10 +72,23 @@ The `plotGO` function creates GO enrichment heatmaps from the output of the `TRI
 **Parameters:**
 
 - `indir`: The path to the output directory from `TRIAGEparser`.
+
+..
+
 - `outdir`: The directory where the generated heatmap PDF files will be saved.
-- `id`: Optional parameter to specify a particular group or ID for heatmap generation. Default is NULL (generates heatmaps for all groups/IDs).
-- `color_palette`: Optional parameter for custom heatmap color palette. Default is a gradient from light grey to red.
-- `top_terms`: Optional. The number of top GO terms to include in the heatmap. Default is 10.
+
+..
+
+- `id`: (Optional) Parameter to specify a particular group or ID for heatmap generation. Default is NULL (generates heatmaps for all groups/IDs).
+
+..
+
+- `color_palette`: (Optional) Parameter for custom heatmap color palette. Default is a gradient from light grey to red.
+
+..
+
+- `top_terms`: (Optional) The number of top GO terms to include in the heatmap. Default is 10.
+
 
 **Usage Example:**
 

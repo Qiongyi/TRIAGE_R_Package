@@ -22,19 +22,33 @@ Parameters
 ----------
 - `expr`: The input file for the normalized gene expression matrix or TRIAGE-weighted matrix. Accepts .csv or tab-delimited .txt files.
 
+..
+
 - `metadata`: The metadata file for scRNA-seq data analysis, also in .csv or tab-delimited .txt format.
 
-- `outdir`: Optional. Specifies the output directory for the analysis results. Default is "TRIAGEcluster_results".
+..
 
-- `output_prefix`: Optional. The prefix for output files. Default is "TRIAGEcluster".
+- `outdir`: (Optional) Specifies the output directory for the analysis results. Default is "TRIAGEcluster_results".
 
-- `cell_column`: Optional. Indicates the column name in the metadata file representing cell identifiers. Default is "Barcode".
+..
 
-- `umap_column`: Optional. Specifies the prefix for UMAP coordinate columns. Default is "UMAP\_".
+- `output_prefix`: (Optional) The prefix for output files. Default is "TRIAGEcluster".
 
-- `priority_rts`: Optional. Specifies the path to the priority RTS gene list file. The default setting is "Priority_epimap_rts.csv". Note that this option is intended for advanced users who are capable of generating their own priority RTS gene lists. For most users, it is recommended to use the default setting to ensure optimal functionality and results.
+..
 
-- `min_cells_per_peak`: Optional. Sets the minimum number of cells required per peak to be considered in the analysis. Default is 5.
+- `cell_column`: (Optional) Indicates the column name in the metadata file representing cell identifiers. Default is "Barcode".
+
+..
+
+- `umap_column`: (Optional) Specifies the prefix for UMAP coordinate columns. Default is "UMAP\_".
+
+..
+
+- `priority_rts`: (Optional) Specifies the path to the priority RTS gene list file. The default setting is "Priority_epimap_rts.csv". Note that this option is intended for advanced users who are capable of generating their own priority RTS gene lists. For most users, it is recommended to use the default setting to ensure optimal functionality and results.
+
+..
+
+- `min_cells_per_peak`: (Optional) Sets the minimum number of cells required per peak to be considered in the analysis. Default is 5.
 
 
 Usage Examples

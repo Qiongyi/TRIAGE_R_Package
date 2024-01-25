@@ -55,13 +55,27 @@ For more details, see: <a class="reference external" href="https://academic.oup.
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><cite>expr</cite>: The input file for the normalized gene expression matrix or TRIAGE-weighted matrix. Accepts .csv or tab-delimited .txt files.</p></li>
+</ul>
+<ul class="simple">
 <li><p><cite>metadata</cite>: The metadata file for scRNA-seq data analysis, also in .csv or tab-delimited .txt format.</p></li>
-<li><p><cite>outdir</cite>: Optional. Specifies the output directory for the analysis results. Default is “TRIAGEcluster_results”.</p></li>
-<li><p><cite>output_prefix</cite>: Optional. The prefix for output files. Default is “TRIAGEcluster”.</p></li>
-<li><p><cite>cell_column</cite>: Optional. Indicates the column name in the metadata file representing cell identifiers. Default is “Barcode”.</p></li>
-<li><p><cite>umap_column</cite>: Optional. Specifies the prefix for UMAP coordinate columns. Default is “UMAP_”.</p></li>
-<li><p><cite>priority_rts</cite>: Optional. Specifies the path to the priority RTS gene list file. The default setting is “Priority_epimap_rts.csv”. Note that this option is intended for advanced users who are capable of generating their own priority RTS gene lists. For most users, it is recommended to use the default setting to ensure optimal functionality and results.</p></li>
-<li><p><cite>min_cells_per_peak</cite>: Optional. Sets the minimum number of cells required per peak to be considered in the analysis. Default is 5.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>outdir</cite>: (Optional) Specifies the output directory for the analysis results. Default is “TRIAGEcluster_results”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>output_prefix</cite>: (Optional) The prefix for output files. Default is “TRIAGEcluster”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>cell_column</cite>: (Optional) Indicates the column name in the metadata file representing cell identifiers. Default is “Barcode”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>umap_column</cite>: (Optional) Specifies the prefix for UMAP coordinate columns. Default is “UMAP_”.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>priority_rts</cite>: (Optional) Specifies the path to the priority RTS gene list file. The default setting is “Priority_epimap_rts.csv”. Note that this option is intended for advanced users who are capable of generating their own priority RTS gene lists. For most users, it is recommended to use the default setting to ensure optimal functionality and results.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>min_cells_per_peak</cite>: (Optional) Sets the minimum number of cells required per peak to be considered in the analysis. Default is 5.</p></li>
 </ul>
 </section>
 <section id="usage-examples">
