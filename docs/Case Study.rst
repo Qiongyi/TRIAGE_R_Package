@@ -17,10 +17,6 @@ Objective: To apply `TRIAGEcluster` for cell clustering, `byPeak()` for calculat
 2. `TRIAGEgene` + `plotJaccard()`
 3. `TRIAGEparser` + `plotGO()`
 
-1. Run `TRIAGEcluster` for cell clustering, select a suitable bandwidth resolution based on UMAP reviews, and calculate average gene expression by various categories using the `byPeak()` function.
-2. Run `TRIAGEgene` to generate TRIAGE-weighted expression data and generate Jaccard Index Heatmap using the `plotJaccard()` function.
-3. Run `TRIAGEparser` to dissect gene clusters and their associated ontologies and generate GO enrichment heatmaps using the `plotGO()` function.
-
 .. code-block:: R
 
     # Load packages and set up the working directory
@@ -69,7 +65,7 @@ A snippet of the "AverageByPeak.csv" file is shown below:
 +---------+------------+------------+------------+------------+
 
 
-**Step 2:** Run `TRIAGEgene` to generate TRIAGE-weighted expression data and run `plotJaccard()` to generate Jaccard similarity index heatmap.
+**Step 2:** Run `TRIAGEgene` to generate TRIAGE-weighted expression data and `plotJaccard()` to generate Jaccard similarity index heatmap.
 
 .. code-block:: R
 
@@ -111,7 +107,7 @@ The plotJaccard() function generates a heatmap to visualize the extent of simila
    :alt: Jaccard similarity index heatmap 
 
 
-**Step 3:** Run `TRIAGEparser` to dissect gene clusters and their associated ontologies and run `plotGO()` to generate GO enrichment heatmaps.
+**Step 3:** Run `TRIAGEparser` to dissect gene clusters and their associated ontologies and `plotGO()` to generate GO enrichment heatmaps.
 
 .. code-block:: R
 
