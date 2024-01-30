@@ -17,6 +17,7 @@ Contents:
    TRIAGEparser
    User-friendly functions 
    Testing TRIAGE
+   Case Study
 
 
 Indices and tables

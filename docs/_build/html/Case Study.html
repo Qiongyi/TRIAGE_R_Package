@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Case Study &#8212; TRIAGE R Package  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Testing TRIAGE" href="Testing TRIAGE.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="case-study">
+<h1>Case Study<a class="headerlink" href="#case-study" title="Permalink to this headline">¶</a></h1>
+<p>This case study demonstrates the application of the TRIAGE analysis pipeline using a publicly available single-nucleus RNA sequencing (snRNA-seq) dataset.</p>
+<p><strong>Data Source:</strong></p>
+<ul class="simple">
+<li><p>Dataset: <a class="reference external" href="https://www.nature.com/articles/s41586-022-05060-x">Kuppe et al., Nature 2022, Spatial multi-omic map of human myocardial infarction</a>.</p></li>
+<li><p>Data Available at: <a class="reference external" href="https://www.nature.com/articles/s41586-022-05060-x#data-availability">https://www.nature.com/articles/s41586-022-05060-x#data-availability</a></p></li>
+<li><p>The demonstration uses control endothelial and pericyte cells to showcase the TRIAGE analysis pipeline.</p></li>
+</ul>
+<p>Objective: To apply <cite>TRIAGEcluster</cite> for cell clustering, <cite>byPeak()</cite> for calculating average expression data by various categories, <cite>TRIAGEgene</cite> for generating TRIAGE-weighted expression data, <cite>plotJaccard()</cite> for Jaccard Index Heatmap visualization, <cite>TRIAGEparser</cite> to dissect gene clusters and their associated ontologies, and <cite>plotGO()</cite> for GO enrichment visualization.</p>
+<p><strong>Steps:</strong></p>
+<ol class="arabic simple">
+<li><p><cite>TRIAGEcluster</cite> + <cite>byPeak()</cite></p></li>
+<li><p><cite>TRIAGEgene</cite> + <cite>plotJaccard()</cite></p></li>
+<li><p><cite>TRIAGEparser</cite> + <cite>plotGO()</cite></p></li>
+</ol>
+<ol class="arabic simple">
+<li><p>Run <cite>TRIAGEcluster</cite> for cell clustering, select a suitable bandwidth resolution based on UMAP reviews, and calculate average gene expression by various categories using the <cite>byPeak()</cite> function.</p></li>
+<li><p>Run <cite>TRIAGEgene</cite> to generate TRIAGE-weighted expression data and generate Jaccard Index Heatmap using the <cite>plotJaccard()</cite> function.</p></li>
+<li><p>Run <cite>TRIAGEparser</cite> to dissect gene clusters and their associated ontologies and generate GO enrichment heatmaps using the <cite>plotGO()</cite> function.</p></li>
+</ol>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load packages and set up the working directory</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">Triage</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
+<span class="nf">setwd</span><span class="p">(</span><span class="s">&quot;/path/to/working/directory&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Step 1:</strong> Run <cite>TRIAGEcluster</cite> for cell clustering, select a suitable bandwidth resolution based on UMAP reviews, and calculate average gene expression by various categories using the <cite>byPeak()</cite> function.</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run TRIAGEcluster</span>
+<span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;Triage&quot;</span><span class="p">)</span>
+<span class="n">metadata_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_metadata_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;Triage&quot;</span><span class="p">)</span>
+<span class="nf">TRIAGEcluster</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;tests&quot;</span><span class="p">,</span> <span class="n">output_prefix</span> <span class="o">=</span> <span class="s">&quot;demo&quot;</span><span class="p">)</span>
+
+<span class="c1"># Select a suitable bandwidth and calculate average gene expression</span>
+<span class="n">peak_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/demo_bw0.80_metadata.csv&quot;</span>
+<span class="n">avg_peak</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">peak_file</span><span class="p">)</span>
+<span class="c1"># Save the average gene expression result to a CSV file</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">avg_peak</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/AverageByPeak.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>TRIAGEcluster generates nine UMAPs with bandwidths from 0.1 to 0.9, and a corresponding set of metadata files. Here, a bandwidth of 0.8 was selected for downstream application, resulting in four TRIAGEcluster-defined peaks within the UMAP.</p>
+<img alt="UMAP showing TRIAGEcluster-defined peaks" src="_images/demo_bw0.80_labelledUMAP.jpg" />
+<p>A snippet of the “AverageByPeak.csv” file is shown below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Peak0</p></th>
+<th class="head"><p>Peak1</p></th>
+<th class="head"><p>Peak2</p></th>
+<th class="head"><p>Peak3</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ALDH1A2</p></td>
+<td><p>0.04404541</p></td>
+<td><p>0.04426352</p></td>
+<td><p>1.18265890</p></td>
+<td><p>0.12415153</p></td>
+</tr>
+<tr class="row-odd"><td><p>PRRX1</p></td>
+<td><p>0.63263328</p></td>
+<td><p>0.19289223</p></td>
+<td><p>0.08957362</p></td>
+<td><p>0.11108879</p></td>
+</tr>
+<tr class="row-even"><td><p>NOVA2</p></td>
+<td><p>0.00785169</p></td>
+<td><p>0.31212372</p></td>
+<td><p>0.22311596</p></td>
+<td><p>0.28179011</p></td>
+</tr>
+<tr class="row-odd"><td><p>NGFR</p></td>
+<td><p>0.07502976</p></td>
+<td><p>0.01140611</p></td>
+<td><p>0.01078702</p></td>
+<td><p>0.02280367</p></td>
+</tr>
+<tr class="row-even"><td><p>MCF2L</p></td>
+<td><p>0.03431053</p></td>
+<td><p>1.41983845</p></td>
+<td><p>0.25927713</p></td>
+<td><p>1.39706381</p></td>
+</tr>
+<tr class="row-odd"><td><p>TBX4</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 2:</strong> Run <cite>TRIAGEgene</cite> to generate TRIAGE-weighted expression data and run <cite>plotJaccard()</cite> to generate Jaccard similarity index heatmap.</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run TRIAGEgene to generate TRIAGE-weighted expression data (DS)</span>
+<span class="n">ds</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">avg_peak</span><span class="p">)</span>
+<span class="c1"># Save the average DS result to a CSV file</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/AverageByPeak_DS.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="c1"># Save the average DS result to a tab-delimited text file</span>
+<span class="nf">write.table</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/AverageByPeak.txt&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;\t&quot;</span><span class="p">,</span>
+            <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">col.names</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="c1"># Generate Jaccard Index Heatmap</span>
+<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s">&quot;tests/Jaccard_heatmap_peak.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A snippet of the “AverageByPeak_DS.csv” file is shown below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Peak0</p></th>
+<th class="head"><p>Peak1</p></th>
+<th class="head"><p>Peak2</p></th>
+<th class="head"><p>Peak3</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ALDH1A2</p></td>
+<td><p>0.000685619</p></td>
+<td><p>0.000689014</p></td>
+<td><p>0.018409486</p></td>
+<td><p>0.001932566</p></td>
+</tr>
+<tr class="row-odd"><td><p>PRRX1</p></td>
+<td><p>0.019265802</p></td>
+<td><p>0.005874214</p></td>
+<td><p>0.002727817</p></td>
+<td><p>0.003383026</p></td>
+</tr>
+<tr class="row-even"><td><p>NOVA2</p></td>
+<td><p>0.000207595</p></td>
+<td><p>0.008252406</p></td>
+<td><p>0.005899082</p></td>
+<td><p>0.0074504</p></td>
+</tr>
+<tr class="row-odd"><td><p>NGFR</p></td>
+<td><p>0.012602077</p></td>
+<td><p>0.001915782</p></td>
+<td><p>0.001811799</p></td>
+<td><p>0.003830128</p></td>
+</tr>
+<tr class="row-even"><td><p>MCF2L</p></td>
+<td><p>0.000594645</p></td>
+<td><p>0.024607587</p></td>
+<td><p>0.004493599</p></td>
+<td><p>0.024212873</p></td>
+</tr>
+<tr class="row-odd"><td><p>TBX4</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+</tbody>
+</table>
+<p>The plotJaccard() function generates a heatmap to visualize the extent of similarity across identified peaks:</p>
+<img alt="Jaccard similarity index heatmap" src="_images/Jaccard_heatmap_peak.jpg" />
+<p><strong>Step 3:</strong> Run <cite>TRIAGEparser</cite> to dissect gene clusters and their associated ontologies and run <cite>plotGO()</cite> to generate GO enrichment heatmaps.</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run TRIAGEparser to dissect gene clusters and their associated ontologies</span>
+<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/AverageByPeak_DS.csv&quot;</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;table&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_peak&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate GO Heatmaps</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_peak&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_peak&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The TRIAGEparser output comprises gene clusters and their associated Gene Ontology (GO) enrichments, which are organized into two separate folders named “gene_cluster” and “go”. The plotGO() function generates heatmaps for gene clusters in each peak. The folder structure is illustrated below:</p>
+<img alt="TRIAGEparser output folder structure" src="_images/Screenshot_TRIAGEparser_output.jpg" />
+<p>GO enrichment heatmap for the ‘Peak0’ cluster:</p>
+<img alt="GO enrichment heatmap for 'Peak0' cluster" src="_images/Peak0_go_heatmap.jpg" />
+<p>GO enrichment heatmap for the ‘Peak1’ cluster:</p>
+<img alt="GO enrichment heatmap for 'Peak1' cluster" src="_images/Peak1_go_heatmap.jpg" />
+<p>GO enrichment heatmap for the ‘Peak2’ cluster:</p>
+<img alt="GO enrichment heatmap for 'Peak2' cluster" src="_images/Peak2_go_heatmap.jpg" />
+<p>GO enrichment heatmap for the ‘Peak3’ cluster:</p>
+<img alt="GO enrichment heatmap for 'Peak3' cluster" src="_images/Peak3_go_heatmap.jpg" />
+<p><strong>Alternative Calculations 1: Average Gene Expression by Cluster:</strong></p>
+<p>Objective: To calculate average gene expression based on cluster categories using <cite>byPeak()</cite> function, followed by <cite>TRIAGEgene</cite> analysis and Jaccard index heatmap generation.</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;Triage&quot;</span><span class="p">)</span>
+<span class="n">peak_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/demo_bw0.80_metadata.csv&quot;</span>
+
+<span class="c1"># Calculate average gene expression by cluster</span>
+<span class="n">avg_cluster</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">peak_file</span><span class="p">,</span> <span class="n">peak_col</span> <span class="o">=</span> <span class="s">&quot;final_cluster&quot;</span><span class="p">)</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">avg_cluster</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/AverageByCluster.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="c1"># Run TRIAGEgene</span>
+<span class="n">ds_cluster</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">avg_cluster</span><span class="p">)</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">ds_cluster</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/AverageByCluster_DS.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="c1"># Generate Jaccard index heatmap</span>
+<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds_cluster</span><span class="p">,</span> <span class="s">&quot;tests/Jaccard_heatmap_cluster.pdf&quot;</span><span class="p">)</span>
+
+<span class="c1"># Run TRIAGEparser</span>
+<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/AverageByCluster_DS.csv&quot;</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;table&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_cluster&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate GO Heatmaps</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_cluster&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_cluster&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Alternative Calculations 2: Average Gene Expression by Cell Type</strong></p>
+<p>Objective: To calculate average gene expression based on cell type categories using <cite>byPeak()</cite> function, followed by <cite>TRIAGEgene</cite> analysis and Jaccard index heatmap generation.</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;Triage&quot;</span><span class="p">)</span>
+<span class="n">peak_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/demo_bw0.80_metadata.csv&quot;</span>
+
+<span class="c1"># Calculate average gene expression by cell type</span>
+<span class="n">avg_celltype</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">peak_file</span><span class="p">,</span> <span class="n">peak_col</span> <span class="o">=</span> <span class="s">&quot;cell_type&quot;</span><span class="p">)</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">avg_celltype</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/AverageByCelltype.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="c1"># Run TRIAGEgene</span>
+<span class="n">ds_celltype</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">avg_celltype</span><span class="p">)</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">ds_celltype</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/AverageByCelltype_DS.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="c1"># Generate Jaccard index heatmap</span>
+<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds_celltype</span><span class="p">,</span> <span class="s">&quot;tests/Jaccard_heatmap_celltype.pdf&quot;</span><span class="p">)</span>
+
+<span class="c1"># Run TRIAGEparser</span>
+<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/AverageByCelltype_DS.csv&quot;</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;table&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_celltype&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate GO Heatmaps</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_celltype&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_celltype&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TRIAGE R Package</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly functions.html">User-friendly Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Testing TRIAGE.html">Testing TRIAGE</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Case Study</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Testing TRIAGE.html" title="previous chapter">Testing TRIAGE</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Qiongyi Zhao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Case Study.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

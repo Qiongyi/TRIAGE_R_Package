@@ -3,12 +3,12 @@ Testing TRIAGE
 
 The TRIAGE R package offers a comprehensive suite of tools for analyzing transcriptomic data. This document provides a guide to testing the key functionalities of TRIAGE, including `TRIAGEgene`, `TRIAGEcluster`, and `TRIAGEparser`, along with their associated visualization and analysis functions. These tests are designed to demonstrate the capabilities of each function and ensure their correct operation.
 
-Testing TRIAGEgene + plotJaccard()
+Test TRIAGEgene + plotJaccard()
 ----------------------------------
 
 `TRIAGEgene` is used for gene-level analysis and generating TRIAGE-weighted gene expression data.
 
-### Test 1: Running TRIAGEgene on Demo Human Data
+**# Test 1: Run TRIAGEgene on Demo Human Data**
 
 Objective: To test `TRIAGEgene` using human data and generate a Jaccard Index Heatmap for visualization.
 
@@ -36,7 +36,7 @@ Objective: To test `TRIAGEgene` using human data and generate a Jaccard Index He
     plotJaccard(ds, "tests/Jaccard_heatmap_Human_demo.pdf")
 
 
-### Test 2: Running TRIAGEgene on Demo Mouse Data
+**# Test 2: Run TRIAGEgene on Demo Mouse Data**
 
 Objective: To test `TRIAGEgene` using mouse data and generate a Jaccard Index Heatmap for visualization.
 
@@ -60,7 +60,7 @@ Objective: To test `TRIAGEgene` using mouse data and generate a Jaccard Index He
     plotJaccard(ds, "tests/Jaccard_heatmap_Mouse_demo.pdf", top_no = 100)
 
 
-### Test 3: Running TRIAGEgene on Mouse Data with Matrix Input
+**# Test 3: Run TRIAGEgene on Mouse Data with Matrix Input**
 
 Objective: To evaluate the functionality of `TRIAGEgene` using mouse data in matrix format and generate a Jaccard Index Heatmap for visualization.
 
@@ -85,106 +85,54 @@ Objective: To evaluate the functionality of `TRIAGEgene` using mouse data in mat
     plotJaccard(ds, "tests/Jaccard_heatmap_Mouse_demo2.pdf", top_no = 88)
 
 
-Testing TRIAGEcluster + byPeak() + TRIAGEgene() + plotJaccard()
----------------------------------------------------------------
+Test TRIAGEcluster + byPeak()
+------------------------------
 
-`TRIAGEcluster` is used for refining cell clustering in scRNA-seq data. 
+`TRIAGEcluster` is used for refining cell clustering in scRNA-seq data.
 
-### Test 4: Running TRIAGEcluster and TRIAGEgene on Human Data
+**# Test 4: Run TRIAGEcluster and TRIAGEgene on Human Data**
 
-**Data Source:** 
-
-- This test uses a publicly available single-nucleus RNA sequencing (snRNA-seq) dataset from Kramann et al., Nature, 2022, titled "Spatial multi-omic map of human myocardial infarction".
-
-- Dataset URL: https://www.nature.com/articles/s41586-022-05060-x#data-availability
-
-- The demonstration uses control cells to showcase the TRIAGE analysis pipeline.
-
-Objective: To use `TRIAGEcluster` for cell clustering and `TRIAGEgene` for analyzing average expression data by peak.
+Objective: To use `TRIAGEcluster` for cell clustering, `byPeak()` for analyzing average expression data by peak, and `TRIAGEgene` for generating TRIAGE-weighted expression data (DS).
 
 **Steps:**
 
-1. Run `TRIAGEcluster` for Cell Clustering (using CSV files for expression data and metadata).
-2. Select the Most Suitable Bandwidth (manual review of plots).
-3. Calculate Average Gene Expression by Peak (using `byPeak` function).
-4. Save Results and Generate Jaccard Index Heatmap.
+1. Run `TRIAGEcluster` for Cell Clustering, using CSV files for expression data and metadata.
+2. Select a suitable Bandwidth based on UMAP reviews and Calculate Average Gene Expression by Peak using the `byPeak()` function.
+3. Run `TRIAGEgene` to generate TRIAGE-weighted expression data.
 
 .. code-block:: R
 
     library(Triage)
     library(reticulate)
     setwd("/path/to/working/directory")
+    
     # Run TRIAGEcluster
     expr_file <- system.file("extdata", "TRIAGEcluster_demo_expr_human.csv", package = "Triage")
     metadata_file <- system.file("extdata", "TRIAGEcluster_demo_metadata_human.csv", package = "Triage")
     TRIAGEcluster(expr_file, metadata_file, outdir = "tests", output_prefix = "demo")
 
-    # Select suitable bandwidth and calculate average expression
+    # Select a suitable bandwidth and calculate average gene expression
     peak_file <- "tests/demo_bw0.80_metadata.csv"
-    result <- byPeak(expr_file, peak_file)
+    avg_peak <- byPeak(expr_file, peak_file)
+    # Save the average gene expression result to a CSV file
+    write.csv(avg_peak, file = "tests/AverageByPeak.csv", row.names = TRUE, quote = FALSE)
 
-    # Save and generate heatmap
-    write.csv(result, file = "tests/AverageByPeak.csv", row.names = TRUE, quote = FALSE)
-    ds <- TRIAGEgene(result)
-    plotJaccard(ds, "tests/Jaccard_heatmap_peak.pdf")
-
-
-### Alternative Calculations 1: Average Gene Expression by Cluster
-
-Objective: To calculate average gene expression based on cluster categories using `byPeak` function, followed by `TRIAGEgene` analysis and Jaccard index heatmap generation.
-
-**Steps:**
-
-1. Calculate Average Gene Expression by Cluster.
-2. Save Results.
-3. Run `TRIAGEgene` on the results.
-4. Generate Jaccard Index Heatmap for cluster-based averages.
-
-.. code-block:: R
-
-    # Calculate average expression by cluster
-    result2 <- byPeak(expr_file, peak_file, peak_col = "final_cluster")
-
-    # Save results
-    write.csv(result2, file = "tests/AverageByCluster.csv", row.names = TRUE, quote = FALSE)
-    write.table(result2, file = "tests/AverageByCluster.txt", sep = "\t", row.names = TRUE, col.names = NA, quote = FALSE)
-
-    # Run TRIAGEgene and generate Jaccard index heatmap
-    ds2 <- TRIAGEgene(result2)
-    plotJaccard(ds2, "tests/Jaccard_heatmap_cluster.pdf")
+    # Run TRIAGEgene to generate TRIAGE-weighted expression data (DS)
+    ds <- TRIAGEgene(avg_peak)
+    # Save the average DS result to a CSV file
+    write.csv(ds, file = "tests/AverageByPeak_DS.csv", row.names = TRUE, quote = FALSE)
+    # Save the average DS result to a tab-delimited text file
+    write.table(ds, file = "tests/AverageByPeak.txt", sep = "\t", 
+                row.names = TRUE, col.names = NA, quote = FALSE)
 
 
-### Alternative Calculations 2: Average Gene Expression by Cell Type
 
-Objective: To calculate average gene expression based on cell type categories using `byPeak` function, followed by `TRIAGEgene` analysis and Jaccard index heatmap generation.
-
-**Steps:**
-
-1. Calculate Average Gene Expression by Cell Type.
-2. Save Results.
-3. Run `TRIAGEgene` on the results.
-4. Generate Jaccard Index Heatmap for cell type-based averages.
-
-.. code-block:: R
-
-    # Calculate average expression by cell type
-    result3 <- byPeak(expr_file, peak_file, peak_col = "cell_type")
-
-    # Save results
-    write.csv(result3, file = "tests/AverageByCelltype.csv", row.names = TRUE, quote = FALSE)
-    write.table(result3, file = "tests/AverageByCelltype.txt", sep = "\t", row.names = TRUE, col.names = NA, quote = FALSE)
-
-    # Run TRIAGEgene and generate Jaccard index heatmap
-    ds3 <- TRIAGEgene(result3)
-    plotJaccard(ds3, "tests/Jaccard_heatmap_celltype.pdf")
-
-
-Testing TRIAGEparser + plotGO()
+Test TRIAGEparser + plotGO()
 -------------------------------
 
 `TRIAGEparser` is a machine learning-based method for evaluating gene expression rank lists.
 
-### Test 5: Running TRIAGEparser with "AverageByPeak.csv"
+**# Test 5: Run TRIAGEparser with "AverageByPeak_DS.csv"**
 
 Objective: To demonstrate `TRIAGEparser` functionality using a CSV file with four peak clusters.
 
@@ -197,15 +145,15 @@ Objective: To demonstrate `TRIAGEparser` functionality using a CSV file with fou
 
     library(Triage)
     library(reticulate)
-    # Run TRIAGEparser
-    input_file <- "tests/AverageByPeak.csv"
+    # Run TRIAGEparser with "AverageByPeak_DS.csv" generated in Test 4
+    input_file <- "tests/AverageByPeak_DS.csv"
     TRIAGEparser(input_file, input_type = "table", outdir="tests/TRIAGEparser_test5")
 
     # Generate Heatmaps
     plotGO(indir="tests/TRIAGEparser_test5", outdir="tests/TRIAGEparser_test5")
 
 
-### Test 6: Running TRIAGEparser with "AverageByPeak.txt"
+**# Test 6: Run TRIAGEparser with "AverageByPeak_DS.txt"**
 
 Objective: To demonstrate `TRIAGEparser` functionality using a tab-delimited text file and generate a specific gene group heatmap.
 
@@ -218,15 +166,15 @@ Objective: To demonstrate `TRIAGEparser` functionality using a tab-delimited tex
 
     library(Triage)
     library(reticulate)
-    # Run TRIAGEparser
-    input_file <- "tests/AverageByPeak.txt"
+    # Run TRIAGEparser with "AverageByPeak_DS.txt" generated in Test 4
+    input_file <- "tests/AverageByPeak_DS.txt"
     TRIAGEparser(input_file, input_type = "table", outdir="tests/TRIAGEparser_test6")
 
     # Generate heatmap for "Peak0" group
     plotGO(indir="tests/TRIAGEparser_test6", outdir="tests/TRIAGEparser_test6", id = "Peak0")
 
 
-### Test 7: Running TRIAGEparser with Gene List
+**# Test 7: Run TRIAGEparser with a Gene List**
 
 Objective: To test `TRIAGEparser` using a gene list and visualize gene ontology enrichment.
 
