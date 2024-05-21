@@ -20,7 +20,7 @@ Objective: To apply `TRIAGEcluster` for cell clustering, `byPeak()` for calculat
 .. code-block:: R
 
     # Load packages and set up the working directory
-    library(Triage)
+    library(TRIAGE)
     library(reticulate)
     setwd("/path/to/working/directory")
 
@@ -29,8 +29,8 @@ Objective: To apply `TRIAGEcluster` for cell clustering, `byPeak()` for calculat
 .. code-block:: R
 
     # Run TRIAGEcluster
-    expr_file <- system.file("extdata", "TRIAGEcluster_demo_expr_human.csv", package = "Triage")
-    metadata_file <- system.file("extdata", "TRIAGEcluster_demo_metadata_human.csv", package = "Triage")
+    expr_file <- system.file("extdata", "TRIAGEcluster_demo_expr_human.csv", package = "TRIAGE")
+    metadata_file <- system.file("extdata", "TRIAGEcluster_demo_metadata_human.csv", package = "TRIAGE")
     TRIAGEcluster(expr_file, metadata_file, outdir = "tests", output_prefix = "demo")
 
     # Select a suitable bandwidth and calculate average gene expression
@@ -152,7 +152,7 @@ Objective: To calculate average gene expression based on cluster categories usin
 
 .. code-block:: R
 
-    expr_file <- system.file("extdata", "TRIAGEcluster_demo_expr_human.csv", package = "Triage")
+    expr_file <- system.file("extdata", "TRIAGEcluster_demo_expr_human.csv", package = "TRIAGE")
     peak_file <- "tests/demo_bw0.80_metadata.csv"
 
     # Calculate average gene expression by cluster
@@ -181,7 +181,7 @@ Objective: To calculate average gene expression based on cell type categories us
 
 .. code-block:: R
 
-    expr_file <- system.file("extdata", "TRIAGEcluster_demo_expr_human.csv", package = "Triage")
+    expr_file <- system.file("extdata", "TRIAGEcluster_demo_expr_human.csv", package = "TRIAGE")
     peak_file <- "tests/demo_bw0.80_metadata.csv"
 
     # Calculate average gene expression by cell type

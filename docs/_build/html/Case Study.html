@@ -48,21 +48,16 @@
 <li><p><cite>TRIAGEgene</cite> + <cite>plotJaccard()</cite></p></li>
 <li><p><cite>TRIAGEparser</cite> + <cite>plotGO()</cite></p></li>
 </ol>
-<ol class="arabic simple">
-<li><p>Run <cite>TRIAGEcluster</cite> for cell clustering, select a suitable bandwidth resolution based on UMAP reviews, and calculate average gene expression by various categories using the <cite>byPeak()</cite> function.</p></li>
-<li><p>Run <cite>TRIAGEgene</cite> to generate TRIAGE-weighted expression data and generate Jaccard Index Heatmap using the <cite>plotJaccard()</cite> function.</p></li>
-<li><p>Run <cite>TRIAGEparser</cite> to dissect gene clusters and their associated ontologies and generate GO enrichment heatmaps using the <cite>plotGO()</cite> function.</p></li>
-</ol>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load packages and set up the working directory</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">Triage</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
 <span class="nf">setwd</span><span class="p">(</span><span class="s">&quot;/path/to/working/directory&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Step 1:</strong> Run <cite>TRIAGEcluster</cite> for cell clustering, select a suitable bandwidth resolution based on UMAP reviews, and calculate average gene expression by various categories using the <cite>byPeak()</cite> function.</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run TRIAGEcluster</span>
-<span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;Triage&quot;</span><span class="p">)</span>
-<span class="n">metadata_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_metadata_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;Triage&quot;</span><span class="p">)</span>
+<span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
+<span class="n">metadata_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_metadata_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
 <span class="nf">TRIAGEcluster</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;tests&quot;</span><span class="p">,</span> <span class="n">output_prefix</span> <span class="o">=</span> <span class="s">&quot;demo&quot;</span><span class="p">)</span>
 
 <span class="c1"># Select a suitable bandwidth and calculate average gene expression</span>
@@ -136,7 +131,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Step 2:</strong> Run <cite>TRIAGEgene</cite> to generate TRIAGE-weighted expression data and run <cite>plotJaccard()</cite> to generate Jaccard similarity index heatmap.</p>
+<p><strong>Step 2:</strong> Run <cite>TRIAGEgene</cite> to generate TRIAGE-weighted expression data and <cite>plotJaccard()</cite> to generate Jaccard similarity index heatmap.</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run TRIAGEgene to generate TRIAGE-weighted expression data (DS)</span>
 <span class="n">ds</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">avg_peak</span><span class="p">)</span>
 <span class="c1"># Save the average DS result to a CSV file</span>
@@ -213,7 +208,7 @@
 </table>
 <p>The plotJaccard() function generates a heatmap to visualize the extent of similarity across identified peaks:</p>
 <img alt="Jaccard similarity index heatmap" src="_images/Jaccard_heatmap_peak.jpg" />
-<p><strong>Step 3:</strong> Run <cite>TRIAGEparser</cite> to dissect gene clusters and their associated ontologies and run <cite>plotGO()</cite> to generate GO enrichment heatmaps.</p>
+<p><strong>Step 3:</strong> Run <cite>TRIAGEparser</cite> to dissect gene clusters and their associated ontologies and <cite>plotGO()</cite> to generate GO enrichment heatmaps.</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run TRIAGEparser to dissect gene clusters and their associated ontologies</span>
 <span class="n">input_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/AverageByPeak_DS.csv&quot;</span>
 <span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;table&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/TRIAGEparser_peak&quot;</span><span class="p">)</span>
@@ -234,7 +229,7 @@
 <img alt="GO enrichment heatmap for 'Peak3' cluster" src="_images/Peak3_go_heatmap.jpg" />
 <p><strong>Alternative Calculations 1: Average Gene Expression by Cluster:</strong></p>
 <p>Objective: To calculate average gene expression based on cluster categories using <cite>byPeak()</cite> function, followed by <cite>TRIAGEgene</cite> analysis and Jaccard index heatmap generation.</p>
-<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;Triage&quot;</span><span class="p">)</span>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
 <span class="n">peak_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/demo_bw0.80_metadata.csv&quot;</span>
 
 <span class="c1"># Calculate average gene expression by cluster</span>
@@ -258,7 +253,7 @@
 </div>
 <p><strong>Alternative Calculations 2: Average Gene Expression by Cell Type</strong></p>
 <p>Objective: To calculate average gene expression based on cell type categories using <cite>byPeak()</cite> function, followed by <cite>TRIAGEgene</cite> analysis and Jaccard index heatmap generation.</p>
-<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;Triage&quot;</span><span class="p">)</span>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
 <span class="n">peak_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/demo_bw0.80_metadata.csv&quot;</span>
 
 <span class="c1"># Calculate average gene expression by cell type</span>
