@@ -50,6 +50,9 @@ Parameters
 
 - `min_cells_per_peak`: (Optional) Sets the minimum number of cells required per peak to be considered in the analysis. Default is 5.
 
+..
+
+- `seed`: (Optional) Sets the seed value for reproducibility. Default is NULL.
 
 Usage Examples
 --------------
@@ -68,12 +71,13 @@ TRIAGEcluster can be run using various combinations of parameters, as shown in t
     # Example 2: Using a tab-delimited .txt file for the discordance score matrix 
     # and a .csv file for the metadata. The cell identifiers are specified in the 
     # "Cells" column and the UMAP info are named in "UMAP1" and "UMAP2" columns 
-    # in the metadata file.
+    # in the metadata file. Set the seed value to 123.
     TRIAGEcluster(expr = "ds.txt", 
               metadata = "metadata.csv", 
               output_prefix = "project2", 
               cell_column = "Cells",  
-              umap_column = "UMAP")
+              umap_column = "UMAP",
+              seed=123)
 
     # Example 3: Using .csv files for both gene expression matrix and metadata.
     TRIAGEcluster("Expr_matrix.csv", 

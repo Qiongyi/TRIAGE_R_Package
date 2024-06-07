@@ -127,7 +127,7 @@
 
 <span class="c1"># Select a suitable bandwidth and calculate average gene expression</span>
 <span class="n">peak_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/test4/demo_bw0.80_metadata.csv&quot;</span>
-<span class="n">avg_peak</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">peak_file</span><span class="p">)</span>
+<span class="n">avg_peak</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">peak_file</span><span class="p">,</span> <span class="n">cell_column</span> <span class="o">=</span> <span class="s">&quot;Barcode&quot;</span><span class="p">,</span> <span class="n">peak_column</span> <span class="o">=</span> <span class="s">&quot;Peak&quot;</span><span class="p">)</span>
 <span class="c1"># Save the average gene expression result to a CSV file</span>
 <span class="nf">write.csv</span><span class="p">(</span><span class="n">avg_peak</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/test4/AverageByPeak.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 

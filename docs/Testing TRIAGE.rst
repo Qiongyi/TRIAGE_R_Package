@@ -113,7 +113,7 @@ Objective: To use `TRIAGEcluster` for cell clustering, `byPeak()` for analyzing 
 
     # Select a suitable bandwidth and calculate average gene expression
     peak_file <- "tests/test4/demo_bw0.80_metadata.csv"
-    avg_peak <- byPeak(expr_file, peak_file)
+    avg_peak <- byPeak(expr_file, peak_file, cell_column = "Barcode", peak_column = "Peak")
     # Save the average gene expression result to a CSV file
     write.csv(avg_peak, file = "tests/test4/AverageByPeak.csv", row.names = TRUE, quote = FALSE)
 

@@ -58,11 +58,11 @@ In future R sessions, activate the r-reticulate environment:
 Installing TRIAGE R Package
 ---------------------------
 
-1. Download the TRIAGE R package (e.g., TRIAGE_1.1.1.tar.gz) from the GitHub repository: https://github.com/Qiongyi/TRIAGE_R_Package
+1. Download the TRIAGE R package (e.g., TRIAGE_1.1.2.tar.gz) from the GitHub repository: https://github.com/Qiongyi/TRIAGE_R_Package
 
 2. Install the TRIAGE R package from the source file:
 
 .. code-block:: R
 
-    install.packages("path/to/TRIAGE_1.1.1.tar.gz", repos = NULL, type = "source")
+    install.packages("path/to/TRIAGE_1.1.2.tar.gz", repos = NULL, type = "source")
     library(TRIAGE)

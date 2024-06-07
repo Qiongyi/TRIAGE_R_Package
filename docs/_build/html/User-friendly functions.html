@@ -66,10 +66,10 @@
 <li><p><cite>peak</cite>: The metadata containing cell IDs and peak values, either as a data frame or a path to a CSV/TXT file.</p></li>
 </ul>
 <ul class="simple">
-<li><p><cite>cell_id_col</cite>: (Optional) Name of the column representing cell IDs. Default is “Barcode”.</p></li>
+<li><p><cite>cell_column</cite>: (Optional) Name of the column in metadata representing cell IDs. Default is “Barcode”.</p></li>
 </ul>
 <ul class="simple">
-<li><p><cite>peak_col</cite>: (Optional) Name of the column representing peak values. Default is “Peak”.</p></li>
+<li><p><cite>peak_column</cite>: (Optional) Name of the column in metadata representing peak values. Default is “Peak”.</p></li>
 </ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: using .csv files as the input files</span>
@@ -77,10 +77,11 @@
                 <span class="n">peak</span> <span class="o">=</span> <span class="s">&quot;path/to/metadata.csv&quot;</span><span class="p">)</span>
 
 <span class="c1"># Example 2: using data frame (&#39;expr_df&#39; and &#39;metadata_df&#39;) as the input,</span>
-<span class="c1"># grouped by &#39;Clusters&#39;</span>
+<span class="c1"># grouped by &#39;Clusters&#39;, and cell IDs are in the &quot;cell_name&quot; column</span>
 <span class="n">result</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="n">expr_df</span><span class="p">,</span>
                 <span class="n">peak</span> <span class="o">=</span> <span class="n">metadata_df</span><span class="p">,</span>
-                <span class="n">peak_col</span><span class="o">=</span><span class="s">&quot;Clusters&quot;</span><span class="p">)</span>
+                <span class="n">peak_column</span><span class="o">=</span><span class="s">&quot;Clusters&quot;</span><span class="p">,</span>
+                <span class="n">cell_column</span><span class="o">=</span><span class="s">&quot;cell_name&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -103,15 +104,22 @@
 <ul class="simple">
 <li><p><cite>top_terms</cite>: (Optional) The number of top GO terms to include in the heatmap. Default is 10.</p></li>
 </ul>
+<ul class="simple">
+<li><p><cite>width</cite>: (Optional) The width of the output PDF heatmap. Default is NULL, which uses default behavior of pdf().</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>height</cite>: (Optional) The height of the output PDF heatmap. Default is NULL, which uses default behavior of pdf().</p></li>
+</ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: Generate heatmaps for all groups/IDs</span>
 <span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span> <span class="o">=</span> <span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
     <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">)</span>
 
-<span class="c1"># Example 2: Generate heatmap for a specific group “E016”</span>
+<span class="c1"># Example 2: Generate heatmap for a specific group “Peak01”, with the PDF size 6X7</span>
 <span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span> <span class="o">=</span> <span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
     <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">,</span>
-    <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;E016&quot;</span><span class="p">)</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;Peak01&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="m">6</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -146,6 +154,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Testing TRIAGE.html">Testing TRIAGE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Case Study.html">Case Study</a></li>
 </ul>
 
 <div class="relations">
