@@ -9,13 +9,14 @@ This case study demonstrates the application of the TRIAGE analysis pipeline usi
 - Data Available at: `https://www.nature.com/articles/s41586-022-05060-x#data-availability <https://www.nature.com/articles/s41586-022-05060-x#data-availability>`_
 - The demonstration uses control endothelial and pericyte cells to showcase the TRIAGE analysis pipeline.
 
-Objective: To apply `TRIAGEcluster` for cell clustering, `byPeak()` for calculating average expression data by various categories, `TRIAGEgene` for generating TRIAGE-weighted expression data, `plotJaccard()` for Jaccard Index Heatmap visualization, `TRIAGEparser` to dissect gene clusters and their associated ontologies, and `plotGO()` for GO enrichment visualization.
+Objective: To apply `TRIAGEcluster` for cell clustering, `byPeak()` for calculating average expression data by various categories, `TRIAGEgene` for generating TRIAGE-weighted expression data, `plotJaccard()` for Jaccard Index Heatmap visualization, `TRIAGEparser` for dissecting gene clusters and their associated ontologies, `plotGO()` for GO enrichment visualization, and `getClusterGenes()` for the extraction of genes from TRIAGEparser clusters.
 
 **Steps:**
 
 1. `TRIAGEcluster` + `byPeak()`
 2. `TRIAGEgene` + `plotJaccard()`
 3. `TRIAGEparser` + `plotGO()`
+4. `getClusterGenes()`
 
 .. code-block:: R
 
@@ -143,6 +144,14 @@ GO enrichment heatmap for the 'Peak3' cluster:
 
 .. image:: image/Peak3_go_heatmap.jpg
    :alt: GO enrichment heatmap for 'Peak3' cluster
+
+
+**Step 4:** Since the Peak3 cluster4 is highly enriched in 'Cell differentiation' and 'Cell fate commitment' terms, we use `getClusterGenes()` to extract genes from this gene cluster for further downstream analysis.
+
+.. code-block:: R
+
+    # Extract genes from Peak3 cluster4
+    Peak3_cluster4_genes <- getClusterGenes("tests/TRIAGEparser_peak/gene_cluster/Peak3_gene_clusters.csv", "cluster4")    
 
 
 **Alternative Calculations 1: Average Gene Expression by Cluster:**

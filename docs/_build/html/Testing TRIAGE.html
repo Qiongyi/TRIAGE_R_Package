@@ -1,22 +1,20 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
-    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Testing TRIAGE &#8212; TRIAGE R Package  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Case Study" href="Case Study.html" />
-    <link rel="prev" title="User-friendly Functions" href="User-friendly functions.html" />
+    <link rel="next" title="Case Study" href="Case%20Study.html" />
+    <link rel="prev" title="User-friendly Functions" href="User-friendly%20functions.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,10 +32,10 @@
           <div class="body" role="main">
             
   <section id="testing-triage">
-<h1>Testing TRIAGE<a class="headerlink" href="#testing-triage" title="Permalink to this headline">¶</a></h1>
+<h1>Testing TRIAGE<a class="headerlink" href="#testing-triage" title="Permalink to this heading">¶</a></h1>
 <p>The TRIAGE R package offers a comprehensive suite of tools for analyzing transcriptomic data. This document provides a guide to testing the key functionalities of TRIAGE, including <cite>TRIAGEgene</cite>, <cite>TRIAGEcluster</cite>, and <cite>TRIAGEparser</cite>, along with their associated visualization and analysis functions. These tests are designed to demonstrate the capabilities of each function and ensure their correct operation.</p>
 <section id="test-triagegene-plotjaccard">
-<h2>Test TRIAGEgene + plotJaccard()<a class="headerlink" href="#test-triagegene-plotjaccard" title="Permalink to this headline">¶</a></h2>
+<h2>Test TRIAGEgene + plotJaccard()<a class="headerlink" href="#test-triagegene-plotjaccard" title="Permalink to this heading">¶</a></h2>
 <p><cite>TRIAGEgene</cite> is used for gene-level analysis and generating TRIAGE-weighted gene expression data.</p>
 <p><strong># Test 1: Run TRIAGEgene on Demo Human Data</strong></p>
 <p>Objective: To test <cite>TRIAGEgene</cite> using human data and generate a Jaccard Index Heatmap for visualization.</p>
@@ -49,18 +47,18 @@
 </ol>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
 <span class="c1"># Read input file</span>
-<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEgene_demo_Human.txt&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
-<span class="n">demo</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;\t&quot;</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">input_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TRIAGEgene_demo_Human.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
+<span class="n">demo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.table</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\t&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 
 <span class="c1"># Run TRIAGEgene</span>
-<span class="n">ds</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo</span><span class="p">)</span>
+<span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo</span><span class="p">)</span>
 
 <span class="c1"># Generate Jaccard Index Heatmap</span>
 <span class="nf">setwd</span><span class="p">(</span><span class="s">&quot;/path/to/working/directory&quot;</span><span class="p">)</span>
-<span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">dir.exists</span><span class="p">(</span><span class="s">&quot;tests&quot;</span><span class="p">))</span> <span class="p">{</span>
-  <span class="nf">dir.create</span><span class="p">(</span><span class="s">&quot;tests&quot;</span><span class="p">)</span>
+<span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">dir.exists</span><span class="p">(</span><span class="s">&quot;tests&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nf">dir.create</span><span class="p">(</span><span class="s">&quot;tests&quot;</span><span class="p">)</span>
 <span class="p">}</span>
-<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s">&quot;tests/Jaccard_heatmap_Human_test1.pdf&quot;</span><span class="p">)</span>
+<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tests/Jaccard_heatmap_Human_test1.pdf&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong># Test 2: Run TRIAGEgene on Demo Mouse Data</strong></p>
@@ -73,14 +71,14 @@
 </ol>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
 <span class="c1"># Read input file (CSV)</span>
-<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEgene_demo_Mouse.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
-<span class="n">demo</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">input_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TRIAGEgene_demo_Mouse.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
+<span class="n">demo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 
 <span class="c1"># Run TRIAGEgene for Mouse data</span>
-<span class="n">ds</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo</span><span class="p">,</span> <span class="n">species</span> <span class="o">=</span> <span class="s">&quot;Mouse&quot;</span><span class="p">)</span>
+<span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Mouse&quot;</span><span class="p">)</span>
 
 <span class="c1"># Generate Jaccard Index Heatmap</span>
-<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s">&quot;tests/Jaccard_heatmap_Mouse_test2.pdf&quot;</span><span class="p">,</span> <span class="n">top_no</span> <span class="o">=</span> <span class="m">100</span><span class="p">)</span>
+<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tests/Jaccard_heatmap_Mouse_test2.pdf&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">top_no</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">100</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong># Test 3: Run TRIAGEgene on Mouse Data with Matrix Input</strong></p>
@@ -92,21 +90,21 @@
 <li><p>Generate a Jaccard Index Heatmap using the top 88 genes.</p></li>
 </ol>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
-<span class="c1"># Read input file (CSV) and convert to matrix</span>
-<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEgene_demo_Mouse.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
-<span class="n">demo</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
-<span class="n">demo_matrix</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">demo</span><span class="p">)</span>
+<span class="c1"># 1) Read input file (CSV) and convert to matrix</span>
+<span class="n">input_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TRIAGEgene_demo_Mouse.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
+<span class="n">demo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+<span class="n">demo_matrix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">as.matrix</span><span class="p">(</span><span class="n">demo</span><span class="p">)</span>
 
-<span class="c1"># Run TRIAGEgene with matrix input for Mouse data</span>
-<span class="n">ds</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo_matrix</span><span class="p">,</span> <span class="n">species</span> <span class="o">=</span> <span class="s">&quot;Mouse&quot;</span><span class="p">)</span>
+<span class="c1"># 2) Run TRIAGEgene with matrix input for Mouse data</span>
+<span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Mouse&quot;</span><span class="p">)</span>
 
-<span class="c1"># Generate Jaccard Index Heatmap</span>
-<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="s">&quot;tests/Jaccard_heatmap_Mouse_test3.pdf&quot;</span><span class="p">,</span> <span class="n">top_no</span> <span class="o">=</span> <span class="m">88</span><span class="p">)</span>
+<span class="c1"># 3) Generate Jaccard Index Heatmap</span>
+<span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tests/Jaccard_heatmap_Mouse_test3.pdf&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">top_no</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">88</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="test-triagecluster-bypeak">
-<h2>Test TRIAGEcluster + byPeak()<a class="headerlink" href="#test-triagecluster-bypeak" title="Permalink to this headline">¶</a></h2>
+<h2>Test TRIAGEcluster + byPeak()<a class="headerlink" href="#test-triagecluster-bypeak" title="Permalink to this heading">¶</a></h2>
 <p><cite>TRIAGEcluster</cite> is used for refining cell clustering in scRNA-seq data.</p>
 <p><strong># Test 4: Run TRIAGEcluster and TRIAGEgene on Human Data</strong></p>
 <p>Objective: To use <cite>TRIAGEcluster</cite> for cell clustering, <cite>byPeak()</cite> for analyzing average expression data by peak, and <cite>TRIAGEgene</cite> for generating TRIAGE-weighted expression data (DS).</p>
@@ -120,45 +118,49 @@
 <span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
 <span class="nf">setwd</span><span class="p">(</span><span class="s">&quot;/path/to/working/directory&quot;</span><span class="p">)</span>
 
-<span class="c1"># Run TRIAGEcluster</span>
-<span class="n">expr_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
-<span class="n">metadata_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEcluster_demo_metadata_human.csv&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
-<span class="nf">TRIAGEcluster</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">,</span> <span class="n">outdir</span> <span class="o">=</span> <span class="s">&quot;tests/test4&quot;</span><span class="p">,</span> <span class="n">output_prefix</span> <span class="o">=</span> <span class="s">&quot;demo&quot;</span><span class="p">)</span>
+<span class="c1"># 1) Run TRIAGEcluster</span>
+<span class="n">expr_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TRIAGEcluster_demo_expr_human.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
+<span class="n">metadata_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TRIAGEcluster_demo_metadata_human.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
+<span class="nf">TRIAGEcluster</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span><span class="w"> </span><span class="n">metadata_file</span><span class="p">,</span><span class="w"> </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;tests/test4&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">output_prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;demo&quot;</span><span class="p">)</span>
 
-<span class="c1"># Select a suitable bandwidth and calculate average gene expression</span>
-<span class="n">peak_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/test4/demo_bw0.80_metadata.csv&quot;</span>
-<span class="n">avg_peak</span> <span class="o">&lt;-</span> <span class="nf">byPeak</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span> <span class="n">peak_file</span><span class="p">,</span> <span class="n">cell_column</span> <span class="o">=</span> <span class="s">&quot;Barcode&quot;</span><span class="p">,</span> <span class="n">peak_column</span> <span class="o">=</span> <span class="s">&quot;Peak&quot;</span><span class="p">)</span>
+<span class="c1"># 2) Select a suitable bandwidth and calculate average gene expression</span>
+<span class="n">peak_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;tests/test4/demo_bw0.80_metadata.csv&quot;</span>
+<span class="n">avg_peak</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">byPeak</span><span class="p">(</span><span class="n">expr_file</span><span class="p">,</span><span class="w"> </span><span class="n">peak_file</span><span class="p">,</span><span class="w"> </span><span class="n">cell_column</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Barcode&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">peak_column</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Peak&quot;</span><span class="p">)</span>
 <span class="c1"># Save the average gene expression result to a CSV file</span>
-<span class="nf">write.csv</span><span class="p">(</span><span class="n">avg_peak</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/test4/AverageByPeak.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">avg_peak</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;tests/test4/AverageByPeak.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">quote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
 
-<span class="c1"># Run TRIAGEgene to generate TRIAGE-weighted expression data (DS)</span>
-<span class="n">ds</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">avg_peak</span><span class="p">)</span>
+<span class="c1"># 3) Run TRIAGEgene to generate TRIAGE-weighted expression data (DS)</span>
+<span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">avg_peak</span><span class="p">)</span>
 <span class="c1"># Save the average DS result to a CSV file</span>
-<span class="nf">write.csv</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/test4/AverageByPeak_DS.csv&quot;</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;tests/test4/AverageByPeak_DS.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">quote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
 <span class="c1"># Save the average DS result to a tab-delimited text file</span>
-<span class="nf">write.table</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">file</span> <span class="o">=</span> <span class="s">&quot;tests/test4/AverageByPeak_DS.txt&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;\t&quot;</span><span class="p">,</span>
-            <span class="n">row.names</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">col.names</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="nf">write.table</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;tests/test4/AverageByPeak_DS.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\t&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">col.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">quote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="test-triageparser-plotgo">
-<h2>Test TRIAGEparser + plotGO()<a class="headerlink" href="#test-triageparser-plotgo" title="Permalink to this headline">¶</a></h2>
-<p><cite>TRIAGEparser</cite> is a machine learning-based method for evaluating gene expression rank lists.</p>
+<section id="test-triageparser-plotgo-getclustergenes">
+<h2>Test TRIAGEparser + plotGO() + getClusterGenes()<a class="headerlink" href="#test-triageparser-plotgo-getclustergenes" title="Permalink to this heading">¶</a></h2>
+<p><cite>TRIAGEparser</cite> is a machine learning-based method for classifying genes with distinct biological functions.</p>
 <p><strong># Test 5: Run TRIAGEparser with “AverageByPeak_DS.csv”</strong></p>
 <p>Objective: To demonstrate <cite>TRIAGEparser</cite> functionality using a CSV file with four peak clusters.</p>
 <p><strong>Steps:</strong></p>
 <ol class="arabic simple">
 <li><p>Run <cite>TRIAGEparser</cite>.</p></li>
 <li><p>Generate GO Heatmaps for All Groups.</p></li>
+<li><p>Extract genes for cluster1 from the “Peak0_gene_clusters.csv” output of TRIAGEparser.</p></li>
 </ol>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
-<span class="c1"># Run TRIAGEparser with &quot;AverageByPeak_DS.csv&quot; generated in Test 4</span>
-<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/test4/AverageByPeak_DS.csv&quot;</span>
-<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;table&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test5&quot;</span><span class="p">)</span>
+<span class="c1"># 1) Run TRIAGEparser with &quot;AverageByPeak_DS.csv&quot; generated in Test 4</span>
+<span class="n">input_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;tests/test4/AverageByPeak_DS.csv&quot;</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="w"> </span><span class="n">input_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;table&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test5&quot;</span><span class="p">)</span>
 
-<span class="c1"># Generate Heatmaps</span>
-<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/test5&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test5&quot;</span><span class="p">)</span>
+<span class="c1"># 2) Generate Heatmaps using plotGO()</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/test5&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test5&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3) Extract genes for cluster1 from the &quot;Peak0_gene_clusters.csv&quot; using getClusterGenes()</span>
+<span class="n">cluster1_genes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">getClusterGenes</span><span class="p">(</span><span class="s">&quot;tests/test5/gene_clusters/Peak0_gene_clusters.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cluster1&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong># Test 6: Run TRIAGEparser with “AverageByPeak_DS.txt”</strong></p>
@@ -170,12 +172,12 @@
 </ol>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
-<span class="c1"># Run TRIAGEparser with &quot;AverageByPeak_DS.txt&quot; generated in Test 4</span>
-<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="s">&quot;tests/test4/AverageByPeak_DS.txt&quot;</span>
-<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;table&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test6&quot;</span><span class="p">)</span>
+<span class="c1"># 1) Run TRIAGEparser with &quot;AverageByPeak_DS.txt&quot; generated in Test 4</span>
+<span class="n">input_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s">&quot;tests/test4/AverageByPeak_DS.txt&quot;</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="w"> </span><span class="n">input_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;table&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test6&quot;</span><span class="p">)</span>
 
-<span class="c1"># Generate heatmap for &quot;Peak0&quot; group</span>
-<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/test6&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test6&quot;</span><span class="p">,</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;Peak0&quot;</span><span class="p">)</span>
+<span class="c1"># 2) Generate heatmap for &quot;Peak0&quot; group</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/test6&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test6&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Peak0&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong># Test 7: Run TRIAGEparser with a Gene List</strong></p>
@@ -185,12 +187,12 @@
 <li><p>Run <cite>TRIAGEparser</cite> with a gene list file as input.</p></li>
 <li><p>Generate Gene Ontology Heatmap.</p></li>
 </ol>
-<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run TRIAGEparser with gene list file</span>
-<span class="n">input_file</span> <span class="o">&lt;-</span> <span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span> <span class="s">&quot;TRIAGEparser_demo_genelist.txt&quot;</span><span class="p">,</span> <span class="n">package</span> <span class="o">=</span> <span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
-<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">input_type</span> <span class="o">=</span> <span class="s">&quot;list&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test7&quot;</span><span class="p">)</span>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1) Run TRIAGEparser with gene list file</span>
+<span class="n">input_file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">system.file</span><span class="p">(</span><span class="s">&quot;extdata&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TRIAGEparser_demo_genelist.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;TRIAGE&quot;</span><span class="p">)</span>
+<span class="nf">TRIAGEparser</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="w"> </span><span class="n">input_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;list&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test7&quot;</span><span class="p">)</span>
 
-<span class="c1"># Generate Gene Ontology Heatmap</span>
-<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/test7&quot;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test7&quot;</span><span class="p">)</span>
+<span class="c1"># 2) Generate Gene Ontology Heatmap</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="o">=</span><span class="s">&quot;tests/test7&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">outdir</span><span class="o">=</span><span class="s">&quot;tests/test7&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>These tests serve as a practical demonstration of how to apply the TRIAGE R package for analyzing and visualizing complex transcriptomic data. Researchers can adapt these procedures to their specific datasets, ensuring the effective use of TRIAGE in research projects.</p>
@@ -219,22 +221,22 @@
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEgene.html">TRIAGEgene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="User-friendly functions.html">User-friendly Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly%20functions.html">User-friendly Functions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Testing TRIAGE</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#test-triagegene-plotjaccard">Test TRIAGEgene + plotJaccard()</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-triagecluster-bypeak">Test TRIAGEcluster + byPeak()</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#test-triageparser-plotgo">Test TRIAGEparser + plotGO()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-triageparser-plotgo-getclustergenes">Test TRIAGEparser + plotGO() + getClusterGenes()</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Case Study.html">Case Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Case%20Study.html">Case Study</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="User-friendly functions.html" title="previous chapter">User-friendly Functions</a></li>
-      <li>Next: <a href="Case Study.html" title="next chapter">Case Study</a></li>
+      <li>Previous: <a href="User-friendly%20functions.html" title="previous chapter">User-friendly Functions</a></li>
+      <li>Next: <a href="Case%20Study.html" title="next chapter">Case Study</a></li>
   </ul></li>
 </ul>
 </div>
@@ -242,12 +244,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -264,8 +266,8 @@
       &copy;2024, Qiongyi Zhao.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/Testing TRIAGE.rst.txt"

@@ -44,6 +44,10 @@ Parameters
 
 ..
 
+- `bw`: (Optional) A vector or sequence of bandwidth values for KDE plots, such as "bw = 0.1", "bw = c(0.1,0.5, 1.1)", etc.  Default is "bw = seq(0.1, 1.0, by = 0.1)".
+
+..
+
 - `priority_rts`: (Optional) Specifies the path to the priority RTS gene list file. The default setting is "Priority_epimap_rts.csv". Note that this option is intended for advanced users who are capable of generating their own priority RTS gene lists. For most users, it is recommended to use the default setting to ensure optimal functionality and results.
 
 ..
@@ -68,10 +72,10 @@ TRIAGEcluster can be run using various combinations of parameters, as shown in t
                 outdir = "TRIAGEcluster_results", 
                 output_prefix = "project1")
 
-    # Example 2: Using a tab-delimited .txt file for the discordance score matrix 
-    # and a .csv file for the metadata. The cell identifiers are specified in the 
-    # "Cells" column and the UMAP info are named in "UMAP1" and "UMAP2" columns 
-    # in the metadata file. Set the seed value to 123.
+    # Example 2: Using a tab-delimited .txt file for the discordance score 
+    # matrix and a .csv file for the metadata. The cell identifiers are 
+    # specified in the "Cells" column and the UMAP info are named in "UMAP1" 
+    # and "UMAP2" columns in the metadata file. Set the seed value to 123.
     TRIAGEcluster(expr = "ds.txt", 
               metadata = "metadata.csv", 
               output_prefix = "project2", 
@@ -90,4 +94,3 @@ TRIAGEcluster can be run using various combinations of parameters, as shown in t
                 "metadata.txt", 
                 outdir = "results", 
                 output_prefix = "project4")
-

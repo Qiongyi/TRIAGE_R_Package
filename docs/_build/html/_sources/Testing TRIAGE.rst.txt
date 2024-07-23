@@ -73,15 +73,15 @@ Objective: To evaluate the functionality of `TRIAGEgene` using mouse data in mat
 .. code-block:: R
 
     library(TRIAGE)
-    # Read input file (CSV) and convert to matrix
+    # 1) Read input file (CSV) and convert to matrix
     input_file <- system.file("extdata", "TRIAGEgene_demo_Mouse.csv", package = "TRIAGE")
     demo <- read.csv(input_file, row.names = 1)
     demo_matrix <- as.matrix(demo)
 
-    # Run TRIAGEgene with matrix input for Mouse data
+    # 2) Run TRIAGEgene with matrix input for Mouse data
     ds <- TRIAGEgene(demo_matrix, species = "Mouse")
 
-    # Generate Jaccard Index Heatmap
+    # 3) Generate Jaccard Index Heatmap
     plotJaccard(ds, "tests/Jaccard_heatmap_Mouse_test3.pdf", top_no = 88)
 
 
@@ -106,18 +106,18 @@ Objective: To use `TRIAGEcluster` for cell clustering, `byPeak()` for analyzing 
     library(reticulate)
     setwd("/path/to/working/directory")
     
-    # Run TRIAGEcluster
+    # 1) Run TRIAGEcluster
     expr_file <- system.file("extdata", "TRIAGEcluster_demo_expr_human.csv", package = "TRIAGE")
     metadata_file <- system.file("extdata", "TRIAGEcluster_demo_metadata_human.csv", package = "TRIAGE")
     TRIAGEcluster(expr_file, metadata_file, outdir = "tests/test4", output_prefix = "demo")
 
-    # Select a suitable bandwidth and calculate average gene expression
+    # 2) Select a suitable bandwidth and calculate average gene expression
     peak_file <- "tests/test4/demo_bw0.80_metadata.csv"
     avg_peak <- byPeak(expr_file, peak_file, cell_column = "Barcode", peak_column = "Peak")
     # Save the average gene expression result to a CSV file
     write.csv(avg_peak, file = "tests/test4/AverageByPeak.csv", row.names = TRUE, quote = FALSE)
 
-    # Run TRIAGEgene to generate TRIAGE-weighted expression data (DS)
+    # 3) Run TRIAGEgene to generate TRIAGE-weighted expression data (DS)
     ds <- TRIAGEgene(avg_peak)
     # Save the average DS result to a CSV file
     write.csv(ds, file = "tests/test4/AverageByPeak_DS.csv", row.names = TRUE, quote = FALSE)
@@ -127,10 +127,10 @@ Objective: To use `TRIAGEcluster` for cell clustering, `byPeak()` for analyzing 
 
 
 
-Test TRIAGEparser + plotGO()
--------------------------------
+Test TRIAGEparser + plotGO() + getClusterGenes()
+-------------------------------------------------
 
-`TRIAGEparser` is a machine learning-based method for evaluating gene expression rank lists.
+`TRIAGEparser` is a machine learning-based method for classifying genes with distinct biological functions.
 
 **# Test 5: Run TRIAGEparser with "AverageByPeak_DS.csv"**
 
@@ -140,18 +140,21 @@ Objective: To demonstrate `TRIAGEparser` functionality using a CSV file with fou
 
 1. Run `TRIAGEparser`.
 2. Generate GO Heatmaps for All Groups.
+3. Extract genes for cluster1 from the "Peak0_gene_clusters.csv" output of TRIAGEparser.
 
 .. code-block:: R
 
     library(TRIAGE)
     library(reticulate)
-    # Run TRIAGEparser with "AverageByPeak_DS.csv" generated in Test 4
+    # 1) Run TRIAGEparser with "AverageByPeak_DS.csv" generated in Test 4
     input_file <- "tests/test4/AverageByPeak_DS.csv"
     TRIAGEparser(input_file, input_type = "table", outdir="tests/test5")
 
-    # Generate Heatmaps
+    # 2) Generate Heatmaps using plotGO()
     plotGO(indir="tests/test5", outdir="tests/test5")
 
+    # 3) Extract genes for cluster1 from the "Peak0_gene_clusters.csv" using getClusterGenes()
+    cluster1_genes <- getClusterGenes("tests/test5/gene_clusters/Peak0_gene_clusters.csv", "cluster1")
 
 **# Test 6: Run TRIAGEparser with "AverageByPeak_DS.txt"**
 
@@ -166,11 +169,11 @@ Objective: To demonstrate `TRIAGEparser` functionality using a tab-delimited tex
 
     library(TRIAGE)
     library(reticulate)
-    # Run TRIAGEparser with "AverageByPeak_DS.txt" generated in Test 4
+    # 1) Run TRIAGEparser with "AverageByPeak_DS.txt" generated in Test 4
     input_file <- "tests/test4/AverageByPeak_DS.txt"
     TRIAGEparser(input_file, input_type = "table", outdir="tests/test6")
 
-    # Generate heatmap for "Peak0" group
+    # 2) Generate heatmap for "Peak0" group
     plotGO(indir="tests/test6", outdir="tests/test6", id = "Peak0")
 
 
@@ -185,11 +188,11 @@ Objective: To test `TRIAGEparser` using a gene list and visualize gene ontology 
 
 .. code-block:: R
 
-    # Run TRIAGEparser with gene list file
+    # 1) Run TRIAGEparser with gene list file
     input_file <- system.file("extdata", "TRIAGEparser_demo_genelist.txt", package = "TRIAGE")
     TRIAGEparser(input_file, input_type = "list", outdir="tests/test7")
 
-    # Generate Gene Ontology Heatmap
+    # 2) Generate Gene Ontology Heatmap
     plotGO(indir="tests/test7", outdir="tests/test7")
 
 

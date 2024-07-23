@@ -1,18 +1,16 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
-    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>TRIAGEgene &#8212; TRIAGE R Package  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="TRIAGEcluster" href="TRIAGEcluster.html" />
@@ -34,20 +32,20 @@
           <div class="body" role="main">
             
   <section id="triagegene">
-<h1>TRIAGEgene<a class="headerlink" href="#triagegene" title="Permalink to this headline">¶</a></h1>
+<h1>TRIAGEgene<a class="headerlink" href="#triagegene" title="Permalink to this heading">¶</a></h1>
 <section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">¶</a></h2>
 <p>TRIAGEgene is one of core functions of the TRIAGE R package, aiming to predict the regulatory potential of genes and further identify genetic drivers of cell identity. This approach calculates repressive tendency scores (RTS) for each gene by analyzing broad H3K27me3 domains near the gene (2.5kb upstream plus the gene body), and then integrates the RTS metric with gene expression data to calculate a TRIAGE-weighted value for each gene. This value, also referred to as Discordance Score (DS) in previous literature, indicates genes’ regulatory potential. After this TRIAGEgene transformation, it becomes instrumental in identifying potential regulatory and cell identity genes by ranking them in descending order based on the TRIAGE-weighted values within each group, which can vary from specific conditions to individual samples, distinct cell types, clusters, or even single cells.
 For more details, see: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S2405-4712(20)30419-1">Shim et al., Cell Systems 2020, Conserved Epigenetic Regulatory Logic Infers Genes Governing Cell Identity</a>.</p>
 <p><strong>Note:</strong> TRIAGEgene is adaptable to any type of data mapped to protein-coding and non-coding genes, including RNAseq, proteomics, ChIP-seq, and more.</p>
 </section>
 <section id="input-and-output">
-<h2>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this headline">¶</a></h2>
+<h2>Input and Output<a class="headerlink" href="#input-and-output" title="Permalink to this heading">¶</a></h2>
 <p>Input: The function requires a matrix or data frame of normalized gene expression data. This data can be in formats like Counts Per Million (CPM), Fragments Per Kilobase of transcript per Million mapped reads (FPKM), or Transcripts Per Million (TPM).</p>
 <p>Output: The output is a matrix or data frame of TRIAGE-weighted gene expression data. This TRIAGE transformation can help to identify regulatory genes and genes crucial for cell identity.</p>
 </section>
 <section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><cite>m</cite>: Input matrix or data frame of normalized gene expression data. Acceptable types include CPM, FPKM, TPM, among others.</p></li>
 </ul>
@@ -62,18 +60,18 @@ For more details, see: <a class="reference external" href="https://linkinghub.el
 </ul>
 </section>
 <section id="usage-examples">
-<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example 1: Human data, with auto log transformation decision</span>
-<span class="n">result</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
 
 <span class="c1"># Example 2: Human data, &#39;roadmap&#39; data source, auto log transformation</span>
-<span class="n">result</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">data_source</span> <span class="o">=</span> <span class="s">&quot;roadmap&quot;</span><span class="p">)</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">data_source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;roadmap&quot;</span><span class="p">)</span>
 
 <span class="c1"># Example 3: Human data, forced log transformation</span>
-<span class="n">result</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
 
 <span class="c1"># Example 4: Mouse data, without log transformation</span>
-<span class="n">result</span> <span class="o">&lt;-</span> <span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">species</span> <span class="o">=</span> <span class="s">&quot;Mouse&quot;</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Mouse&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -107,8 +105,9 @@ For more details, see: <a class="reference external" href="https://linkinghub.el
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="User-friendly functions.html">User-friendly Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Testing TRIAGE.html">Testing TRIAGE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="User-friendly%20functions.html">User-friendly Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Testing%20TRIAGE.html">Testing TRIAGE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Case%20Study.html">Case Study</a></li>
 </ul>
 
 <div class="relations">
@@ -124,12 +123,12 @@ For more details, see: <a class="reference external" href="https://linkinghub.el
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -146,8 +145,8 @@ For more details, see: <a class="reference external" href="https://linkinghub.el
       &copy;2024, Qiongyi Zhao.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/TRIAGEgene.rst.txt"

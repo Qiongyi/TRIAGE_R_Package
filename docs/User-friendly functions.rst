@@ -49,6 +49,11 @@ The `byPeak` function calculates the average gene expression or average TRIAGE-w
 
 - `peak_column`: (Optional) Name of the column in metadata representing peak values. Default is "Peak".
 
+..
+
+- `prefix`: (Optional) The prefix for the column names in the output file. Default is NULL.
+
+
 **Usage Example:**
 
 .. code-block:: R
@@ -63,6 +68,31 @@ The `byPeak` function calculates the average gene expression or average TRIAGE-w
                     peak = metadata_df, 
                     peak_column="Clusters",
                     cell_column="cell_name")
+
+
+getClusterGenes Function
+------------------------
+
+The `getClusterGenes` function extracts genes assigned to a specific cluster based on the highest probability from the output of the `TRIAGEparser`. This is particularly useful for users conducting downstream analyses for individual gene clusters.
+
+**Parameters:**
+
+- `input_file`: The path to the CSV file containing genes and their cluster probabilities.
+
+..
+
+- `cluster_name`: The name of the cluster to extract genes from.
+
+
+
+**Usage Example:**
+
+.. code-block:: R
+
+
+    # Example: Extract genes assigned to cluster1 from the TRIAGEparser output
+    cluster1_genes <- getClusterGenes("TRIAGEparser_output/gene_clusters/output_gene_clusters.csv", "cluster1")
+
 
 
 plotGO Function
@@ -88,10 +118,16 @@ The `plotGO` function creates GO enrichment heatmaps from the output of the `TRI
 
 ..
 
-- `top_terms`: (Optional) The number of top GO terms to include in the heatmap. Default is 10.
+- `top_terms`: (Optional) The number of top GO terms for each gene cluster to include in the heatmap. Default is 10.
+
+..
+
+- `fdr`: (Optional) The FDR threshold for the heatmap visulization of TRIAGEparser results. Default is 0.01.
+
 ..
 
 - `width`: (Optional) The width of the output PDF heatmap. Default is NULL, which uses default behavior of pdf().
+
 ..
 
 - `height`: (Optional) The height of the output PDF heatmap. Default is NULL, which uses default behavior of pdf().
@@ -105,7 +141,8 @@ The `plotGO` function creates GO enrichment heatmaps from the output of the `TRI
     plotGO(indir = "path/to/TRIAGEparser_output", 
         outdir = "path/to/heatmap_output")
 
-    # Example 2: Generate heatmap for a specific group “Peak01”, with the PDF size 6X7
+    # Example 2: Generate heatmap for a specific group “Peak01”, 
+    # with the PDF size 6X7
     plotGO(indir = "path/to/TRIAGEparser_output", 
         outdir = "path/to/heatmap_output", 
         id = "Peak01",
