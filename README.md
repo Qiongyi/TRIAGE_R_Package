@@ -14,6 +14,9 @@ TRIAGE R package is particularly useful for researchers focusing on:
 - User-friendly functions for data analysis and visualization: The package includes functions for creating publication-ready figures, aiding in data interpretation and presentation.
 - Multi-species support: Facilitates research across various biological contexts, enhancing its applicability in diverse studies.
 
+# Download the Latest Release
+You can download the latest release of TRIAGE [here](https://github.com/Qiongyi/TRIAGE_R_Package/releases/download/v1.1.3/TRIAGE_1.1.3.tar.gz).
+
 # Documentation
 The complete TRIAGE R package manual is available via [readthedocs](https://triage-r-package.readthedocs.io/en/latest/index.html).
 
