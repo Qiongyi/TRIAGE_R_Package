@@ -1,0 +1,31 @@
+Description	all genes	cluster 1	cluster 2	cluster 3
+collagen-containing extracellular matrix	5.56793123926916e-14	0.128394814098056	1	1.56101062690141e-07
+axoneme assembly	3.63239408614816e-10	1	1	0.000393855301757389
+axoneme	5.04258727936954e-10	0.0918994942329191	1	1
+ciliary plasm	5.04258727936954e-10	0.0918994942329191	1	1
+microtubule bundle formation	9.09951427267249e-09	1	1	1
+extracellular matrix organization	2.02881900593794e-08	1	1	1.2920561808877e-06
+extracellular structure organization	2.02881900593794e-08	1	1	1.2920561808877e-06
+external encapsulating structure organization	2.03508445233693e-08	1	1	1.2920561808877e-06
+pattern specification process	5.40072701694351e-08	1	1.83148290707824e-07	1
+axonemal dynein complex assembly	2.18525343426771e-07	1	1	0.000393855301757389
+filopodium	1	0.048944179260791	1	1
+axonemal microtubule	1	0.0696338111404567	1	1
+actin-based cell projection	1	0.0696338111404567	1	1
+distal axon	1	0.135377959893989	1	1
+neuronal cell body	1	0.211623687984601	1	1
+glial cell projection	1	0.211623687984601	1	1
+microfibril	1	0.211623687984601	1	1
+embryonic organ development	1	1	1.83148290707824e-07	1
+regionalization	1	1	2.26866911883263e-07	1
+forebrain development	1	1	6.72840414267401e-05	1
+mesenchyme development	1	1	6.72840414267401e-05	1
+anterior/posterior pattern specification	1	1	6.72840414267401e-05	1
+heart morphogenesis	1	1	7.83243391181969e-05	1
+embryonic organ morphogenesis	1	1	7.83243391181969e-05	1
+metanephros development	1	1	7.83243391181969e-05	1
+modulation of chemical synaptic transmission	1	1	7.83243391181969e-05	1
+membrane raft	1	1	1	6.44878220510906e-07
+membrane microdomain	1	1	1	6.44878220510906e-07
+platelet alpha granule	1	1	1	0.000290196609734222
+cilium movement	1	1	1	0.000393855301757389
