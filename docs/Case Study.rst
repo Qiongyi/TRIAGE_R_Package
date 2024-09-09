@@ -78,6 +78,9 @@ A snippet of the "AverageByPeak.csv" file is shown below:
     write.table(ds, file = "tests/AverageByPeak.txt", sep = "\t", 
                 row.names = TRUE, col.names = NA, quote = FALSE)
 
+    # Extract the top 10 genes for each TRIAGE peak
+    top_genes <- topGenes(ds, top_no = 10)
+
     # Generate Jaccard Index Heatmap
     plotJaccard(ds, "tests/Jaccard_heatmap_peak.pdf")
 
