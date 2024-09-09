@@ -1,0 +1,2 @@
+	cluster1	cluster3
+Synapse_pruning	1	0.002

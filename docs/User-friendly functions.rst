@@ -3,8 +3,8 @@ User-friendly Functions
 
 The TRIAGE R package includes several user-friendly functions designed to enhance data visualization and analysis. These functions provide intuitive graphical representations of complex data, making it easier for researchers to interpret their results. This document covers three key functions: `plotJaccard`, `byPeak`, and `plotGO`.
 
-plotJaccard Function
---------------------
+plotJaccard
+-----------
 
 The `plotJaccard` function generates Jaccard similarity index heatmaps based on the output from the `TRIAGEgene` function, allowing for intuitive data comparisons.
 
@@ -28,8 +28,8 @@ The `plotJaccard` function generates Jaccard similarity index heatmaps based on 
     plotJaccard(ds, "Jaccard_heatmap.pdf")
 
 
-byPeak Function
----------------
+byPeak
+------
 
 The `byPeak` function calculates the average gene expression or average TRIAGE-weighted values for each gene grouped by 'Peak'. It supports direct data frame input or reading from CSV/TXT files.
 
@@ -70,8 +70,35 @@ The `byPeak` function calculates the average gene expression or average TRIAGE-w
                     cell_column="cell_name")
 
 
-getClusterGenes Function
-------------------------
+topGenes
+--------
+
+The `topGenes` function extracts the top `n` genes with the highest values from each column of a given data frame or matrix. This function is useful for identifying the top genes based on DS values or gene expression values for each TRIAGE peak, cluster, or group.
+
+**Parameters:**
+
+- `ds`: A data frame or matrix where rows represent genes and columns represent TRIAGE peaks, cell clusters, or groups. The values should be DS values or gene expression values.
+- `top_no` (optional): The number of top genes to extract for each column. The default value is 10.
+
+**Returns:**
+
+- A matrix where each element contains the top `n` genes in the format "GeneSymbol (DS value)" for each column of the input data.
+
+**Version Added:**
+
+- v1.1.4
+
+**Usage Example:**
+
+.. code-block:: R
+
+    # Example: Extract the top 5 genes for each TRIAGE peak
+    ds <- TRIAGEgene(input_matrix)
+    top_genes <- topGenes(ds, top_no = 5)
+
+
+getClusterGenes
+---------------
 
 The `getClusterGenes` function extracts genes assigned to a specific cluster based on the highest probability from the output of the `TRIAGEparser`. This is particularly useful for users conducting downstream analyses for individual gene clusters.
 
@@ -83,7 +110,9 @@ The `getClusterGenes` function extracts genes assigned to a specific cluster bas
 
 - `cluster_name`: The name of the cluster to extract genes from.
 
+**Version Added:**
 
+- v1.1.3
 
 **Usage Example:**
 
@@ -95,8 +124,8 @@ The `getClusterGenes` function extracts genes assigned to a specific cluster bas
 
 
 
-plotGO Function
----------------
+plotGO
+------
 
 The `plotGO` function creates GO enrichment heatmaps from the output of the `TRIAGEparser`. It visualizes the GO enrichment analysis results for specific groups or IDs.
 
@@ -141,9 +170,16 @@ The `plotGO` function creates GO enrichment heatmaps from the output of the `TRI
     plotGO(indir = "path/to/TRIAGEparser_output", 
         outdir = "path/to/heatmap_output")
 
-    # Example 2: Generate heatmap for a specific group “Peak01”, 
+    # Example 2: Generate heatmap for a specific group “Peak1”, 
     # with the PDF size 6X7
     plotGO(indir = "path/to/TRIAGEparser_output", 
         outdir = "path/to/heatmap_output", 
-        id = "Peak01",
+        id = "Peak1",
+        width=6, height=7)
+
+    # Example 3: Generate heatmap for two groups: “Peak0” and "Peak1", 
+    # with the PDF size 6X7
+    plotGO(indir = "path/to/TRIAGEparser_output", 
+        outdir = "path/to/heatmap_output", 
+        id = c("Peak0", "Peak1"),
         width=6, height=7)

@@ -85,8 +85,8 @@ Objective: To evaluate the functionality of `TRIAGEgene` using mouse data in mat
     plotJaccard(ds, "tests/Jaccard_heatmap_Mouse_test3.pdf", top_no = 88)
 
 
-Test TRIAGEcluster + byPeak()
-------------------------------
+Test TRIAGEcluster + byPeak() + topGenes()
+------------------------------------------
 
 `TRIAGEcluster` is used for refining cell clustering in scRNA-seq data.
 
@@ -96,9 +96,10 @@ Objective: To use `TRIAGEcluster` for cell clustering, `byPeak()` for analyzing 
 
 **Steps:**
 
-1. Run `TRIAGEcluster` for Cell Clustering, using CSV files for expression data and metadata.
-2. Select a suitable Bandwidth based on UMAP reviews and Calculate Average Gene Expression by Peak using the `byPeak()` function.
+1. Run `TRIAGEcluster` for cell clustering, using CSV files for expression data and metadata, and select a suitable bandwidth based on UMAP reviews.
+2. Run `byPeak()` to calculate average gene expression by peak.
 3. Run `TRIAGEgene` to generate TRIAGE-weighted expression data.
+4. Run `topGenes()` to extract the top 10 DS genes for each TRIAGE peak.
 
 .. code-block:: R
 
@@ -111,7 +112,7 @@ Objective: To use `TRIAGEcluster` for cell clustering, `byPeak()` for analyzing 
     metadata_file <- system.file("extdata", "TRIAGEcluster_demo_metadata_human.csv", package = "TRIAGE")
     TRIAGEcluster(expr_file, metadata_file, outdir = "tests/test4", output_prefix = "demo")
 
-    # 2) Select a suitable bandwidth and calculate average gene expression
+    # 2) Select a suitable bandwidth and run 'byPeak()' to calculate average gene expression
     peak_file <- "tests/test4/demo_bw0.80_metadata.csv"
     avg_peak <- byPeak(expr_file, peak_file, cell_column = "Barcode", peak_column = "Peak")
     # Save the average gene expression result to a CSV file
@@ -125,6 +126,8 @@ Objective: To use `TRIAGEcluster` for cell clustering, `byPeak()` for analyzing 
     write.table(ds, file = "tests/test4/AverageByPeak_DS.txt", sep = "\t", 
                 row.names = TRUE, col.names = NA, quote = FALSE)
 
+    # 4) Run 'topGenes()' to extract the top 10 genes for each TRIAGE peak based on DS values.
+    top_ds_genes <- topGenes(ds, top_no = 10)
 
 
 Test TRIAGEparser + plotGO() + getClusterGenes()

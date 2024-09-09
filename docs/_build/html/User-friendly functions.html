@@ -34,8 +34,8 @@
   <section id="user-friendly-functions">
 <h1>User-friendly Functions<a class="headerlink" href="#user-friendly-functions" title="Permalink to this heading">¶</a></h1>
 <p>The TRIAGE R package includes several user-friendly functions designed to enhance data visualization and analysis. These functions provide intuitive graphical representations of complex data, making it easier for researchers to interpret their results. This document covers three key functions: <cite>plotJaccard</cite>, <cite>byPeak</cite>, and <cite>plotGO</cite>.</p>
-<section id="plotjaccard-function">
-<h2>plotJaccard Function<a class="headerlink" href="#plotjaccard-function" title="Permalink to this heading">¶</a></h2>
+<section id="plotjaccard">
+<h2>plotJaccard<a class="headerlink" href="#plotjaccard" title="Permalink to this heading">¶</a></h2>
 <p>The <cite>plotJaccard</cite> function generates Jaccard similarity index heatmaps based on the output from the <cite>TRIAGEgene</cite> function, allowing for intuitive data comparisons.</p>
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
@@ -53,8 +53,8 @@
 </pre></div>
 </div>
 </section>
-<section id="bypeak-function">
-<h2>byPeak Function<a class="headerlink" href="#bypeak-function" title="Permalink to this heading">¶</a></h2>
+<section id="bypeak">
+<h2>byPeak<a class="headerlink" href="#bypeak" title="Permalink to this heading">¶</a></h2>
 <p>The <cite>byPeak</cite> function calculates the average gene expression or average TRIAGE-weighted values for each gene grouped by ‘Peak’. It supports direct data frame input or reading from CSV/TXT files.</p>
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
@@ -86,8 +86,31 @@
 </pre></div>
 </div>
 </section>
-<section id="getclustergenes-function">
-<h2>getClusterGenes Function<a class="headerlink" href="#getclustergenes-function" title="Permalink to this heading">¶</a></h2>
+<section id="topgenes">
+<h2>topGenes<a class="headerlink" href="#topgenes" title="Permalink to this heading">¶</a></h2>
+<p>The <cite>topGenes</cite> function extracts the top <cite>n</cite> genes with the highest values from each column of a given data frame or matrix. This function is useful for identifying the top genes based on DS values or gene expression values for each TRIAGE peak, cluster, or group.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>ds</cite>: A data frame or matrix where rows represent genes and columns represent TRIAGE peaks, cell clusters, or groups. The values should be DS values or gene expression values.</p></li>
+<li><p><cite>top_no</cite> (optional): The number of top genes to extract for each column. The default value is 10.</p></li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul class="simple">
+<li><p>A matrix where each element contains the top <cite>n</cite> genes in the format “GeneSymbol (DS value)” for each column of the input data.</p></li>
+</ul>
+<p><strong>Version Added:</strong></p>
+<ul class="simple">
+<li><p>v1.1.4</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Extract the top 5 genes for each TRIAGE peak</span>
+<span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">input_matrix</span><span class="p">)</span>
+<span class="n">top_genes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">topGenes</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">top_no</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="getclustergenes">
+<h2>getClusterGenes<a class="headerlink" href="#getclustergenes" title="Permalink to this heading">¶</a></h2>
 <p>The <cite>getClusterGenes</cite> function extracts genes assigned to a specific cluster based on the highest probability from the output of the <cite>TRIAGEparser</cite>. This is particularly useful for users conducting downstream analyses for individual gene clusters.</p>
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
@@ -96,14 +119,18 @@
 <ul class="simple">
 <li><p><cite>cluster_name</cite>: The name of the cluster to extract genes from.</p></li>
 </ul>
+<p><strong>Version Added:</strong></p>
+<ul class="simple">
+<li><p>v1.1.3</p></li>
+</ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Extract genes assigned to cluster1 from the TRIAGEparser output</span>
 <span class="n">cluster1_genes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">getClusterGenes</span><span class="p">(</span><span class="s">&quot;TRIAGEparser_output/gene_clusters/output_gene_clusters.csv&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cluster1&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="plotgo-function">
-<h2>plotGO Function<a class="headerlink" href="#plotgo-function" title="Permalink to this heading">¶</a></h2>
+<section id="plotgo">
+<h2>plotGO<a class="headerlink" href="#plotgo" title="Permalink to this heading">¶</a></h2>
 <p>The <cite>plotGO</cite> function creates GO enrichment heatmaps from the output of the <cite>TRIAGEparser</cite>. It visualizes the GO enrichment analysis results for specific groups or IDs.</p>
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
@@ -135,11 +162,18 @@
 <span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">)</span>
 
-<span class="c1"># Example 2: Generate heatmap for a specific group “Peak01”,</span>
+<span class="c1"># Example 2: Generate heatmap for a specific group “Peak1”,</span>
 <span class="c1"># with the PDF size 6X7</span>
 <span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Peak01&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Peak1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">width</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
+
+<span class="c1"># Example 3: Generate heatmap for two groups: “Peak0” and &quot;Peak1&quot;,</span>
+<span class="c1"># with the PDF size 6X7</span>
+<span class="nf">plotGO</span><span class="p">(</span><span class="n">indir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/TRIAGEparser_output&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">outdir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/heatmap_output&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Peak0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Peak1&quot;</span><span class="p">),</span>
 <span class="w">    </span><span class="n">width</span><span class="o">=</span><span class="m">6</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="o">=</span><span class="m">7</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -169,10 +203,11 @@
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEcluster.html">TRIAGEcluster</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User-friendly Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#plotjaccard-function">plotJaccard Function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#bypeak-function">byPeak Function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#getclustergenes-function">getClusterGenes Function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#plotgo-function">plotGO Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotjaccard">plotJaccard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bypeak">byPeak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#topgenes">topGenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getclustergenes">getClusterGenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plotgo">plotGO</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Testing%20TRIAGE.html">Testing TRIAGE</a></li>

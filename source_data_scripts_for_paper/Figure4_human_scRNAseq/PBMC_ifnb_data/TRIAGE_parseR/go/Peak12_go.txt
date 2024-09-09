@@ -1,0 +1,6 @@
+	cluster1	cluster3	cluster4
+Cellular_response_to_cadmium_ion	1	1	0.00028
+Cellular_response_to_copper_ion	1	1	0.00017
+Cellular_response_to_zinc_ion	1	1	0.00017
+Cellular_zinc_ion_homeostasis	1	1	0.00027
+Detoxification_of_copper_ion	1	1	0.00017

@@ -1,5 +1,5 @@
 #############################################################
-######         Figure 2. TRIAGE-prioritized genes      ######
+######         Figure 1. TRIAGE-prioritized genes      ######
 #############################################################
 
 ### Extract go slim annotaton and gene description from BIomaRt
@@ -27,7 +27,7 @@ write.table(annotations_go_slim, "anno_go_slim.xls", sep="\t", row.names=FALSE, 
 
 
 ################################################################################
-### Figure 2c. - functional category
+### Figure 1c. - functional category
 library(ggplot2)
 library(dplyr)
 
@@ -56,7 +56,7 @@ ggplot(data, aes(x = V2, y = V1)) +
 ggsave("function_category_lollipop.pdf", width = 4, height = 4)
 
 ################################################################################
-### Figure 2d. GO enrichment analysis
+### Figure 1d. GO enrichment analysis
 file = read.csv("Priority_epimap_rts.csv", header=T, quote="")
 genes <- file[which(file$Priority == "Y"),]
 
@@ -179,7 +179,7 @@ ggsave("Genecards_disease_lollipop.pdf", width = 6, height = 6)
 
 
 #############################################################
-######        Figure 3 & Table 1. TRIAGEgene           ######
+######        Figure 3 & Table 1.                      ######
 ######       In vivo mouse RNA-seq data analysis       ######
 #############################################################
 
@@ -188,7 +188,7 @@ ggsave("Genecards_disease_lollipop.pdf", width = 6, height = 6)
 
 # Download data from GEO 95755:  https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=gse95755
 
-#setwd("C:/Users/uqqzhao/UQ/1projects/TRIAGE_R_package/Figure3_TRIAGEgene/GSE95755") 
+#setwd("C:/Users/uqqzhao/UQ/1projects/TRIAGE_R_package/Figure3_mouse_RNAseq/GSE95755") 
 file = read.table("GSE95755_MultiCellularRNAseq_EdgeR_CPM.txt", header=T, quote="", sep="\t")
 
 #head(file)
@@ -212,7 +212,7 @@ cpm_deg <- cpm[deg$Symbol, ]
 
 ########### Run TRIAGEgene #############
 # See the installation guideline here: https://triage-r-package.readthedocs.io/en/latest/Installation.html
-#install.packages("path/to/TRIAGE_1.1.3.tar.gz", repos = NULL, type = "source")
+#install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
 library(TRIAGE)
 ds <- TRIAGEgene(cpm_deg, species = "Mouse")
 #head(ds)
@@ -364,7 +364,7 @@ dev.off()
 
 
 #############################################################
-######            Figure 4. TRIAGEcluster              ######
+######            Figure 4.                            ######
 ###### In vivo human single-cell RNA-seq data analysis ######
 #############################################################
 
@@ -379,7 +379,7 @@ library(cowplot)
 # packageVersion("Seurat")
 # [1] ‘4.3.0’
 
-#setwd("C:/Users/uqqzhao/UQ/1projects/TRIAGE_R_package/Figure4_TRIAGEcluster/PBMC_ifnb_data")
+#setwd("C:/Users/uqqzhao/UQ/1projects/TRIAGE_R_package/Figure4_human_scRNAseq/PBMC_ifnb_data")
 
 ################################################################################
 ### Seurat data integration
@@ -452,17 +452,17 @@ immune.combined <- FindClusters(immune.combined, resolution = 0.5)
 # but some fluctuation across systems is inevitable, and nothing to worry about."
 ################################################################################
 seu <- readRDS("./PBMC_ifnb_data/PBMC_Seurat_CCAint_data_multires_seuob.RDS")
-p1 <- DimPlot(seu, reduction = "umap", group.by = "stim", pt.size = 0.1) + ggtitle("Conditions")
+#p1 <- DimPlot(seu, reduction = "umap", group.by = "stim", pt.size = 0.1) + ggtitle("Conditions")
 p2 <- DimPlot(seu, reduction = "umap", group.by = "seurat_annotations", pt.size = 0.1) + ggtitle("Cell types")
-ggsave("Figure4a1_umap.pdf", plot = p1, width = 8, height = 8)
-ggsave("Figure4a2_umap.pdf", plot = p2, width = 8, height = 8)
+#ggsave("Figure4a1_umap.pdf", plot = p1, width = 8, height = 8)
+ggsave("Figure4a_umap.pdf", plot = p2, width = 8, height = 8)
 
 
 
 ################################################################################
-### Run TRIAGEcluster
+### Run TRIAGE R package
 # See the installation guideline here: https://triage-r-package.readthedocs.io/en/latest/Installation.html
-#install.packages("path/to/TRIAGE_1.1.3.tar.gz", repos = NULL, type = "source")
+#install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
 library(TRIAGE)
 
 TRIAGEcluster(expr = "PBMC_ifnb_data/pbmc_ifnb_Seurat_CCAint_allgenes.csv",
@@ -479,7 +479,14 @@ TRIAGEcluster(expr = "PBMC_ifnb_data/pbmc_ifnb_Seurat_CCAint_allgenes.csv",
 ### Figure 4b
 # Figure 4b is the UMAP generated in the above step with a bandwidth of 0.4 (i.e. bw=0.4)
 # "PBMC_ifnb_data/TRIAGE_Cluster/TRIAGE_Cluster_bw0.40_labelledUMAP.pdf"
+
+
+
 ################################################################################
+### Figure 4c
+# Run the python script "peak_correlation_and_plot.py" to generate Figure 4c.
+# https://github.com/Qiongyi/TRIAGE_R_Package/source_data_scripts_for_paper/Figure4_human_scRNAseq/peak_correlation_and_plot.py
+
 
 
 ################################################################################
@@ -493,6 +500,7 @@ result <- byPeak(expr = "PBMC_ifnb_data/pbmc_ifnb_Seurat_CCAint_allgenes.csv",
                  peak_column="Peak",
                  cell_column="cell_name")
 write.csv(result, "PBMC_ifnb_data/Peak_AvgExp.csv", quote=F)
+
 # Supplementary Data 1 is "Peak_AvgExp.csv".
 
 
@@ -502,37 +510,47 @@ ds <- TRIAGEgene(result)
 write.csv(ds, "PBMC_ifnb_data/Peak_DS.csv", quote=F)
 
 
-################################################################################
-### Optional analysis
-exp <- read.csv("PBMC_ifnb_data/Peak_AvgExp.csv", row.names = 1)
-# Extract top 10 genes for each peak
-get_top_genes <- function(df, peaks, top_n = 10) {
-  top_genes_list <- list()
-  
-  for (peak in peaks) {
-    if (peak %in% colnames(df)) {
-      # Sort genes by expression level for the current peak
-      sorted_genes <- df[order(-df[[peak]]), ]
-      top_genes <- head(sorted_genes, top_n)
-      top_genes_list[[peak]] <- top_genes
-    } else {
-      warning(paste("Peak column", peak, "not found in data"))
-    }
-  }
-  
-  return(top_genes_list)
-}
-
-peaks_of_interest <- c("Peak0", "Peak1", "Peak2")
-
-# Get top 10 genes for each peak
-top_genes <- get_top_genes(exp, peaks_of_interest)
-
+ds <- read.csv("PBMC_ifnb_data/Peak_DS.csv", row.names = 1)
 
 
 ################################################################################
-### Run TRIAGE 'byPeak' to extract cluster-level average data
-### Supplementary Data 2
+# check the top 10 genes with highest DS values in each TRIAGE peak (i.e. cell group)
+top <- topGenes(ds, top_no = 10)
+
+write.csv(top, "PBMC_ifnb_data/Peak_DS_top10.csv", quote=F, row.names=F)
+
+
+# Peak 0: CD14 Mono
+# Peak 1: CD4 Memory T
+# Peak 11: T activated
+
+### Figure 4d
+top[, "Peak0"]
+
+### Run TRIAGEparser
+TRIAGEparser("PBMC_ifnb_data/Peak_DS.csv",
+             input_type = "table",
+             outdir = "PBMC_ifnb_data/TRIAGE_parseR",
+             number_of_gene = 100)
+
+### Figure 4e
+plotGO(indir="PBMC_ifnb_data/TRIAGE_parseR", outdir="PBMC_ifnb_data/TRIAGE_parseR", id = "Peak0")
+
+
+
+#############################################################
+######          Supplementary Figure 2                 ######
+#############################################################
+top[, "Peak1"]
+plotGO(indir="PBMC_ifnb_data/TRIAGE_parseR", outdir="PBMC_ifnb_data/TRIAGE_parseR", id = "Peak1")
+top[, "Peak11"]
+plotGO(indir="PBMC_ifnb_data/TRIAGE_parseR", outdir="PBMC_ifnb_data/TRIAGE_parseR", id = "Peak11")
+
+
+
+
+################################################################################
+### Run TRIAGE 'byPeak' to extract cluster-level average data - (optinal)
 # read the metadata file: can be "TRIAGE_Cluster_bw0.40_metadata.csv" or any other metadata files with Seurat cluster information
 result <- byPeak(expr = "PBMC_ifnb_data/pbmc_ifnb_Seurat_CCAint_allgenes.csv",
                  peak = "PBMC_ifnb_data/TRIAGE_Cluster/TRIAGE_Cluster_bw0.40_metadata.csv",
@@ -540,10 +558,8 @@ result <- byPeak(expr = "PBMC_ifnb_data/pbmc_ifnb_Seurat_CCAint_allgenes.csv",
                  cell_column="cell_name",
                  prefix = "Cluster")
 write.csv(result, "PBMC_ifnb_data/Cluster_AvgExp.csv", quote=F)
-# Supplementary Data 2 is "Cluster_AvgExp.csv".
 
 
-################################################################################
 ### Run TRIAGEgene based on cluster-level average data
 ds <- TRIAGEgene(result)
 write.csv(ds, "PBMC_ifnb_data/Cluster_DS.csv", quote=F)
@@ -599,15 +615,13 @@ corall2=corall1[, c('cosine_similarity', 'spearman_correlation', 'cluster_peak',
 write.csv(corall2, "PBMC_ifnb_data/pbmc_ifnb_PCA_Seurat_within_cluster_mean_correlation_similarity.csv", quote = F, row.names = T)
 
 
-################################################################################
-### Figure 4c
-# Run the python script "peak_correlation_and_plot.py" to generate Figure 4c.
+
 
 
 
 
 #############################################################
-######            Figure 5. TRIAGEparser               ######
+######            Figure 5.                            ######
 ######      In vitro human RNA-seq data analysis       ######
 #############################################################
 
@@ -617,7 +631,7 @@ write.csv(corall2, "PBMC_ifnb_data/pbmc_ifnb_PCA_Seurat_within_cluster_mean_corr
 
 
 ### select 1431 DE genes (>2 fold changes and padj<0.05) for the GO enrichment analysis
-#setwd("C:/Users/uqqzhao/UQ/1projects/TRIAGE_R_package/Figure5_TRIAGEparser/GSE246079")
+#setwd("C:/Users/uqqzhao/UQ/1projects/TRIAGE_R_package/Figure5_human_RNAseq/GSE246079")
 file = read.table("1T_vs_1_DESeq2_p0.05_231011.xls", header=T, quote="", sep="\t")
 
 file <- file[abs(file$log2FoldChange) > 1 & file$padj < 0.05, ]
@@ -625,6 +639,150 @@ file <- file[abs(file$log2FoldChange) > 1 & file$padj < 0.05, ]
 #[1] 1431   22
 genes <- file$Row.names
 writeLines(genes, "DE_genes_1431_list.txt")
+
+################################################################################
+### For Figure 5a - GO enrichement analysis for top DS 20/50/100 genes
+
+exp <- file[,8:13]
+rownames(exp) <- file$Row.names
+head(exp)
+
+# dim(exp)
+# [1] 1431    6
+
+exp$mean_CHIR <- rowMeans(exp[, c("X1CHIR_R1_S1", "X1CHIR_R2_S2", "X1CHIR_R3_S3")])
+exp$mean_CHIR_Tran <- rowMeans(exp[, c("X1CHIR_Tran_R1_S4", "X1CHIR_Tran_R2_S5", "X1CHIR_Tran_R3_S6")])
+
+### Run TRIAGE R package
+# See the installation guideline here: https://triage-r-package.readthedocs.io/en/latest/Installation.html
+#install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
+library(TRIAGE)
+# Run TRIAGEgene
+ds <- TRIAGEgene(exp)
+
+# Sort based on DS values
+ds <- ds[order(-ds$mean_CHIR_Tran), ]
+
+write.csv(ds, "DS_sorted.csv", quote=F, row.names=T)
+
+
+# top 20 DS genes
+top <- rownames(ds[1:20,])
+writeLines(top, "top20DSgenes.txt")
+
+# top 50 DS genes
+top <- rownames(ds[1:50,])
+writeLines(top, "top50DSgenes.txt")
+
+# top 100 DS genes
+top <- rownames(ds[1:100,])
+writeLines(top, "top100DSgenes.txt")
+
+
+### GO enrichment analysis for top 20/50/100 DS genes 
+library(clusterProfiler)
+library(enrichplot)
+library(org.Hs.eg.db)
+organism="org.Hs.eg.db"
+
+genes <- rownames(ds[1:20,])
+go <- enrichGO(gene = genes,
+               OrgDb = organism, 
+               keyType = 'SYMBOL',
+               ont = "ALL",
+               pAdjustMethod = "fdr",
+               pvalueCutoff = 0.05,
+               qvalueCutoff = 0.05)
+
+write.table(go,"GO_enrichment_top20DS.xls", row.names=FALSE, quote = FALSE, sep = "\t")
+
+genes <- rownames(ds[1:50,])
+go <- enrichGO(gene = genes,
+               OrgDb = organism, 
+               keyType = 'SYMBOL',
+               ont = "ALL",
+               pAdjustMethod = "fdr",
+               pvalueCutoff = 0.05,
+               qvalueCutoff = 0.05)
+
+write.table(go,"GO_enrichment_top50DS.xls", row.names=FALSE, quote = FALSE, sep = "\t")
+
+genes <- rownames(ds[1:100,])
+go <- enrichGO(gene = genes,
+               OrgDb = organism, 
+               keyType = 'SYMBOL',
+               ont = "ALL",
+               pAdjustMethod = "fdr",
+               pvalueCutoff = 0.05,
+               qvalueCutoff = 0.05)
+
+write.table(go,"GO_enrichment_top100DS.xls", row.names=FALSE, quote = FALSE, sep = "\t")
+
+library(dplyr)
+key_words <- c("Wnt", "cardiac cell", "cardiac pacemaker cell", "cardiac muscle cell", "endothelial cell", "cardiomyocytes", "fibroblast", "myofibroblasts", "smooth muscle cell")
+
+process_file <- function(file) {
+  data <- read.delim(file, header = TRUE, sep = "\t")
+  
+  filtered_data <- data %>%
+    filter(grepl(paste(key_words, collapse = "|"), Description, ignore.case = TRUE))
+  return(filtered_data)
+}
+
+
+files <- list("GO_enrichment_top20DS.xls", "GO_enrichment_top50DS.xls", "GO_enrichment_top100DS.xls")
+processed_data <- lapply(files, process_file)
+
+all_go_terms <- unique(unlist(lapply(processed_data, function(x) x$Description)))
+
+# remove "Wnt signaling pathway involved in midbrain dopaminergic neuron differentiation" as this GO term is not relevant
+all_go_terms <- all_go_terms[all_go_terms != "Wnt signaling pathway involved in midbrain dopaminergic neuron differentiation"]
+
+all_go_terms
+
+
+result <- data.frame(Description = all_go_terms, stringsAsFactors = FALSE)
+
+for (i in 1:length(files)) {
+  file_data <- processed_data[[i]]
+  p_adjust_col <- file_data %>% select(Description, p.adjust)
+  colnames(p_adjust_col)[2] <- gsub("GO_enrichment_", "", gsub(".xls", "", files[i]))
+  result <- left_join(result, p_adjust_col, by = c("Description" = "Description"))
+}
+
+head(result)
+
+result[is.na(result)] <- 1
+
+colnames(result)<-c("Description", "Top20", "Top50", "Top100")
+
+write.table(result, "GO_1T_vs_1_TopDSgenes_combined.xls", sep = "\t", row.names = FALSE, quote = FALSE)
+
+
+rownames(result) <- result$Description
+go <- result[,-1,drop = FALSE]
+go <- -log10(go)
+
+library(ggplot2)
+library(reshape2)
+
+go_long <- melt(result, id.vars = "Description")
+colnames(go_long) <- c("Description", "Category", "p.adjust")
+
+
+### Figure 5a
+ggplot(go_long, aes(x = Category, y = Description, size = -log10(p.adjust), color = -log10(p.adjust))) +
+  geom_point() +
+  scale_color_gradient(low = "lightgrey", high = "red", guide = "legend") +
+  theme_minimal() +
+  labs(x = "Category", y = "GO description", size = "-log10(p.adjust)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  guides(size = guide_legend(), color = guide_legend()) 
+
+ggsave("GO_1T_vs_1_TopDS_dotplot.pdf", width = 8, height = 6)
+
+# Figure 5a is "GO_1T_vs_1_TopDS_dotplot.pdf".
+
 
 ################################################################################
 ### GO enrichment analysis for all DE genes
@@ -645,7 +803,7 @@ write.table(go,"GO_enrichment_results_1T_vs_1_DEgenes1431.xls", row.names=FALSE,
 ################################################################################
 ### Run TRIAGE R package: TRIAGEparser
 # See the installation guideline here: https://triage-r-package.readthedocs.io/en/latest/Installation.html
-#install.packages("path/to/TRIAGE_1.1.3.tar.gz", repos = NULL, type = "source")
+#install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
 library(TRIAGE)
 TRIAGEparser("DE_genes_1431_list.txt", input_type = "list", outdir = "TRIAGEparser_output_DE1431")
 plotGO(indir = "./TRIAGEparser_output_DE1431", outdir = "./TRIAGEparser_output_DE1431")
@@ -670,6 +828,8 @@ cluster4_genes <- getClusterGenes("./TRIAGEparser_output_DE1431/gene_clusters/ou
 writeLines(cluster4_genes, "cluster4_genes.txt")
 length(cluster4_genes)
 # [1] 7
+
+# Supplementary Data 2 is the combination of "cluster1_genes.txt", "cluster2_genes.txt" and "cluster3_genes.txt".
 
 
 ################################################################################
@@ -717,7 +877,7 @@ write.table(go,"GO_enrichment_results_1T_vs_1_genecluster3.xls", row.names=FALSE
 
 
 ################################################################################
-### Figure 5a
+### Figure 5b
 ### compare GO terms - keywords: c("Wnt", "embryonic organ", "embryonic heart", "mesoderm", "mesenchyme", "pattern specification")
 library(dplyr)
 key_words <- c("Wnt", "embryonic organ", "embryonic heart", "mesoderm", "mesenchyme", "pattern specification")
@@ -772,12 +932,12 @@ pdf("GO_1T_vs_1_DEgenes1431_combined.keywords.pdf", width = 6, height = 6)
 pheatmap(go, cluster_cols = FALSE, cluster_rows = FALSE, color = color_palette, breaks = breaks, border_color = NA, fontsize_row = 8)
 dev.off()
 
-# Figure 5a is "GO_1T_vs_1_DEgenes1431_combined.keywords.pdf".
+# Figure 5b is "GO_1T_vs_1_DEgenes1431_combined.keywords.pdf".
 
 
 
 ################################################################################
-### Figure 5b - gene network
+### Figure 5c - gene network
 # using the cnetplot function from the R package ClusterProfiler
 # plot gene networks: mesoderm development, Wnt signalling pathway, cell-cell signaling by wnt, embryonic heart tube morphogenesis
 library(clusterProfiler)
@@ -785,7 +945,7 @@ library(org.Hs.eg.db)
 organism="org.Hs.eg.db"
 library(dplyr)
 
-#setwd("C:/Users/uqqzhao/UQ/1projects/TRIAGE_R_package/Figure5_TRIAGEparser/GSE246079")
+#setwd("C:/Users/uqqzhao/UQ/1projects/TRIAGE_R_package/igure5_human_RNAseq/GSE246079")
 go_results <- read.delim("GO_enrichment_results_1T_vs_1_genecluster2.xls", header = TRUE, sep = "\t")
 keywords <- c("mesoderm development", "Wnt signaling pathway", "embryonic heart tube morphogenesis")
 
@@ -812,12 +972,12 @@ pdf("gene_cluster2_heart_mesoderm_network.pdf", width = 6, height = 8)
 cnetplot(go, showCategory = keywords, circular = F, color.params = list(foldChange = fold_changes, edge = T)) + guides(edge_color = "none")
 dev.off()
 
-# Figure 5b is "gene_cluster2_heart_mesoderm_network.pdf"
+# Figure 5c is "gene_cluster2_heart_mesoderm_network.pdf"
 
 
 
 #############################################################
-######          Supplementary Figure 2                 ######
+######          Supplementary Figure 3                 ######
 #############################################################
 ### Comparison of top enriched GO terms for the genes in each cluster as well as for all DE genes
 library(dplyr)
