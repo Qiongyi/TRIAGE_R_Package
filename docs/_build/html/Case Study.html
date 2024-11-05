@@ -132,6 +132,9 @@
 <span class="nf">write.table</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;tests/AverageByPeak.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;\t&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">col.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="n">quote</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
 
+<span class="c1"># Extract the top 10 genes for each TRIAGE peak</span>
+<span class="n">top_genes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">topGenes</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">top_no</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">)</span>
+
 <span class="c1"># Generate Jaccard Index Heatmap</span>
 <span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tests/Jaccard_heatmap_peak.pdf&quot;</span><span class="p">)</span>
 </pre></div>

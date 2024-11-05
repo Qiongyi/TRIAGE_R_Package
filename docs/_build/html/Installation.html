@@ -42,6 +42,22 @@
 <span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;pheatmap&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<section id="additional-packages-for-comparego">
+<h3>Additional Packages for <cite>compareGO</cite><a class="headerlink" href="#additional-packages-for-comparego" title="Permalink to this heading">¶</a></h3>
+<p>To enable the <cite>compareGO</cite> function, the following R packages are required:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;BiocManager&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quietly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;BiocManager&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">BiocManager</span><span class="o">::</span><span class="nf">install</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;clusterProfiler&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;enrichplot&quot;</span><span class="p">))</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;dplyr&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ggplot2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;reshape2&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>These packages are only required for <cite>compareGO</cite>, which performs GO enrichment analysis on gene lists. Note it also requires an organism-specific annotation database (e.g., <cite>org.Hs.eg.db</cite> for human), which can be installed with:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">BiocManager</span><span class="o">::</span><span class="nf">install</span><span class="p">(</span><span class="s">&quot;org.Hs.eg.db&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Common options include <cite>org.Hs.eg.db</cite> for humans, <cite>org.Mm.eg.db</cite> for mice, and <cite>org.Rn.eg.db</cite> for rats (default: <cite>org.Hs.eg.db</cite>). For additional species databases, see the [Bioconductor Annotation Packages](<a class="reference external" href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">https://bioconductor.org/packages/release/BiocViews.html#___OrgDb</a>).</p>
+</section>
 </section>
 <section id="python-environment-setup">
 <h2>Python Environment Setup<a class="headerlink" href="#python-environment-setup" title="Permalink to this heading">¶</a></h2>
@@ -76,10 +92,10 @@
 <section id="installing-triage-r-package">
 <h2>Installing TRIAGE R Package<a class="headerlink" href="#installing-triage-r-package" title="Permalink to this heading">¶</a></h2>
 <ol class="arabic simple">
-<li><p>Download the TRIAGE R package (e.g., TRIAGE_1.1.4.tar.gz) from the GitHub repository: <a class="reference external" href="https://github.com/Qiongyi/TRIAGE_R_Package">https://github.com/Qiongyi/TRIAGE_R_Package</a></p></li>
+<li><p>Download the TRIAGE R package (e.g., TRIAGE_1.1.5.tar.gz) from the GitHub repository: <a class="reference external" href="https://github.com/Qiongyi/TRIAGE_R_Package">https://github.com/Qiongyi/TRIAGE_R_Package</a></p></li>
 <li><p>Install the TRIAGE R package from the source file:</p></li>
 </ol>
-<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;path/to/TRIAGE_1.1.4.tar.gz&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">repos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;source&quot;</span><span class="p">)</span>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;path/to/TRIAGE_1.1.5.tar.gz&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">repos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;source&quot;</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
 </pre></div>
 </div>

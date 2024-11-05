@@ -3,20 +3,21 @@ Testing TRIAGE
 
 The TRIAGE R package offers a comprehensive suite of tools for analyzing transcriptomic data. This document provides a guide to testing the key functionalities of TRIAGE, including `TRIAGEgene`, `TRIAGEcluster`, and `TRIAGEparser`, along with their associated visualization and analysis functions. These tests are designed to demonstrate the capabilities of each function and ensure their correct operation.
 
-Test TRIAGEgene + plotJaccard()
-----------------------------------
+Test TRIAGEgene + plotJaccard() + compareGO()
+----------------------------------------------
 
 `TRIAGEgene` is used for gene-level analysis and generating TRIAGE-weighted gene expression data.
 
 **# Test 1: Run TRIAGEgene on Demo Human Data**
 
-Objective: To test `TRIAGEgene` using human data and generate a Jaccard Index Heatmap for visualization.
+Objective: To test `TRIAGEgene` using human data and generate visualizations, including a Jaccard Index heatmap and a dot plot for GO enrichment analysis.
 
 **Steps:**
 
 1. Read the input file (tab delimited .txt file).
 2. Run `TRIAGEgene` (Auto-selection for log transformation is enabled).
-3. Generate Jaccard Index Heatmap based on `TRIAGEgene` output (using top 100 genes by default).
+3. Generate a Jaccard Index Heatmap based on `TRIAGEgene` output (using top 100 genes by default).
+4. Generate a dot plot to compare GO enrichment analysis based on `TRIAGEgene` output.
 
 .. code-block:: R
 
@@ -28,23 +29,26 @@ Objective: To test `TRIAGEgene` using human data and generate a Jaccard Index He
     # Run TRIAGEgene
     ds <- TRIAGEgene(demo)
 
-    # Generate Jaccard Index Heatmap
+    # Generate a Jaccard Index Heatmap
     setwd("/path/to/working/directory")
     if (!dir.exists("tests")) {
       dir.create("tests")
     }
     plotJaccard(ds, "tests/Jaccard_heatmap_Human_test1.pdf")
 
+    # Generate a dot plot to compare GO enrichment analysis based on DS results from "group_1"
+    go_result <- compareGO(ds, ds_column = "group_1", output_file = "tests/group1_compareGO.pdf")
 
 **# Test 2: Run TRIAGEgene on Demo Mouse Data**
 
-Objective: To test `TRIAGEgene` using mouse data and generate a Jaccard Index Heatmap for visualization.
+Objective: To test `TRIAGEgene` using mouse data and generate visualizations.
 
 **Steps:**
 
 1. Read the input file (CSV format).
-2. Run `TRIAGEgene` with species specified as "Mouse". Auto-selection for log transformation is enabled.
+2. Run `TRIAGEgene` with species specified as "Mouse", with 'pvalue' enabled to calculate p-values using a rank-based Z-Score method. Auto-selection for log transformation is enabled.
 3. Generate a Jaccard Index Heatmap using the top 100 genes.
+4. Generate a dot plot to compare GO enrichment analysis based on `TRIAGEgene` output.
 
 .. code-block:: R
 
@@ -54,11 +58,13 @@ Objective: To test `TRIAGEgene` using mouse data and generate a Jaccard Index He
     demo <- read.csv(input_file, row.names = 1)
 
     # Run TRIAGEgene for Mouse data
-    ds <- TRIAGEgene(demo, species = "Mouse")
+    ds <- TRIAGEgene(demo, species = "Mouse", pvalue=T)
 
-    # Generate Jaccard Index Heatmap
+    # Generate a Jaccard Index Heatmap
     plotJaccard(ds, "tests/Jaccard_heatmap_Mouse_test2.pdf", top_no = 100)
 
+    # Generate a dot plot to compare GO enrichment analysis based on DS results from "cell_1", using top 20, 50, and 80 genes.
+    go_result <- compareGO(ds, ds_column = "cell_1", top_genes = c(20, 50, 80), organism = "org.Mm.eg.db", output_file = "tests/cell1_compareGO.pdf")
 
 **# Test 3: Run TRIAGEgene on Mouse Data with Matrix Input**
 

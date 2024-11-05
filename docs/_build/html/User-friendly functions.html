@@ -100,7 +100,7 @@
 </ul>
 <p><strong>Version Added:</strong></p>
 <ul class="simple">
-<li><p>v1.1.4</p></li>
+<li><p>TRIAGE R package v1.1.4</p></li>
 </ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Extract the top 5 genes for each TRIAGE peak</span>
@@ -121,7 +121,7 @@
 </ul>
 <p><strong>Version Added:</strong></p>
 <ul class="simple">
-<li><p>v1.1.3</p></li>
+<li><p>TRIAGE R package v1.1.3</p></li>
 </ul>
 <p><strong>Usage Example:</strong></p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Extract genes assigned to cluster1 from the TRIAGEparser output</span>
@@ -178,6 +178,59 @@
 </pre></div>
 </div>
 </section>
+<section id="comparego">
+<h2>compareGO<a class="headerlink" href="#comparego" title="Permalink to this heading">¶</a></h2>
+<p>The <cite>compareGO</cite> function performs GO enrichment analysis and generates a dot plot to compare selected GO terms across gene sets. It is designed to identify significant GO terms in the provided gene lists based on TRIAGE-weighted values (i.e., DS values). The function can also be used with other ranking methods, such as sorting genes by expression values in descending order, making it adaptable to different analytical approaches.</p>
+<p><strong>Parameters:</strong></p>
+<ul class="simple">
+<li><p><cite>ds</cite>: A data frame containing discordance scores (DS) with gene symbols as row names.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>ds_column</cite>: Character string specifying the name of the column in <cite>ds</cite> containing DS values for sorting. Default is <cite>“DS_value”</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>top_genes</cite>: Numeric vector specifying the number of top DS genes to use in the GO analysis. Default is <cite>c(20, 50, 100)</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>organism</cite>: The <cite>OrgDb</cite> object for the organism’s annotation database. Common options include <cite>org.Hs.eg.db</cite> (human), <cite>org.Mm.eg.db</cite> (mouse), and <cite>org.Rn.eg.db</cite> (rat). Default is <cite>org.Hs.eg.db</cite>. See [Bioconductor Annotation Packages](<a class="reference external" href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">https://bioconductor.org/packages/release/BiocViews.html#___OrgDb</a>) for additional species.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>keywords</cite>: Character vector of keywords to filter GO terms, returning only those containing any of the keywords. Default is <cite>c(“Wnt”, “cardiac cell”, “cardiac pacemaker cell”, “cardiac muscle cell”, “endothelial cell”, “cardiomyocytes”, “fibroblast”, “myofibroblasts”, “smooth muscle cell”)</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>outdir</cite>: Directory to save output files, such as GO enrichment results and the dot plot PDF. Default is the current working directory.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>output_file</cite>: Name of the output PDF file for the dot plot. Default is <cite>“compareGO.pdf”</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>color_low</cite>: Color for low enrichment values in the plot. Default is <cite>“lightgrey”</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>color_high</cite>: Color for high enrichment values in the plot. Default is <cite>“red”</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>width</cite>: Width of the output plot in inches for the PDF file. Default is <cite>8</cite>.</p></li>
+</ul>
+<ul class="simple">
+<li><p><cite>height</cite>: Height of the output plot in inches for the PDF file. Default is <cite>6</cite>.</p></li>
+</ul>
+<p><strong>Returns:</strong>
+A data frame containing the GO enrichment comparison results for the specified gene sets. Additionally, a dot plot visualizing the enrichment comparison is generated and saved as a PDF file.</p>
+<p><strong>Version Added:</strong></p>
+<ul class="simple">
+<li><p>TRIAGE R package v1.1.5</p></li>
+</ul>
+<p><strong>Usage Example:</strong></p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Compare GO enrichment for the top 20, 50, 100, and 150 DS genes with a focus on &quot;Wnt&quot;</span>
+<span class="nf">compareGO</span><span class="p">(</span><span class="n">ds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ds_data</span><span class="p">,</span><span class="w"> </span><span class="n">ds_column</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;DS_value&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="n">top_genes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="m">150</span><span class="p">),</span>
+<span class="w">          </span><span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Wnt&quot;</span><span class="p">),</span>
+<span class="w">          </span><span class="n">output_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;compareGO.pdf&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -208,6 +261,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#topgenes">topGenes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getclustergenes">getClusterGenes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#plotgo">plotGO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comparego">compareGO</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Testing%20TRIAGE.html">Testing TRIAGE</a></li>

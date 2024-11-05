@@ -17,6 +17,28 @@ Install the required R packages:
     install.packages("data.table")
     install.packages("pheatmap")
 
+Additional Packages for `compareGO`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To enable the `compareGO` function, the following R packages are required:
+
+.. code-block:: R
+
+    if (!requireNamespace("BiocManager", quietly = TRUE)) {
+        install.packages("BiocManager")
+    }
+    BiocManager::install(c("clusterProfiler", "enrichplot"))
+    install.packages(c("dplyr", "ggplot2", "reshape2"))
+
+
+These packages are only required for `compareGO`, which performs GO enrichment analysis on gene lists. Note it also requires an organism-specific annotation database (e.g., `org.Hs.eg.db` for human), which can be installed with:
+
+.. code-block:: R
+
+    BiocManager::install("org.Hs.eg.db")
+
+Common options include `org.Hs.eg.db` for humans, `org.Mm.eg.db` for mice, and `org.Rn.eg.db` for rats (default: `org.Hs.eg.db`). For additional species databases, see the [Bioconductor Annotation Packages](https://bioconductor.org/packages/release/BiocViews.html#___OrgDb).
+
 Python Environment Setup
 ------------------------
 
@@ -58,11 +80,11 @@ In future R sessions, activate the r-reticulate environment:
 Installing TRIAGE R Package
 ---------------------------
 
-1. Download the TRIAGE R package (e.g., TRIAGE_1.1.4.tar.gz) from the GitHub repository: https://github.com/Qiongyi/TRIAGE_R_Package
+1. Download the TRIAGE R package (e.g., TRIAGE_1.1.5.tar.gz) from the GitHub repository: https://github.com/Qiongyi/TRIAGE_R_Package
 
 2. Install the TRIAGE R package from the source file:
 
 .. code-block:: R
 
-    install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
+    install.packages("path/to/TRIAGE_1.1.5.tar.gz", repos = NULL, type = "source")
     library(TRIAGE)

@@ -86,7 +86,7 @@ The `topGenes` function extracts the top `n` genes with the highest values from 
 
 **Version Added:**
 
-- v1.1.4
+- TRIAGE R package v1.1.4
 
 **Usage Example:**
 
@@ -112,7 +112,7 @@ The `getClusterGenes` function extracts genes assigned to a specific cluster bas
 
 **Version Added:**
 
-- v1.1.3
+- TRIAGE R package v1.1.3
 
 **Usage Example:**
 
@@ -183,3 +183,72 @@ The `plotGO` function creates GO enrichment heatmaps from the output of the `TRI
         outdir = "path/to/heatmap_output", 
         id = c("Peak0", "Peak1"),
         width=6, height=7)
+
+
+
+compareGO
+----------
+
+The `compareGO` function performs GO enrichment analysis and generates a dot plot to compare selected GO terms across gene sets. It is designed to identify significant GO terms in the provided gene lists based on TRIAGE-weighted values (i.e., DS values). The function can also be used with other ranking methods, such as sorting genes by expression values in descending order, making it adaptable to different analytical approaches.
+
+**Parameters:**
+
+- `ds`: A data frame containing discordance scores (DS) with gene symbols as row names.
+
+..
+
+- `ds_column`: Character string specifying the name of the column in `ds` containing DS values for sorting. Default is `"DS_value"`.
+
+..
+
+- `top_genes`: Numeric vector specifying the number of top DS genes to use in the GO analysis. Default is `c(20, 50, 100)`.
+
+..
+
+- `organism`: The `OrgDb` object for the organism's annotation database. Common options include `org.Hs.eg.db` (human), `org.Mm.eg.db` (mouse), and `org.Rn.eg.db` (rat). Default is `org.Hs.eg.db`. See [Bioconductor Annotation Packages](https://bioconductor.org/packages/release/BiocViews.html#___OrgDb) for additional species.
+
+..
+
+- `keywords`: Character vector of keywords to filter GO terms, returning only those containing any of the keywords. Default is `c("Wnt", "cardiac cell", "cardiac pacemaker cell", "cardiac muscle cell", "endothelial cell", "cardiomyocytes", "fibroblast", "myofibroblasts", "smooth muscle cell")`.
+
+..
+
+- `outdir`: Directory to save output files, such as GO enrichment results and the dot plot PDF. Default is the current working directory.
+
+..
+
+- `output_file`: Name of the output PDF file for the dot plot. Default is `"compareGO.pdf"`.
+
+..
+
+- `color_low`: Color for low enrichment values in the plot. Default is `"lightgrey"`.
+
+..
+
+- `color_high`: Color for high enrichment values in the plot. Default is `"red"`.
+
+..
+
+- `width`: Width of the output plot in inches for the PDF file. Default is `8`.
+
+..
+
+- `height`: Height of the output plot in inches for the PDF file. Default is `6`.
+
+**Returns:**  
+A data frame containing the GO enrichment comparison results for the specified gene sets. Additionally, a dot plot visualizing the enrichment comparison is generated and saved as a PDF file.
+
+**Version Added:**
+
+- TRIAGE R package v1.1.5
+
+**Usage Example:**
+
+.. code-block:: R
+
+    # Example: Compare GO enrichment for the top 20, 50, 100, and 150 DS genes with a focus on "Wnt"
+    compareGO(ds = ds_data, ds_column = "DS_value", 
+              top_genes = c(20, 50, 100, 150), 
+              keywords = c("Wnt"), 
+              output_file = "compareGO.pdf", 
+              width = 10, height = 8)

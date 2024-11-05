@@ -34,16 +34,17 @@
   <section id="testing-triage">
 <h1>Testing TRIAGE<a class="headerlink" href="#testing-triage" title="Permalink to this heading">¶</a></h1>
 <p>The TRIAGE R package offers a comprehensive suite of tools for analyzing transcriptomic data. This document provides a guide to testing the key functionalities of TRIAGE, including <cite>TRIAGEgene</cite>, <cite>TRIAGEcluster</cite>, and <cite>TRIAGEparser</cite>, along with their associated visualization and analysis functions. These tests are designed to demonstrate the capabilities of each function and ensure their correct operation.</p>
-<section id="test-triagegene-plotjaccard">
-<h2>Test TRIAGEgene + plotJaccard()<a class="headerlink" href="#test-triagegene-plotjaccard" title="Permalink to this heading">¶</a></h2>
+<section id="test-triagegene-plotjaccard-comparego">
+<h2>Test TRIAGEgene + plotJaccard() + compareGO()<a class="headerlink" href="#test-triagegene-plotjaccard-comparego" title="Permalink to this heading">¶</a></h2>
 <p><cite>TRIAGEgene</cite> is used for gene-level analysis and generating TRIAGE-weighted gene expression data.</p>
 <p><strong># Test 1: Run TRIAGEgene on Demo Human Data</strong></p>
-<p>Objective: To test <cite>TRIAGEgene</cite> using human data and generate a Jaccard Index Heatmap for visualization.</p>
+<p>Objective: To test <cite>TRIAGEgene</cite> using human data and generate visualizations, including a Jaccard Index heatmap and a dot plot for GO enrichment analysis.</p>
 <p><strong>Steps:</strong></p>
 <ol class="arabic simple">
 <li><p>Read the input file (tab delimited .txt file).</p></li>
 <li><p>Run <cite>TRIAGEgene</cite> (Auto-selection for log transformation is enabled).</p></li>
-<li><p>Generate Jaccard Index Heatmap based on <cite>TRIAGEgene</cite> output (using top 100 genes by default).</p></li>
+<li><p>Generate a Jaccard Index Heatmap based on <cite>TRIAGEgene</cite> output (using top 100 genes by default).</p></li>
+<li><p>Generate a dot plot to compare GO enrichment analysis based on <cite>TRIAGEgene</cite> output.</p></li>
 </ol>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
 <span class="c1"># Read input file</span>
@@ -53,21 +54,25 @@
 <span class="c1"># Run TRIAGEgene</span>
 <span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo</span><span class="p">)</span>
 
-<span class="c1"># Generate Jaccard Index Heatmap</span>
+<span class="c1"># Generate a Jaccard Index Heatmap</span>
 <span class="nf">setwd</span><span class="p">(</span><span class="s">&quot;/path/to/working/directory&quot;</span><span class="p">)</span>
 <span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">dir.exists</span><span class="p">(</span><span class="s">&quot;tests&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="nf">dir.create</span><span class="p">(</span><span class="s">&quot;tests&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tests/Jaccard_heatmap_Human_test1.pdf&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate a dot plot to compare GO enrichment analysis based on DS results from &quot;group_1&quot;</span>
+<span class="n">go_result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">compareGO</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">ds_column</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;group_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">output_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;tests/group1_compareGO.pdf&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong># Test 2: Run TRIAGEgene on Demo Mouse Data</strong></p>
-<p>Objective: To test <cite>TRIAGEgene</cite> using mouse data and generate a Jaccard Index Heatmap for visualization.</p>
+<p>Objective: To test <cite>TRIAGEgene</cite> using mouse data and generate visualizations.</p>
 <p><strong>Steps:</strong></p>
 <ol class="arabic simple">
 <li><p>Read the input file (CSV format).</p></li>
-<li><p>Run <cite>TRIAGEgene</cite> with species specified as “Mouse”. Auto-selection for log transformation is enabled.</p></li>
+<li><p>Run <cite>TRIAGEgene</cite> with species specified as “Mouse”, with ‘pvalue’ enabled to calculate p-values using a rank-based Z-Score method. Auto-selection for log transformation is enabled.</p></li>
 <li><p>Generate a Jaccard Index Heatmap using the top 100 genes.</p></li>
+<li><p>Generate a dot plot to compare GO enrichment analysis based on <cite>TRIAGEgene</cite> output.</p></li>
 </ol>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">TRIAGE</span><span class="p">)</span>
 <span class="c1"># Read input file (CSV)</span>
@@ -75,10 +80,13 @@
 <span class="n">demo</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">read.csv</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="w"> </span><span class="n">row.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 
 <span class="c1"># Run TRIAGEgene for Mouse data</span>
-<span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Mouse&quot;</span><span class="p">)</span>
+<span class="n">ds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">TRIAGEgene</span><span class="p">(</span><span class="n">demo</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Mouse&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">pvalue</span><span class="o">=</span><span class="bp">T</span><span class="p">)</span>
 
-<span class="c1"># Generate Jaccard Index Heatmap</span>
+<span class="c1"># Generate a Jaccard Index Heatmap</span>
 <span class="nf">plotJaccard</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;tests/Jaccard_heatmap_Mouse_test2.pdf&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">top_no</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">100</span><span class="p">)</span>
+
+<span class="c1"># Generate a dot plot to compare GO enrichment analysis based on DS results from &quot;cell_1&quot;, using top 20, 50, and 80 genes.</span>
+<span class="n">go_result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">compareGO</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span><span class="w"> </span><span class="n">ds_column</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;cell_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">top_genes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">80</span><span class="p">),</span><span class="w"> </span><span class="n">organism</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;org.Mm.eg.db&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">output_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;tests/cell1_compareGO.pdf&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong># Test 3: Run TRIAGEgene on Mouse Data with Matrix Input</strong></p>
@@ -227,7 +235,7 @@
 <li class="toctree-l1"><a class="reference internal" href="TRIAGEparser.html">TRIAGEparser</a></li>
 <li class="toctree-l1"><a class="reference internal" href="User-friendly%20functions.html">User-friendly Functions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Testing TRIAGE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#test-triagegene-plotjaccard">Test TRIAGEgene + plotJaccard()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-triagegene-plotjaccard-comparego">Test TRIAGEgene + plotJaccard() + compareGO()</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-triagecluster-bypeak-topgenes">Test TRIAGEcluster + byPeak() + topGenes()</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-triageparser-plotgo-getclustergenes">Test TRIAGEparser + plotGO() + getClusterGenes()</a></li>
 </ul>
