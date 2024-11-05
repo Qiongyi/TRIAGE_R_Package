@@ -212,11 +212,13 @@ cpm_deg <- cpm[deg$Symbol, ]
 
 ########### Run TRIAGEgene #############
 # See the installation guideline here: https://triage-r-package.readthedocs.io/en/latest/Installation.html
-#install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
+#install.packages("path/to/TRIAGE_1.1.5.tar.gz", repos = NULL, type = "source")
 library(TRIAGE)
 ds <- TRIAGEgene(cpm_deg, species = "Mouse")
 #head(ds)
 plotJaccard(ds, "Fig3a_Jaccard_heatmap.pdf")
+
+sessionInfo()
 
 
 ################################################################################
@@ -361,6 +363,127 @@ ggplot(filtered_go, aes(x = reorder(Description, p.adjust), y = GeneRatio, color
 
 dev.off()
 
+################################################################################
+### Figure 3d) Comparison of TRIAGEgene and Lisa in prioritizing transcription factors relevant to heart development. 
+# Both ChIP-seq and motif-based methods in Lisa were used for comparison.
+
+# Download the mouse TFs (Mus_musculus_TF.txt) from AnimalTFDB v4.0 (https://guolab.wchscu.cn/AnimalTFDB4) - 1611 TFs
+tf_data <- read.table("Mus_musculus_TF.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+
+matched_tf_data <- tf_data[tf_data$Symbol %in% go_genes$SYMBOL, ]
+
+
+out <- matched_tf_data[, -1]
+write.csv(out, "TFs_GO0007507.csv", quote=F, row.names = F)
+
+# The source code for the ROC curve in Figure 3d is provided as a Jupyter Notebook file, "Fig3d_ROC.ipynb," located in the GSE95755 folder.
+# https://github.com/Qiongyi/TRIAGE_R_Package/source_data_scripts_for_paper/Figure3_mouse_RNAseq/GSE95755/Fig3d_ROC.ipynb
+
+
+
+
+################################################################################
+### Figure 3e) Enrichment of regulation, heart development, and signaling-related GO terms among top-ranked genes identified by TRIAGEgene. 
+# Genes with P-value < 0.01 were used for GO enrichment analysis.
+
+library(TRIAGE)
+file = read.table("GSE95755_MultiCellularRNAseq_EdgeR_CPM.txt", header=T, quote="", sep="\t")
+
+cpm <- file[,c("Symbol", "MIP56_Myo_1", "MIP56_Myo_2", "MIP56_Myo_3", "MIP56_Myo_4")]
+dim(cpm)
+# [1] 20637     5
+rownames(cpm) <- cpm$Symbol
+
+cpm <- cpm[,-1]
+head(cpm)
+
+library(dplyr)
+
+
+##########################################
+### Run TRIAGEgene with 'pvalue'
+ds <- TRIAGEgene(cpm, species = "Mouse", pvalue=T)
+#head(ds)
+sort <- ds[order(ds$p_value, -ds$DS_value), ]
+#head(sort)
+write.csv(sort, "pvalue_sorted.csv", quote=F, row.names = F)
+
+# sort2 <- ds[order(-ds$DS_value), ]
+# head(sort2)
+# write.csv(sort2, "DS_sorted.csv", quote=F, row.names = F)
+
+
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(enrichplot)
+library(ggplot2)
+organism="org.Mm.eg.db"
+genes <- sort$gene_symbol[sort$p_value < 0.01]
+length(genes)
+# [1] 136
+
+go <- enrichGO(gene = genes,
+               OrgDb = organism,
+               keyType = 'SYMBOL',
+               ont = "BP",
+               pAdjustMethod = "fdr",
+               pvalueCutoff = 0.05,
+               qvalueCutoff = 0.05)
+
+# Simplify the results to reduce redundancy
+go_simplified <- simplify(go, cutoff = 0.7, by = "p.adjust", select_fun = min)
+
+write.table(go_simplified,"GOBP_enrichment_pvalue.xls", row.names=FALSE, quote = FALSE, sep = "\t")
+
+
+regulation_related <- subset(go_simplified, grepl("regulation|signaling|heart|cardiac", go_simplified@result$Description))
+
+regulation_enrichment <- go_simplified
+regulation_enrichment@result <- regulation_related
+regulation_enrichment_df <- as.data.frame(regulation_enrichment@result)
+head(regulation_enrichment_df)
+dim(regulation_enrichment_df)
+# [1] 124    9
+write.table(regulation_enrichment_df,"GOBP_regulation.xls", row.names=FALSE, quote = FALSE, sep = "\t")
+
+
+top10 <- regulation_enrichment_df %>%
+  arrange(pvalue) %>%
+  slice_head(n = 10)
+
+#lollipop plot
+ggplot(top10, aes(x = Count, 
+                  y = reorder(Description, Count), 
+                  size = Count, 
+                  color = p.adjust)) +
+  geom_point(stroke = 0) +
+  geom_segment(aes(x = 0, 
+                   xend = Count, 
+                   y = Description, 
+                   yend = Description, color = p.adjust), linewidth = 1) +
+  scale_color_gradientn(colors = c("red", "#FF4500", "cyan", "blue"),
+                        trans = "log10",
+                        breaks = c(1e-14, 1e-12, 1e-10, 1e-8),
+                        labels = scales::scientific) +
+  labs(title = "GO Enrichment Analysis Lollipop Plot",
+       x = "Gene Count",
+       y = "GO Terms") +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 8)) +
+  scale_size_continuous(range = c(6, 12)) +
+  guides(size = "none")
+
+ggsave("Fig3e_lollipop.pdf", width = 8, height = 8)
+
+
+################################################################################
+### Supplementary Data 2. Top 136 high-DS genes identified by TRIAGEgene with a P-value < 0.01.
+
+## Run the below Perl script to generate Supplementary Data 2.
+# Genes were annotated based on transcription factors and cofactors from AnimalTFDB v4.0 and relevant GO terms related to heart development. 
+# For genes without these annotations, a manual literature search was conducted to annotate them.
+#anno_TF_go.pl Mus_musculus_TF.txt Mus_musculus_Cof.txt GOBP_regulation.xls pvalue_sorted.csv Supplementary_Data_2_mouse_highDS_genes.xls
+
 
 
 #############################################################
@@ -462,7 +585,7 @@ ggsave("Figure4a_umap.pdf", plot = p2, width = 8, height = 8)
 ################################################################################
 ### Run TRIAGE R package
 # See the installation guideline here: https://triage-r-package.readthedocs.io/en/latest/Installation.html
-#install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
+#install.packages("path/to/TRIAGE_1.1.5.tar.gz", repos = NULL, type = "source")
 library(TRIAGE)
 
 TRIAGEcluster(expr = "PBMC_ifnb_data/pbmc_ifnb_Seurat_CCAint_allgenes.csv",
@@ -491,7 +614,7 @@ TRIAGEcluster(expr = "PBMC_ifnb_data/pbmc_ifnb_Seurat_CCAint_allgenes.csv",
 
 ################################################################################
 ### Run TRIAGE 'byPeak' to extract peak-level average data
-### Supplementary Data 1
+### Supplementary Data 3
 # Load the TRIAGE R package
 library(TRIAGE)
 
@@ -501,7 +624,7 @@ result <- byPeak(expr = "PBMC_ifnb_data/pbmc_ifnb_Seurat_CCAint_allgenes.csv",
                  cell_column="cell_name")
 write.csv(result, "PBMC_ifnb_data/Peak_AvgExp.csv", quote=F)
 
-# Supplementary Data 1 is "Peak_AvgExp.csv".
+# Supplementary Data 3 is "Peak_AvgExp.csv".
 
 
 ################################################################################
@@ -539,7 +662,7 @@ plotGO(indir="PBMC_ifnb_data/TRIAGE_parseR", outdir="PBMC_ifnb_data/TRIAGE_parse
 
 
 #############################################################
-######          Supplementary Figure 2                 ######
+######          Supplementary Figure 3                 ######
 #############################################################
 top[, "Peak1"]
 plotGO(indir="PBMC_ifnb_data/TRIAGE_parseR", outdir="PBMC_ifnb_data/TRIAGE_parseR", id = "Peak1")
@@ -636,7 +759,7 @@ file = read.table("1T_vs_1_DESeq2_p0.05_231011.xls", header=T, quote="", sep="\t
 
 file <- file[abs(file$log2FoldChange) > 1 & file$padj < 0.05, ]
 #dim(file)
-#[1] 1431   22
+#[1] 1431   13
 genes <- file$Row.names
 writeLines(genes, "DE_genes_1431_list.txt")
 
@@ -655,7 +778,7 @@ exp$mean_CHIR_Tran <- rowMeans(exp[, c("X1CHIR_Tran_R1_S4", "X1CHIR_Tran_R2_S5",
 
 ### Run TRIAGE R package
 # See the installation guideline here: https://triage-r-package.readthedocs.io/en/latest/Installation.html
-#install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
+#install.packages("path/to/TRIAGE_1.1.5.tar.gz", repos = NULL, type = "source")
 library(TRIAGE)
 # Run TRIAGEgene
 ds <- TRIAGEgene(exp)
@@ -803,7 +926,7 @@ write.table(go,"GO_enrichment_results_1T_vs_1_DEgenes1431.xls", row.names=FALSE,
 ################################################################################
 ### Run TRIAGE R package: TRIAGEparser
 # See the installation guideline here: https://triage-r-package.readthedocs.io/en/latest/Installation.html
-#install.packages("path/to/TRIAGE_1.1.4.tar.gz", repos = NULL, type = "source")
+#install.packages("path/to/TRIAGE_1.1.5.tar.gz", repos = NULL, type = "source")
 library(TRIAGE)
 TRIAGEparser("DE_genes_1431_list.txt", input_type = "list", outdir = "TRIAGEparser_output_DE1431")
 plotGO(indir = "./TRIAGEparser_output_DE1431", outdir = "./TRIAGEparser_output_DE1431")
@@ -829,7 +952,7 @@ writeLines(cluster4_genes, "cluster4_genes.txt")
 length(cluster4_genes)
 # [1] 7
 
-# Supplementary Data 2 is the combination of "cluster1_genes.txt", "cluster2_genes.txt" and "cluster3_genes.txt".
+# Supplementary Data 4 is the combination of "cluster1_genes.txt", "cluster2_genes.txt" and "cluster3_genes.txt".
 
 
 ################################################################################
@@ -977,7 +1100,7 @@ dev.off()
 
 
 #############################################################
-######          Supplementary Figure 3                 ######
+######          Supplementary Figure 4                 ######
 #############################################################
 ### Comparison of top enriched GO terms for the genes in each cluster as well as for all DE genes
 library(dplyr)
@@ -1020,5 +1143,5 @@ pdf("GO_1T_vs_1_DEgenes1431_combined.pdf", width = 6, height = 8)
 pheatmap(go, cluster_cols = FALSE, cluster_rows = FALSE, color = color_palette, border_color = NA, fontsize_row = 8)
 dev.off()
 
-# Supplementary Figure 2 is "GO_1T_vs_1_DEgenes1431_combined.pdf".
+# Supplementary Figure 4 is "GO_1T_vs_1_DEgenes1431_combined.pdf".
 
