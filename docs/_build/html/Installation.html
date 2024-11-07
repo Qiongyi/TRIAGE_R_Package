@@ -42,8 +42,7 @@
 <span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;pheatmap&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<section id="additional-packages-for-comparego">
-<h3>Additional Packages for <cite>compareGO</cite><a class="headerlink" href="#additional-packages-for-comparego" title="Permalink to this heading">¶</a></h3>
+<p><strong>Additional Packages for</strong> <cite>compareGO</cite></p>
 <p>To enable the <cite>compareGO</cite> function, the following R packages are required:</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;BiocManager&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quietly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;BiocManager&quot;</span><span class="p">)</span>
@@ -56,17 +55,59 @@
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">BiocManager</span><span class="o">::</span><span class="nf">install</span><span class="p">(</span><span class="s">&quot;org.Hs.eg.db&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Common options include <cite>org.Hs.eg.db</cite> for humans, <cite>org.Mm.eg.db</cite> for mice, and <cite>org.Rn.eg.db</cite> for rats (default: <cite>org.Hs.eg.db</cite>). For additional species databases, see the [Bioconductor Annotation Packages](<a class="reference external" href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">https://bioconductor.org/packages/release/BiocViews.html#___OrgDb</a>).</p>
-</section>
+<p>Common options include <cite>org.Hs.eg.db</cite> for humans, <cite>org.Mm.eg.db</cite> for mice, and <cite>org.Rn.eg.db</cite> for rats. For additional species databases, see the [<a class="reference external" href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">Bioconductor Annotation Packages</a>].</p>
 </section>
 <section id="python-environment-setup">
 <h2>Python Environment Setup<a class="headerlink" href="#python-environment-setup" title="Permalink to this heading">¶</a></h2>
-<p>Install Python modules within R using the reticulate package. It’s recommended to manage Python dependencies in a separate environment.</p>
+<p>To install the TRIAGE R package, you’ll first need to set up the required Python modules within R using the reticulate package. There are two main options for this setup: using a Conda environment or a Python virtual environment. Details for each option are provided below.</p>
+<p><strong>Option 1: Using a Conda environment</strong></p>
+<p>To set up a Python environment with Conda for use in R, follow the steps below. This approach is distinct from the Python virtual environment (pyenv) option (Option 2) outlined later. The Conda option provides more comprehensive package management and may be preferable for complex projects.</p>
+<p># Bash commands for setting up the Conda environment “r-env”:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all existing Conda environments to see if any relevant environments have already been created</span>
+conda<span class="w"> </span>env<span class="w"> </span>list
+
+<span class="c1"># If you don’t already have a Conda environment for R, create a new one (e.g., &quot;r-env&quot;)</span>
+conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>r-env<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>r
+
+<span class="c1"># Activate the &quot;r-env&quot; Conda environment</span>
+conda<span class="w"> </span>activate<span class="w"> </span>r-env
+
+<span class="c1"># Install R within the Conda environment</span>
+<span class="c1"># Note: This step is only needed if R was not already installed.</span>
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>r
+</pre></div>
+</div>
+<p>It’s recommended to create a separate Conda environment for Python modules used by reticulate (e.g., “r-reticulate”) to avoid potential conflicts with the “r-env” environment.</p>
+<p># Bash commands for setting up the Conda environment “r-reticulate”:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new Conda environment specifically for reticulate (e.g. r-reticulate)</span>
+conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>r-reticulate<span class="w"> </span>python
+
+<span class="c1"># Verify that Python is installed in this environment</span>
+python<span class="w"> </span>--version
+
+<span class="c1"># If Python is not installed, you can install it with the following command:</span>
+conda<span class="w"> </span>install<span class="w"> </span>python
+
+<span class="c1"># Install the required Python modules (e.g., pandas, scipy, matplotlib) for the TRIAGE R package</span>
+conda<span class="w"> </span>install<span class="w"> </span>pandas<span class="w"> </span>scipy<span class="w"> </span>matplotlib<span class="w"> </span>requests<span class="w"> </span>scikit-learn<span class="w"> </span>seaborn
+</pre></div>
+</div>
+<p>In future R sessions (when “r-env” is active), you can activate the “r-reticulate” environment within R using <cite>use_condaenv</cite>:</p>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
+<span class="nf">use_condaenv</span><span class="p">(</span><span class="s">&quot;r-reticulate&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
+
+<span class="c1"># You can verify that the modules were installed successfully. For example:</span>
+<span class="nf">py_module_available</span><span class="p">(</span><span class="s">&quot;pandas&quot;</span><span class="p">)</span>
+<span class="nf">py_module_available</span><span class="p">(</span><span class="s">&quot;matplotlib&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Option 2: Using a Python virtual environment</strong></p>
+<p>To use a Python virtual environment, you’ll need to create and install required Python modules within R using the reticulate package. This setup is suitable for projects that need isolated Python environments without the broader management features provided by Conda.</p>
+<p>Start by installing the required Python version and modules:</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
 <span class="c1"># Note: any Python with version &gt;=3.9 works. Here we install Python version 3.9.5 as an example.</span>
 <span class="n">reticulate</span><span class="o">::</span><span class="nf">install_python</span><span class="p">(</span><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;3.9.5&#39;</span><span class="p">)</span>
 <span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;pandas&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">envname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
-<span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;numpy&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">envname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
 <span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;scipy&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">envname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
 <span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;matplotlib&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">envname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
 <span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;requests&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">envname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
@@ -74,16 +115,7 @@
 <span class="n">reticulate</span><span class="o">::</span><span class="nf">py_install</span><span class="p">(</span><span class="s">&quot;seaborn&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">envname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;r-reticulate&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="knowledge-base">
-<h2>Knowledge Base<a class="headerlink" href="#knowledge-base" title="Permalink to this heading">¶</a></h2>
-<p>When using the reticulate package in R to install Python modules, it is important to understand how reticulate::py_install manages the installation of these modules. Below are key points to consider:</p>
-<ul class="simple">
-<li><p><strong>Intelligent Installation</strong>: The reticulate::py_install function is designed to intelligently manage Python modules within your specified Python environment. It checks whether the required modules are already installed in the targeted environment.</p></li>
-<li><p><strong>No Redundant Installation</strong>: If a module is already installed in the given environment, py_install will not attempt to reinstall it. This avoids redundant installation and saves time, especially when setting up the environment for the first time or in a new session.</p></li>
-<li><p><strong>Specified Environment</strong>: You can specify the environment where you want the modules to be installed. This is done using the envname parameter in the py_install function. For instance, reticulate::py_install(“pandas”, envname = “r-reticulate”) will install the pandas module in the r-reticulate environment.</p></li>
-</ul>
-<p>In future R sessions, activate the r-reticulate environment:</p>
+<p>In future R sessions, you can activate the “r-reticulate” environment to load these modules:</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">reticulate</span><span class="p">)</span>
 <span class="nf">use_virtualenv</span><span class="p">(</span><span class="s">&quot;r-reticulate&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
@@ -123,7 +155,6 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#r-dependencies">R Dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#python-environment-setup">Python Environment Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#knowledge-base">Knowledge Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installing-triage-r-package">Installing TRIAGE R Package</a></li>
 </ul>
 </li>

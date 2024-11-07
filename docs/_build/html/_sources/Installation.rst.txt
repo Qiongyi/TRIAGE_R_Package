@@ -17,8 +17,8 @@ Install the required R packages:
     install.packages("data.table")
     install.packages("pheatmap")
 
-Additional Packages for `compareGO`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Additional Packages for** `compareGO`
 
 To enable the `compareGO` function, the following R packages are required:
 
@@ -37,12 +37,70 @@ These packages are only required for `compareGO`, which performs GO enrichment a
 
     BiocManager::install("org.Hs.eg.db")
 
-Common options include `org.Hs.eg.db` for humans, `org.Mm.eg.db` for mice, and `org.Rn.eg.db` for rats (default: `org.Hs.eg.db`). For additional species databases, see the [Bioconductor Annotation Packages](https://bioconductor.org/packages/release/BiocViews.html#___OrgDb).
+Common options include `org.Hs.eg.db` for humans, `org.Mm.eg.db` for mice, and `org.Rn.eg.db` for rats. For additional species databases, see the [`Bioconductor Annotation Packages <https://bioconductor.org/packages/release/BiocViews.html#___OrgDb>`_].
 
 Python Environment Setup
 ------------------------
 
-Install Python modules within R using the reticulate package. It's recommended to manage Python dependencies in a separate environment.
+To install the TRIAGE R package, you'll first need to set up the required Python modules within R using the reticulate package. There are two main options for this setup: using a Conda environment or a Python virtual environment. Details for each option are provided below.
+
+**Option 1: Using a Conda environment**
+
+To set up a Python environment with Conda for use in R, follow the steps below. This approach is distinct from the Python virtual environment (pyenv) option (Option 2) outlined later. The Conda option provides more comprehensive package management and may be preferable for complex projects.
+
+# Bash commands for setting up the Conda environment "r-env":
+
+.. code-block:: bash
+
+    # List all existing Conda environments to see if any relevant environments have already been created
+    conda env list
+
+    # If you don’t already have a Conda environment for R, create a new one (e.g., "r-env")
+    conda create -n r-env -c conda-forge r
+
+    # Activate the "r-env" Conda environment
+    conda activate r-env
+
+    # Install R within the Conda environment
+    # Note: This step is only needed if R was not already installed.
+    conda install -c conda-forge r
+
+It’s recommended to create a separate Conda environment for Python modules used by reticulate (e.g., "r-reticulate") to avoid potential conflicts with the "r-env" environment.
+
+# Bash commands for setting up the Conda environment "r-reticulate":
+
+.. code-block:: bash
+
+    # Create a new Conda environment specifically for reticulate (e.g. r-reticulate)
+    conda create -n r-reticulate python
+
+    # Verify that Python is installed in this environment
+    python --version
+
+    # If Python is not installed, you can install it with the following command:
+    conda install python
+
+    # Install the required Python modules (e.g., pandas, scipy, matplotlib) for the TRIAGE R package
+    conda install pandas scipy matplotlib requests scikit-learn seaborn
+
+
+In future R sessions (when "r-env" is active), you can activate the "r-reticulate" environment within R using `use_condaenv`:
+
+.. code-block:: R
+
+    library(reticulate)
+    use_condaenv("r-reticulate", required = TRUE)
+
+    # You can verify that the modules were installed successfully. For example:
+    py_module_available("pandas")
+    py_module_available("matplotlib")
+
+
+**Option 2: Using a Python virtual environment**
+
+To use a Python virtual environment, you’ll need to create and install required Python modules within R using the reticulate package. This setup is suitable for projects that need isolated Python environments without the broader management features provided by Conda.
+
+Start by installing the required Python version and modules:
 
 .. code-block:: R
 
@@ -50,26 +108,14 @@ Install Python modules within R using the reticulate package. It's recommended t
     # Note: any Python with version >=3.9 works. Here we install Python version 3.9.5 as an example. 
     reticulate::install_python(version = '3.9.5')
     reticulate::py_install("pandas", envname = "r-reticulate")
-    reticulate::py_install("numpy", envname = "r-reticulate")
     reticulate::py_install("scipy", envname = "r-reticulate")
     reticulate::py_install("matplotlib", envname = "r-reticulate")
     reticulate::py_install("requests", envname = "r-reticulate")
     reticulate::py_install("scikit-learn", envname = "r-reticulate")
     reticulate::py_install("seaborn", envname = "r-reticulate")
 
-Knowledge Base
---------------
 
-When using the reticulate package in R to install Python modules, it is important to understand how reticulate::py_install manages the installation of these modules. Below are key points to consider:
-
-- **Intelligent Installation**: The reticulate::py_install function is designed to intelligently manage Python modules within your specified Python environment. It checks whether the required modules are already installed in the targeted environment.
-
-- **No Redundant Installation**: If a module is already installed in the given environment, py_install will not attempt to reinstall it. This avoids redundant installation and saves time, especially when setting up the environment for the first time or in a new session.
-
-- **Specified Environment**: You can specify the environment where you want the modules to be installed. This is done using the envname parameter in the py_install function. For instance, reticulate::py_install("pandas", envname = "r-reticulate") will install the pandas module in the r-reticulate environment.
-
-
-In future R sessions, activate the r-reticulate environment:
+In future R sessions, you can activate the “r-reticulate” environment to load these modules:
 
 .. code-block:: R
 
