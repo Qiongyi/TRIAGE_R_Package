@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Installation &#8212; TRIAGE R Package  documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b3523f8e" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-DVHM78V00S"></script>
+    <script src="_static/ga4.js?v=5a672351"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="TRIAGEgene" href="TRIAGEgene.html" />
@@ -18,8 +21,9 @@
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -32,10 +36,10 @@
           <div class="body" role="main">
             
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h1>
 <p>This section covers the installation and setup of the TRIAGE R package. The TRIAGE R package requires both R and Python dependencies. Follow these steps to set up the environment and install the package.</p>
 <section id="r-dependencies">
-<span id="id1"></span><h2>R Dependencies<a class="headerlink" href="#r-dependencies" title="Permalink to this heading">¶</a></h2>
+<span id="id1"></span><h2>R Dependencies<a class="headerlink" href="#r-dependencies" title="Link to this heading">¶</a></h2>
 <p>Install the required R packages:</p>
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;reticulate&quot;</span><span class="p">)</span>
 <span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;data.table&quot;</span><span class="p">)</span>
@@ -44,7 +48,7 @@
 </div>
 <p><strong>Additional Packages for</strong> <cite>compareGO</cite></p>
 <p>To enable the <cite>compareGO</cite> function, the following R packages are required:</p>
-<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="nf">if </span><span class="p">(</span><span class="o">!</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;BiocManager&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quietly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="kr">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">requireNamespace</span><span class="p">(</span><span class="s">&quot;BiocManager&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">quietly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;BiocManager&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="n">BiocManager</span><span class="o">::</span><span class="nf">install</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;clusterProfiler&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;enrichplot&quot;</span><span class="p">))</span>
@@ -55,10 +59,10 @@
 <div class="highlight-R notranslate"><div class="highlight"><pre><span></span><span class="n">BiocManager</span><span class="o">::</span><span class="nf">install</span><span class="p">(</span><span class="s">&quot;org.Hs.eg.db&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Common options include <cite>org.Hs.eg.db</cite> for humans, <cite>org.Mm.eg.db</cite> for mice, and <cite>org.Rn.eg.db</cite> for rats. For additional species databases, see the [<a class="reference external" href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">Bioconductor Annotation Packages</a>].</p>
+<p>Common options include <cite>org.Hs.eg.db</cite> for humans, <cite>org.Mm.eg.db</cite> for mice, and <cite>org.Rn.eg.db</cite> for rats. For additional species databases, see [<a class="reference external" href="https://bioconductor.org/packages/release/BiocViews.html#___OrgDb">Bioconductor Annotation Packages</a>].</p>
 </section>
 <section id="python-environment-setup">
-<h2>Python Environment Setup<a class="headerlink" href="#python-environment-setup" title="Permalink to this heading">¶</a></h2>
+<h2>Python Environment Setup<a class="headerlink" href="#python-environment-setup" title="Link to this heading">¶</a></h2>
 <p>To install the TRIAGE R package, you’ll first need to set up the required Python modules within R using the reticulate package. There are two main options for this setup: using a Conda environment or a Python virtual environment. Details for each option are provided below.</p>
 <p><strong>Option 1: Using a Conda environment</strong></p>
 <p>To set up a Python environment with Conda for use in R, follow the steps below. This approach is distinct from the Python virtual environment (pyenv) option (Option 2) outlined later. The Conda option provides more comprehensive package management and may be preferable for complex projects.</p>
@@ -122,7 +126,7 @@ conda<span class="w"> </span>install<span class="w"> </span>pandas<span class="w
 </div>
 </section>
 <section id="installing-triage-r-package">
-<h2>Installing TRIAGE R Package<a class="headerlink" href="#installing-triage-r-package" title="Permalink to this heading">¶</a></h2>
+<h2>Installing TRIAGE R Package<a class="headerlink" href="#installing-triage-r-package" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Download the TRIAGE R package (e.g., TRIAGE_1.1.5.tar.gz) from the GitHub repository: <a class="reference external" href="https://github.com/Qiongyi/TRIAGE_R_Package">https://github.com/Qiongyi/TRIAGE_R_Package</a></p></li>
 <li><p>Install the TRIAGE R package from the source file:</p></li>
@@ -139,7 +143,7 @@ conda<span class="w"> </span>install<span class="w"> </span>pandas<span class="w
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <h1 class="logo"><a href="index.html">TRIAGE R Package</a></h1>
 
@@ -150,7 +154,16 @@ conda<span class="w"> </span>install<span class="w"> </span>pandas<span class="w
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#r-dependencies">R Dependencies</a></li>
@@ -175,16 +188,6 @@ conda<span class="w"> </span>install<span class="w"> </span>pandas<span class="w
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -198,11 +201,11 @@ conda<span class="w"> </span>install<span class="w"> </span>pandas<span class="w
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2024, Qiongyi Zhao.
+      &#169;2024, Qiongyi Zhao.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.1.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="_sources/Installation.rst.txt"

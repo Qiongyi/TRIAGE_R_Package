@@ -37,7 +37,7 @@ These packages are only required for `compareGO`, which performs GO enrichment a
 
     BiocManager::install("org.Hs.eg.db")
 
-Common options include `org.Hs.eg.db` for humans, `org.Mm.eg.db` for mice, and `org.Rn.eg.db` for rats. For additional species databases, see the [`Bioconductor Annotation Packages <https://bioconductor.org/packages/release/BiocViews.html#___OrgDb>`_].
+Common options include `org.Hs.eg.db` for humans, `org.Mm.eg.db` for mice, and `org.Rn.eg.db` for rats. For additional species databases, see [`Bioconductor Annotation Packages <https://bioconductor.org/packages/release/BiocViews.html#___OrgDb>`_].
 
 Python Environment Setup
 ------------------------

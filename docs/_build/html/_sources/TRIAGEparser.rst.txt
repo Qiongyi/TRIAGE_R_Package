@@ -4,7 +4,7 @@ TRIAGEparser
 Description
 -----------
 TRIAGEparser is one of core functions of the TRIAGE R package, designed to evaluate groups of genes, such as the top 100 genes ranked by TRIAGE-weighted values or differentially expressed genes, to classify genes with distinct biological functions. It performs principal component analysis to extract orthogonal patterns of H3K27me3 depositions from consortium-level epigenomic data and uses Bayesian information criterion to optimally determine gene clusters. TRIAGEparser then assesses each gene cluster by searching the protein-protein interaction (PPI) networks from the STRING database and conducts Gene Ontology (GO) enrichment analysis for genes with direct PPI interactions. 
-For more details, see: `Sun et al., Nucleic Acid Research 2023, Inferring cell diversity in single cell data using consortium-scale epigenetic data as a biological anchor for cell identity <https://academic.oup.com/nar/article/51/11/e62/7147502>`_.
+For more details, see: `Zhao et al., Briefings in Bioinformatics 2025, TRIAGE: an R package for regulatory gene analysis <https://doi.org/10.1093/bib/bbaf004>`_ and `Sun et al., Nucleic Acid Research 2023, Inferring cell diversity in single cell data using consortium-scale epigenetic data as a biological anchor for cell identity <https://academic.oup.com/nar/article/51/11/e62/7147502>`_.
 
 **Note:** TRIAGEparser is adaptable to any type of data mapped to protein-coding and non-coding genes, including RNAseq, proteomics, ChIP-seq, and more.
 
