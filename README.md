@@ -15,7 +15,7 @@ TRIAGE R package is particularly useful for researchers focusing on:
 - Enhanced performance: Features significant improvements in computational efficiency and compatibility.
 
 # Download the Latest Release
-You can download the latest release of TRIAGE [here](https://github.com/Qiongyi/TRIAGE_R_Package/releases/latest/download/TRIAGE_1.1.6.tar.gz).
+You can download the latest release of TRIAGE [here](https://github.com/Qiongyi/TRIAGE_R_Package/releases/latest/download/TRIAGE_1.1.7.tar.gz).
 
 # Documentation
 The complete TRIAGE R package manual is available via [readthedocs](https://triage-r-package.readthedocs.io/en/latest/index.html).
