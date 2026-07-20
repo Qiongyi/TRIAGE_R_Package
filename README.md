@@ -1,5 +1,47 @@
 # TRIAGE R Package
 
+> [!IMPORTANT]
+> **TRIAGE Toolkit v2.0.0 (also referred to as TRIAGE R package v2) is now available.**  
+> The updated toolkit is described in our 2026 *Current Protocols* paper:  
+> [TRIAGE Toolkit: Streamlined Discovery of Regulatory Genes and Elements](https://doi.org/10.1002/cpz1.70413)
+
+
+## TRIAGE Toolkit v2.0.0
+
+TRIAGE is a streamlined computational toolkit for discovering and prioritizing regulatory genes and genomic elements involved in cell identity, development, and disease. The toolkit supports regulatory analysis using diverse input types, including gene expression matrices, gene lists, and genomic loci, and can be applied to both bulk and single-cell RNA-seq data.
+
+The TRIAGE toolkit includes four main components:
+
+- **TRIAGEgene**: prioritizes regulatory genes from gene expression data
+- **TRIAGEcluster**: identifies biologically distinct cell populations from single-cell RNA-seq data
+- **TRIAGEparser**: groups genes into functionally related regulatory modules and supports downstream functional interpretation
+- **TRIAGEccs**: prioritizes regulatory genomic elements at single-base resolution
+
+
+## Access and Licensing
+
+TRIAGE Toolkit v2.0.0 is available through the [UniQuest Online Store](https://uniquest.store/product/triage2) under one of the following licences:
+
+- **Academic Research and Teaching Licence**: free for academic research and teaching
+- **General Use Licence**: for other uses, including commercial research
+
+## Documentation
+
+The TRIAGE Toolkit v2.0.0 documentation is available at:
+
+[https://tinyurl.com/triage2doc](https://tinyurl.com/triage2doc)
+
+
+
+# TRIAGE R Package v1.x
+
+This GitHub repository provides the TRIAGE R package v1.x releases and associated source materials. With the exception of TRIAGEccs, the core functions available in TRIAGE Toolkit v2.0.0 are also available in the v1.x package and provide equivalent functionality.
+
+Users who do not require the single-base-resolution regulatory element analysis provided by TRIAGEccs may continue to use the TRIAGE R package v1.x from this GitHub repository.
+
+Important bug fixes and essential updates affecting the shared functions will also be incorporated into future v1.x releases where applicable.
+
+
 # Overview
 The TRIAGE R package is a powerful, integrated toolkit developed by our team to decipher the regulatory complexities of transcriptome dynamics and cell identity in development and disease. 
 
